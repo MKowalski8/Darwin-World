@@ -1,4 +1,4 @@
-package WorldElements;
+package worldElements;
 
 public class SlowEvolvingAnimal extends AbstractAnimal{
 }

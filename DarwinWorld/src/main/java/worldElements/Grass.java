@@ -1,6 +1,6 @@
-package WorldElements;
+package worldElements;
 
-import Components.Vector2d;
+import components.Vector2d;
 
 public class Grass implements WorldElement{
     @Override

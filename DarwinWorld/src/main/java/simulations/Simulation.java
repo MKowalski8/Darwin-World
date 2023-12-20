@@ -1,4 +1,4 @@
-package Simulations;
+package simulations;
 
 public class Simulation implements Runnable{
 

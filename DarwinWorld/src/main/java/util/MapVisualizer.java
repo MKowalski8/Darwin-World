@@ -1,6 +1,6 @@
 package util;
-import Maps.WorldMap;
-import Components.Vector2d;
+import maps.WorldMap;
+import components.Vector2d;
 
 /**
  * The map visualizer converts the {@link WorldMap} map into a string

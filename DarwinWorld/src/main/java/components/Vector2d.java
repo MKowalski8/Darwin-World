@@ -1,4 +1,4 @@
-package Components;
+package components;
 
 public class Vector2d {
     private final int x;

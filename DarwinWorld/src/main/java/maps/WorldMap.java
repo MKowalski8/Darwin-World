@@ -1,4 +1,4 @@
-package Maps;
+package maps;
 
 public interface WorldMap {
 }

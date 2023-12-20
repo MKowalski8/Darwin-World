@@ -1,6 +1,6 @@
-package WorldElements;
+package worldElements;
 
-import Components.Vector2d;
+import components.Vector2d;
 
 public class AbstractAnimal implements Animal{
     @Override
