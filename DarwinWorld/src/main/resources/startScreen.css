@@ -1,0 +1,24 @@
+#infoLabel{
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-color: lightgrey;
+    -fx-color-label-visible: white;
+    -fx-font-size: 30px;
+}
+
+.body{
+    -fx-font-size: 15px;
+}
+
+.confElement{
+    -fx-alignment: CENTER;
+    -fx-padding: 3px;
+}
+
+.labelConf{
+    -fx-label-padding: 10;
+}
+
+.spinnerConf{
+    -fx-max-width: 80;
+}
