@@ -6,9 +6,6 @@ import worldElements.WorldElement;
 
 public abstract class AbstractWorld implements WorldMap{
 
-//    Wiele z tych atrybutów pewnie stąd wyleci gdzieś indziej,
-//    albo okaze sie, ze sa praktycznie bezuczytne
-
     private final Boundary bounds;
     private int numberOfPlants;
 
@@ -26,9 +23,15 @@ public abstract class AbstractWorld implements WorldMap{
         this.numberOfAnimals = numberOfAnimals;
     }
 
-
     @Override
     public WorldElement objectAt(Vector2d position) {
         return null;
     }
+
+    @Override
+    public Boundary getBounds(){
+        return bounds;
+    }
+
+    
 }

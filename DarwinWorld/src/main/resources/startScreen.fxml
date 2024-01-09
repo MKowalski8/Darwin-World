@@ -27,7 +27,7 @@
         <VBox alignment="CENTER">
             <HBox alignment="CENTER">
                 <Label text="Select map variant" styleClass="labelConf"/>
-                <ComboBox fx:id="mapVariant"/>
+                <ComboBox fx:id="mapVariant" />
             </HBox>
 
             <HBox styleClass="confElement">
@@ -48,6 +48,11 @@
             <HBox styleClass="confElement">
                 <Label text="Set start plant number" styleClass="labelConf"/>
                 <Spinner fx:id="plantNumber" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
+            </HBox>
+
+            <HBox styleClass="confElement">
+                <Label text="Set start plant number" styleClass="labelConf"/>
+                <Spinner fx:id="plantGrowingDaily" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
             </HBox>
 
             <HBox styleClass="confElement">
@@ -85,6 +90,10 @@
                 <Spinner fx:id="genomeLength" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true" />
             </HBox>
 
+            <HBox styleClass="confElement">
+                <Label text="Do you want to safe statistics?" styleClass="labelConf"/>
+                <ComboBox fx:id="toSave"/>
+            </HBox>
         </VBox>
     </center>
 
