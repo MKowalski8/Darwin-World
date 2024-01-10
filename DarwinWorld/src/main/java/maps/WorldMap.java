@@ -1,5 +1,6 @@
 package maps;
 
+import components.Boundary;
 import components.Vector2d;
 import worldElements.WorldElement;
 
@@ -9,4 +10,6 @@ public interface WorldMap {
     }
 
     WorldElement objectAt(Vector2d position);
+
+    Boundary getBounds();
 }
