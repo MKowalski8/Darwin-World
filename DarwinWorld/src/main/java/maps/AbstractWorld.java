@@ -8,13 +8,11 @@ import worldElements.WorldElement;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 public abstract class AbstractWorld implements WorldMap{
 
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
+    private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
-
     private final Boundary bounds;
     private int numberOfPlants;
 
@@ -28,9 +26,8 @@ public abstract class AbstractWorld implements WorldMap{
         this.plantEnergy = plantEnergy;
         this.growingPlantsNumber = growingPlantsNumber;
         placeAnimals(numberOfAnimals);
-
-
     }
+
 
     @Override
     public WorldElement objectAt(Vector2d position) {
@@ -47,10 +44,10 @@ public abstract class AbstractWorld implements WorldMap{
     @Override
     public void placeAnimals(int numberOfAnimals){
         for (int i = 0; i < numberOfAnimals; i++){
-            int x = (int)(Math.random() * bounds.width());
-            int y = (int)(Math.random() * bounds.height());
-            //TODO
-//            animals.put(new Vector2d(x,y), new Animal());
+            Vector2d position = new Vector2d((int)(Math.random() * bounds.width()),  (int)(Math.random() * bounds.height()));
+            
+//            mapCells.containsKey(position) ? mapCells.put(position, new MapCell().placeAnimalOnCell(new Animal())) :
+//                    mapCells.get(position).placeAnimalOnCell(new Animal());
         }
     }
 
