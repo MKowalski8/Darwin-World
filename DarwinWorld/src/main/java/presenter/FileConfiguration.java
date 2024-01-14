@@ -48,7 +48,8 @@ public class FileConfiguration {
             startPresenter.setPlantNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
             startPresenter.setPlantGrowingDaily(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
             startPresenter.setEnergyFromPlant(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
-            startPresenter.setStartAnimalEnergy(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 100, scanner.nextInt()));
+            startPresenter.setStartAnimalEnergy(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
+            startPresenter.setStartAnimalNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 100, scanner.nextInt()));
             startPresenter.setEnergyForReproduction(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
             startPresenter.setMaxMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
             startPresenter.setMinMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));

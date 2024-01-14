@@ -1,5 +1,6 @@
 package presenter;
 
+import components.Boundary;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +16,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class StartPresenter {
-
 
     @FXML
     private ComboBox<String> toSave;
@@ -86,12 +86,14 @@ public class StartPresenter {
     }
 
     private WorldMap configureWorldMap() {
-        return mapVariant.equals("Round World") ?
-                new RoundWorld(mapWidth.getValue(), mapHeight.getValue(), plantNumber.getValue(), energyFromPlant.getValue(),
-                        plantGrowingDaily.getValue(), startAnimalNumber.getValue())
+        Boundary bounds = new Boundary(getMapWidth(), getMapHeight());
+
+        return getMapVariant().equals("Round World") ?
+                new RoundWorld(bounds, getPlantNumber(), getEnergyFromPlant(),
+                        getPlantGrowingDaily(), getStartAnimalNumber())
                 :
-                new HellWorld(mapWidth.getValue(), mapHeight.getValue(), plantNumber.getValue(), energyFromPlant.getValue(),
-                        plantGrowingDaily.getValue(), startAnimalNumber.getValue());
+                new HellWorld(bounds, getPlantNumber(), getEnergyFromPlant(),
+                        getPlantGrowingDaily(), getStartAnimalNumber());
     }
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
@@ -103,17 +105,18 @@ public class StartPresenter {
     }
 
 
-    public void saveConfiguration() {
-        Configuration configuration = new Configuration(this);
-        configuration.saveActualConfiguration();
-    }
-
     public void simulationStart(String[] args, WorldMap map) {
 
     }
 
+
+    public void saveConfiguration() {
+        FileConfiguration configuration = new FileConfiguration(this);
+        configuration.saveActualConfiguration();
+    }
+
     public void loadConfiguration() {
-        Configuration configuration = new Configuration(this);
+        FileConfiguration configuration = new FileConfiguration(this);
         configuration.loadSavedConfiguration();
     }
 
