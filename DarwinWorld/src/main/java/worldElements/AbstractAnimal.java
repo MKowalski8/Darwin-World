@@ -19,7 +19,9 @@ public abstract class AbstractAnimal implements Animal{
 //    Nie wiem czy tych spraw nie trzeba bedzie wrzyucic gdzies indziej
 //    private int[] genom;
 
-    public AbstractAnimal(int energyOfAnimal, int energyRequiredForReproduction, int energyUsedByReproduction, int maxMutations, int minMutations, int genomeLength) {
+    public AbstractAnimal(int energyOfAnimal, int energyRequiredForReproduction,
+                          int energyUsedByReproduction, int maxMutations,
+                          int minMutations, int genomeLength) {
         this.energyOfAnimal = energyOfAnimal;
         this.energyRequiredForReproduction = energyRequiredForReproduction;
         this.energyUsedByReproduction = energyUsedByReproduction;
@@ -27,8 +29,6 @@ public abstract class AbstractAnimal implements Animal{
         this.minMutations = minMutations;
         genomeCreation(genomeLength);
     }
-
-
 
     @Override
     public Vector2d getPosition() {

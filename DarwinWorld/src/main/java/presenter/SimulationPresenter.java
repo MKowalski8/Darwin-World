@@ -3,7 +3,6 @@ package presenter;
 import components.Boundary;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -43,11 +42,11 @@ public class SimulationPresenter implements MapChangeListener {
 
         Boundary bounds = worldMap.getBounds();
 
-        for (int i = 0; i <= bounds.getWidth() + 1; i++) {
+        for (int i = 0; i <= bounds.width() + 1; i++) {
             mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
         }
 
-        for (int i = 0; i <= bounds.getHeight() + 1; i++) {
+        for (int i = 0; i <= bounds.height() + 1; i++) {
             mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
         }
 
