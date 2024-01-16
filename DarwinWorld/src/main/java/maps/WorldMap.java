@@ -2,6 +2,7 @@ package maps;
 
 import components.Boundary;
 import components.Vector2d;
+import worldElements.Animal;
 import worldElements.WorldElement;
 
 public interface WorldMap {
@@ -10,6 +11,10 @@ public interface WorldMap {
     }
 
     WorldElement objectAt(Vector2d position);
+
+    void move(Animal animal);
+
+    void placeAnimals(int numberOfAnimals);
 
     Boundary getBounds();
 }

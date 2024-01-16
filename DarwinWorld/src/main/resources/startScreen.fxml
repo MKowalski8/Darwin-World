@@ -17,8 +17,9 @@
             styleClass="body">
     <top>
         <HBox alignment="CENTER">
-            <Label fx:id="infoLabel"
-                   text="CONFIGURATION"/>
+            <Label fx:id="infoLabel" text="CONFIGURATION"/>
+            <Button onAction="#saveConfiguration" text="Save Configuration" textAlignment="CENTER"/>
+            <Button onAction="#loadConfiguration" text="Load Configuration" textAlignment="CENTER"/>
         </HBox>
     </top>
 
