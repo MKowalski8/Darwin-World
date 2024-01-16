@@ -29,6 +29,8 @@ public class Animal{
         facing=strongerParentFacing;
     }
     public Animal reproduce(Animal anotherAnimal){
+        consumeEnergy(info.energyUsedToSurviveNextDay());
+        anotherAnimal.consumeEnergy(info.energyUsedByReproduction());
         Genome childGenome = new Genome(info.genomeInfo(),this.genome,anotherAnimal.genome,energy,anotherAnimal.energy);
         return new Animal(info,this.facing,childGenome);
     }
