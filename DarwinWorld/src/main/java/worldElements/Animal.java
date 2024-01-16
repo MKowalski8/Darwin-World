@@ -4,7 +4,7 @@ import components.Genome;
 import components.SimulationInformation;
 import components.Vector2d;
 
-class Animal implements WorldElement{
+public class Animal implements WorldElement{
     private final int energyOfAnimal;
     private final int energyRequiredForReproduction;
     private final int energyUsedByReproduction;
