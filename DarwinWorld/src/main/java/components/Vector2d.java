@@ -1,5 +1,7 @@
 package components;
 
+import java.util.Vector;
+
 public class Vector2d {
     private final int x;
     private final int y;
@@ -15,6 +17,10 @@ public class Vector2d {
 
     public int getY() {
         return y;
+    }
+
+    public boolean outOfBounds(Boundary bounds){
+        return (bounds.height() < x || x < -1);
     }
 
 }

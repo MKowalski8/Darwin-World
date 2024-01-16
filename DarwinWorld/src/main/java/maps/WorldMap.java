@@ -12,9 +12,21 @@ public interface WorldMap {
 
     WorldElement objectAt(Vector2d position);
 
-    void move(Animal animal);
+    void moveAnimals();
 
     void placeAnimals(int numberOfAnimals);
 
     Boundary getBounds();
+
+    void cleanDeadAnimals();
+
+    boolean areAnimals();
+
+    Vector2d cellToPlaceOn(Animal animal, Boundary bounds);
+
+    void consumePlants();
+
+    void reproduction();
+
+    void plantGrow();
 }

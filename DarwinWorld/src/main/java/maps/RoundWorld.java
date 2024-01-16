@@ -1,6 +1,8 @@
 package maps;
 
 import components.Boundary;
+import components.Vector2d;
+import worldElements.Animal;
 
 public class RoundWorld extends AbstractWorld {
 
@@ -9,4 +11,9 @@ public class RoundWorld extends AbstractWorld {
     }
 
 
+    @Override
+    public Vector2d cellToPlaceOn(Animal animal, Boundary bounds) {
+//        TODO
+        return null;
+    }
 }
