@@ -12,7 +12,7 @@ public class RoundWorld extends AbstractWorld {
 
 
     @Override
-    public Vector2d cellToPlaceOn(Animal animal) {
+    public Vector2d cellToPlaceOn(Animal animal, Boundary bounds) {
 //        TODO
         return null;
     }

@@ -46,7 +46,7 @@ public abstract class AbstractWorld implements WorldMap {
                 Animal animal = mapCell.takeAnimalFromCell();
 //                Tutaj bedzie sprawdzanie kolejnego cella animala
 //                zaimplementowane w zaleznosci od wariantu mapy
-                Vector2d nextPosition = cellToPlaceOn(animal);
+                Vector2d nextPosition = cellToPlaceOn(animal, bounds);
                 if (!mapCells.containsKey(nextPosition)) {
                     mapCells.put(nextPosition, new MapCell(nextPosition));
                 }

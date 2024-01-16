@@ -22,7 +22,7 @@ public interface WorldMap {
 
     boolean areAnimals();
 
-    Vector2d cellToPlaceOn(Animal animal);
+    Vector2d cellToPlaceOn(Animal animal, Boundary bounds);
 
     void consumePlants();
 
