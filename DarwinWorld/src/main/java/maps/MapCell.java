@@ -3,12 +3,14 @@ package maps;
 import components.Vector2d;
 import worldElements.Animal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class MapCell {
 
     private final List<Animal> animals = new ArrayList<>();
+
     private final List<Animal> newMovedAnimals = new ArrayList<>();
 
     private final Vector2d cellPosition;
@@ -22,12 +24,15 @@ public class MapCell {
         animals.add(animal);
     }
 
-    public void removeDeads(){
+    public List<Animal> removeDeads(){
+        List<Animal> deadAnimals = new ArrayList<>();
         animals.forEach(animal -> {
             if (animal.isDead()){
+                deadAnimals.add(animal);
                 animals.remove(animal);
             }
         });
+        return deadAnimals;
     }
 
     public void consumePlantOnCell(){
@@ -77,4 +82,7 @@ public class MapCell {
 //        animals.sort();
     }
 
+    public List<Animal> getAnimals() {
+        return Collections.unmodifiableList(animals);
+    }
 }

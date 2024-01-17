@@ -3,6 +3,7 @@ package presenter;
 import components.AnimalInformation;
 import components.Boundary;
 import components.GenomeInformation;
+import components.MapStatistics;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -97,10 +98,10 @@ public class StartPresenter {
 
         return getMapVariant().equals("Round World") ?
                 new RoundWorld(bounds, getPlantNumber(),
-                        getPlantGrowingDaily())
+                        getPlantGrowingDaily(), new MapStatistics())
                 :
                 new HellWorld(bounds, getPlantNumber(),
-                        getPlantGrowingDaily());
+                        getPlantGrowingDaily(), new MapStatistics());
     }
 
 

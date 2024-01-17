@@ -12,27 +12,38 @@ public class Genome {
         this.genes = new int[len];
 
         initRandomGenes();
+
+//        this(info,this,this,1,1);
     }
     public Genome(GenomeInformation info,Genome g1,Genome g2,int g1Energy, int g2Energy) {
-        Random random=new Random();
-        int borderGene=Math.round(len*g1Energy/(g1Energy+g2Energy));
         this.info=info;
         this.len = info.genomeLength();
+
+        Random random=new Random();
+        int borderGene=Math.round(len*g1Energy/(g1Energy+g2Energy));
         if(random.nextInt(1)==1){ //left or right
-            for(int i =0;i<len;i++){
-                genes[i]=(i<borderGene)?g1.genes[i]:g2.genes[i];
-            }
+
+            preformCombineGenes(g1, g2, borderGene);
         }
         else{
-            if(random.nextInt(1)==1){
-                for(int i =0;i<len;i++){
-                    genes[i]=(i>borderGene)?g2.genes[i]:g1.genes[i];
-                }
-            }
+            preformCombineGenes(g2, g1, borderGene);
         }
 
         performMutation();
     }
+
+//    public Genome(GenomeInformation info,Genome g1,Genome g2,int g1Energy, int g2Energy) {
+//        this.info=info;
+//        this(info);
+//        this(g1,g2,1,1);
+//    }
+
+    private void preformCombineGenes(Genome g1, Genome g2, int borderGene) {
+        for(int i =0;i<len;i++){
+            genes[i]=(i< borderGene)? g1.genes[i]: g2.genes[i];
+        }
+    }
+
     private void initRandomGenes() {
         Random random = new Random();
         for (int i = 0; i < len; i++) {
@@ -76,5 +87,9 @@ public class Genome {
         int res=genes[geneIterator];
         geneIterator=(geneIterator+1)%len;
         return res;
+    }
+
+    public int getGeneIterator(){
+        return geneIterator;
     }
 }

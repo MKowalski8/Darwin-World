@@ -15,12 +15,12 @@ public class Simulation implements Runnable{
 
     @Override
     public void run() {
-        System.out.println(map.areAnimals());
+        System.out.println(Thread.currentThread());
         while(map.areAnimals()){
             System.out.println(Thread.currentThread());
             map.cleanDeadAnimals();
-            map.moveAnimals();
             System.out.println("end2");
+            map.moveAnimals();
             map.consumePlants();
             map.reproduction();
             map.plantGrow();
