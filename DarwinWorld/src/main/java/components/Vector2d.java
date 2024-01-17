@@ -19,8 +19,10 @@ public class Vector2d {
         return y;
     }
 
-    public boolean outOfBounds(Boundary bounds){
-        return (bounds.height() < x || x < -1);
+
+
+    public Vector2d addVector(Vector2d vectorToAdd) {
+        return new Vector2d(vectorToAdd.getX() + x, vectorToAdd.getY() + y);
     }
 
 }

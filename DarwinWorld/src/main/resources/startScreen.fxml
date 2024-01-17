@@ -77,6 +77,11 @@
             </HBox>
 
             <HBox styleClass="confElement">
+                <Label text="Set energy used by reproduction" styleClass="labelConf"/>
+                <Spinner fx:id="energyUsedByReproduction"  min="0" max="100" initialValue="1" editable="true" styleClass="spinnerConf"/>
+            </HBox>
+
+            <HBox styleClass="confElement">
                 <Label text="Set max mutation number" styleClass="labelConf"/>
                 <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
             </HBox>

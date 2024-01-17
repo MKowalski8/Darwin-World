@@ -1,20 +1,15 @@
 package maps;
 
+import components.AnimalInformation;
 import components.Boundary;
 import components.Vector2d;
 import worldElements.Animal;
-import worldElements.WorldElement;
 
 public interface WorldMap {
-    default boolean isOccupied(Vector2d position){
-        return objectAt(position) != null;
-    }
-
-    WorldElement objectAt(Vector2d position);
 
     void moveAnimals();
 
-    void placeAnimals(int numberOfAnimals);
+    void placeAnimals(int numberOfAnimals, AnimalInformation animaInfo);
 
     Boundary getBounds();
 
@@ -22,11 +17,15 @@ public interface WorldMap {
 
     boolean areAnimals();
 
-    Vector2d cellToPlaceOn(Animal animal, Boundary bounds);
+    Vector2d cellToPlaceOn(Animal animal, Boundary bounds, Vector2d position);
 
     void consumePlants();
 
     void reproduction();
 
     void plantGrow();
+
+    void endDay();
+
+
 }

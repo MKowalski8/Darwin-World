@@ -1,6 +1,8 @@
 package presenter;
 
+import components.AnimalInformation;
 import components.Boundary;
+import components.GenomeInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -49,6 +51,8 @@ public class StartPresenter {
 
     @FXML
     private Spinner<Integer> energyForReproduction;
+    @FXML
+    private Spinner<Integer> energyUsedByReproduction;
 
     @FXML
     private Spinner<Integer> maxMutationNumber;
@@ -89,12 +93,13 @@ public class StartPresenter {
         Boundary bounds = new Boundary(getMapWidth(), getMapHeight());
 
         return getMapVariant().equals("Round World") ?
-                new RoundWorld(bounds, getPlantNumber(), getEnergyFromPlant(),
-                        getPlantGrowingDaily(), getStartAnimalNumber())
+                new RoundWorld(bounds, getPlantNumber(),
+                        getPlantGrowingDaily())
                 :
-                new HellWorld(bounds, getPlantNumber(), getEnergyFromPlant(),
-                        getPlantGrowingDaily(), getStartAnimalNumber());
+                new HellWorld(bounds, getPlantNumber(),
+                        getPlantGrowingDaily());
     }
+
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
@@ -106,9 +111,17 @@ public class StartPresenter {
 
 
     public void simulationStart(String[] args, WorldMap map) {
-
+        GenomeInformation genomeInfo = getGenomeInformation();
+        AnimalInformation animalInfo = new AnimalInformation(getEnergyForReproduction(), getEnergyForReproduction(),
+                getStartAnimalEnergy(),1, getEnergyFromPlant(), genomeInfo);
     }
 
+    private GenomeInformation getGenomeInformation() {
+        boolean slowEvolvingFlag = getEvolutionVariant().equals("Normal Evolving Animal") ? false : true;
+
+        GenomeInformation genomeInfo = new GenomeInformation(getMaxMutationNumber(), getMinMutationNumber(), slowEvolvingFlag, getGenomeLength());
+        return genomeInfo;
+    }
 
     public void saveConfiguration() {
         FileConfiguration configuration = new FileConfiguration(this);
@@ -206,6 +219,14 @@ public class StartPresenter {
 
     public void setEnergyForReproduction(SpinnerValueFactory<Integer> energyForReproduction) {
         this.energyForReproduction.setValueFactory(energyForReproduction);
+    }
+
+    public int getEnergyUsedByReproduction() {
+        return energyUsedByReproduction.getValue();
+    }
+
+    public void setEnergyUsedByReproduction(SpinnerValueFactory<Integer> energyForReproduction) {
+        this.energyUsedByReproduction.setValueFactory(energyForReproduction);
     }
 
     public int getMaxMutationNumber() {
