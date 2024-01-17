@@ -30,6 +30,7 @@ public class FileConfiguration {
                     startPresenter.getStartAnimalEnergy() + "\n" +
                     startPresenter.getStartAnimalNumber() + "\n" +
                     startPresenter.getEnergyForReproduction() + "\n" +
+                    startPresenter.getEnergyUsedByReproduction() + "\n" +
                     startPresenter.getMaxMutationNumber() + "\n" +
                     startPresenter.getMinMutationNumber() + "\n" +
                     startPresenter.getGenomeLength() + "\n");
@@ -51,6 +52,7 @@ public class FileConfiguration {
             startPresenter.setStartAnimalEnergy(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
             startPresenter.setStartAnimalNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 100, scanner.nextInt()));
             startPresenter.setEnergyForReproduction(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
+            startPresenter.setEnergyUsedByReproduction(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, scanner.nextInt()));
             startPresenter.setMaxMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
             startPresenter.setMinMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
             startPresenter.setGenomeLength(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));

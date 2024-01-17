@@ -3,6 +3,7 @@ package maps;
 import components.Vector2d;
 import worldElements.Animal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MapCell {
@@ -23,19 +24,18 @@ public class MapCell {
 
     public void removeDeads(){
         animals.forEach(animal -> {
-//            if (animal.getEnergy() <= 0){
+//            if (animal.isDead()){
 //                animals.remove(animal);
 //            }
         });
     }
 
-    public void consumePlantOnCell(int plantEnergy){
-//        animals.get(plantForAnimal()).eatPlant();
+    public void consumePlantOnCell(){
+        animals.get(plantForAnimal()).eatPlant();
     }
 
     private int plantForAnimal(){
-//          TODO
-//        Tutaj bedziemy wybierali animala, ktory ma pierwszenstwo do jedzenia
+
         return 0;
     }
 
@@ -63,9 +63,19 @@ public class MapCell {
     public void mergeAnimals(){
         animals.addAll(newMovedAnimals);
         newMovedAnimals.clear();
+        sortAnimals();
     }
 
     public Vector2d getCellPosition() {
         return cellPosition;
     }
+
+    public void survivedDay(){
+        animals.forEach(Animal::skipDay);
+    }
+
+    public void sortAnimals(){
+//        animals.sort();
+    }
+
 }

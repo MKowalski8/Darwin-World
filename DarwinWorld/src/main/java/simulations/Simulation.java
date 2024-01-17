@@ -1,14 +1,16 @@
 package simulations;
+import components.AnimalInformation;
 import maps.WorldMap;
+import worldElements.Animal;
 
 public class Simulation implements Runnable{
 
     private final WorldMap map;
 
-    public Simulation(WorldMap map, int startAnimalNumber) {
+    public Simulation(WorldMap map, int startAnimalNumber, AnimalInformation animalInfo) {
         this.map = map;
 //        umieszczanie zwierzakow na mapie
-        map.placeAnimals(startAnimalNumber);
+        map.placeAnimals(startAnimalNumber, animalInfo);
     }
 
     @Override
@@ -19,6 +21,7 @@ public class Simulation implements Runnable{
             map.consumePlants();
             map.reproduction();
             map.plantGrow();
+            map.endDay();
         }
 
     }
