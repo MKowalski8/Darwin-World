@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
 import maps.WorldMap;
+import simulations.Simulation;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -82,7 +83,9 @@ public class StartPresenter {
 
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
-        presenter.setWorldMap(configureWorldMap(), mapVariant.getValue());
+        WorldMap map = configureWorldMap();
+        simulationStart(map);
+        presenter.setWorldMap(map, mapVariant.getValue());
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
@@ -110,17 +113,18 @@ public class StartPresenter {
     }
 
 
-    public void simulationStart(String[] args, WorldMap map) {
+    public void simulationStart(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
         AnimalInformation animalInfo = new AnimalInformation(getEnergyForReproduction(), getEnergyForReproduction(),
                 getStartAnimalEnergy(),1, getEnergyFromPlant(), genomeInfo);
+
+        executorService.submit(new Simulation(map, getStartAnimalNumber(), animalInfo));
     }
 
     private GenomeInformation getGenomeInformation() {
-        boolean slowEvolvingFlag = getEvolutionVariant().equals("Normal Evolving Animal") ? false : true;
+        boolean slowEvolvingFlag = !getEvolutionVariant().equals("Normal Evolving Animal");
 
-        GenomeInformation genomeInfo = new GenomeInformation(getMaxMutationNumber(), getMinMutationNumber(), slowEvolvingFlag, getGenomeLength());
-        return genomeInfo;
+        return new GenomeInformation(getMaxMutationNumber(), getMinMutationNumber(), slowEvolvingFlag, getGenomeLength());
     }
 
     public void saveConfiguration() {

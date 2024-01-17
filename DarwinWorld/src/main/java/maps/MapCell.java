@@ -24,9 +24,9 @@ public class MapCell {
 
     public void removeDeads(){
         animals.forEach(animal -> {
-//            if (animal.isDead()){
-//                animals.remove(animal);
-//            }
+            if (animal.isDead()){
+                animals.remove(animal);
+            }
         });
     }
 
@@ -35,7 +35,6 @@ public class MapCell {
     }
 
     private int plantForAnimal(){
-
         return 0;
     }
 

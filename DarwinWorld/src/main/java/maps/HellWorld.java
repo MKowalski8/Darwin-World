@@ -17,6 +17,7 @@ public class HellWorld extends AbstractWorld {
         Vector2d newPosition = position.addVector(animal.moveTo().toVector2d());
 
         if (bounds.outOfBounds(newPosition) || bounds.crossedSites(newPosition)){
+//            animal.consumeEnergy();
             newPosition = new Vector2d((int) (Math.random() * (bounds.getWidth()-1)),
                     (int) (Math.random() * (bounds.getHeight()-1)));
         }
