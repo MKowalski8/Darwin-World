@@ -13,10 +13,6 @@ import simulations.MapChangeListener;
 
 
 public class SimulationPresenter implements MapChangeListener {
-
-    private static final double CELL_WIDTH = 35;
-    private static final double CELL_HEIGHT = 35;
-
     private WorldMap map;
 
     @FXML
@@ -31,6 +27,8 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label infoLabel;
 
+
+
     public void setWorldMap(WorldMap map, String mapType) {
         this.map = map;
         infoLabel.setText(mapType);
@@ -41,22 +39,23 @@ public class SimulationPresenter implements MapChangeListener {
         clearGrid();
 
         Boundary bounds = worldMap.getBounds();
+        int cellWidth = 600/bounds.getWidth();
+        int cellHeight = 600/bounds.getHeight();
+
 
         for (int i = 0; i <= bounds.getWidth()-1; i++) {
-            mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
         }
 
         for (int i = 0; i <= bounds.getHeight()-1; i++) {
-            mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
+            mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
         }
 
         drawMapElements();
     }
 
     private void drawMapElements() {
-
     }
-
 
     @Override
     public void mapChanged(WorldMap worldMap, String message) {

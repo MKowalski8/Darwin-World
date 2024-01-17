@@ -16,10 +16,11 @@ public class Animal{
     private int numberOfGrasses=0;
 
     public Animal(AnimalInformation info) {
-        Random random =new Random();
+        Random random = new Random();
         this.genome = new Genome(info.genomeInfo());
         this.info=info;
         energy= info.startingEnergy();
+//        this.facing = MapDirection.intToMoveDirection(genome.getInstruction());
     }
 
     public Animal(AnimalInformation info,MapDirection strongerParentFacing,Genome genome) {
@@ -28,21 +29,14 @@ public class Animal{
         energy= info.energyUsedByReproduction();// *2 ?
         facing=strongerParentFacing;
     }
-    public Animal reproduce(Animal anotherAnimal){
-        consumeEnergy(info.energyUsedToSurviveNextDay());
-        anotherAnimal.consumeEnergy(info.energyUsedByReproduction());
-        Genome childGenome = new Genome(info.genomeInfo(),this.genome,anotherAnimal.genome,energy,anotherAnimal.energy);
-        return new Animal(info,this.facing,childGenome);
-    }
+
 
 
     public void eatPlant(){
         this.energy+=info.energyProvidedByEating();
         numberOfGrasses++;
     }
-    public void consumeEnergy(int energyQuantity){
-        energy-=energyQuantity;
-    }
+
     public boolean canReproduce(){
         return energy>=info.energyRequiredForReproduction();
     }
@@ -61,10 +55,23 @@ public class Animal{
         facing=MapDirection.intToMoveDirection ((facing.toInt()+4)%8);
     }
 
+    private void consumeEnergy(int energyQuantity){
+        energy-=energyQuantity;
+    }
     public void skipDay(){
         consumeEnergy(info.energyUsedToSurviveNextDay());
         daysSurvived++;
     }
+    public void consumeEnergyToReproduce(){
+        consumeEnergy(info.energyUsedByReproduction());
+    }
+    public Animal reproduce(Animal anotherAnimal){
+        consumeEnergyToReproduce();
+        anotherAnimal.consumeEnergy(info.energyUsedByReproduction());
+        Genome childGenome = new Genome(info.genomeInfo(),this.genome,anotherAnimal.genome,energy,anotherAnimal.energy);
+        return new Animal(info,this.facing,childGenome);
+    }
 
+    public boolean isDead() {return energy < 0;}
 
 }
