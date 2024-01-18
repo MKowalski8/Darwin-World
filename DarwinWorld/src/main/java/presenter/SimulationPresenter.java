@@ -13,6 +13,7 @@ import maps.MapCell;
 import maps.WorldMap;
 import simulations.MapChangeListener;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -81,9 +82,9 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void addAnimals(){
-        Map<Vector2d, MapCell> mapCells = map.getMapCells();
+        List<MapCell> mapCells = map.getMapCellsList();
 
-        mapCells.values().forEach(mapCell -> {
+        mapCells.forEach(mapCell -> {
             int row = mapCell.getCellPosition().getY();
             int column = mapCell.getCellPosition().getX();
 

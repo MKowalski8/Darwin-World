@@ -135,12 +135,8 @@ public abstract class AbstractWorld implements WorldMap {
         stats.updateLiveStats(getMapCellsList());
     }
 
-    private List<MapCell> getMapCellsList() {
-        return getMapCells().values().stream().toList();
-    }
-
-    public Map<Vector2d, MapCell> getMapCells() {
-        return Collections.unmodifiableMap(mapCells);
+    public List<MapCell> getMapCellsList() {
+        return mapCells.values().stream().toList();
     }
 
     public Map<Vector2d, Boolean> getPlants() {return Collections.unmodifiableMap(plants);}
