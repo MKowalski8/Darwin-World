@@ -18,24 +18,28 @@ public class MapStatistics {
     private int currentDay = 0;
 
 
-    public void updateDeadLiftime(List<Animal> deadAnimals){
-        int newSume=0;
+    public void updateDeadLifetime(List<Animal> deadAnimals){
+        if (!deadAnimals.isEmpty()){
+            int newSum=0;
 
-        for (Animal deadAnimal: deadAnimals) {
-            newSume+=deadAnimal.getLifetime();
+            for (Animal deadAnimal: deadAnimals) {
+                newSum+=deadAnimal.getLifetime();
+            }
+
+            avgDeadLiveTime=((avgDeadLiveTime*allDeadAnimalNumber)+newSum)/(allDeadAnimalNumber+ deadAnimals.size());
+            allDeadAnimalNumber+=deadAnimals.size();
+            allAliveAnimalNumber-=deadAnimals.size();
         }
-
-        avgDeadLiveTime=((avgDeadLiveTime*allDeadAnimalNumber)+newSume)/(allDeadAnimalNumber+ deadAnimals.size());
-        allDeadAnimalNumber+=deadAnimals.size();
-        allAliveAnimalNumber-=deadAnimals.size();
     }
 
 
     public void updateLiveStats(List<MapCell> mapCells){
-        //TODO mostPopularGenome();
-        //TODO plantNumber();
-        currentDay += 1;
-        updatedAvgEnergyAndAnimalNumber(mapCells);
+        if (!mapCells.isEmpty()){
+            //TODO mostPopularGenome();
+            //TODO plantNumber();
+            currentDay += 1;
+            updatedAvgEnergyAndAnimalNumber(mapCells);
+        }
     }
 
     private void updateAvgLifeTime(){

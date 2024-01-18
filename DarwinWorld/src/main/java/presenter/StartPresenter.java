@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
 import maps.WorldMap;
+import simulations.MapChangeListener;
 import simulations.Simulation;
 
 import java.io.IOException;

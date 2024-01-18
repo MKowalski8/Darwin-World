@@ -3,7 +3,10 @@ package maps;
 import components.AnimalInformation;
 import components.Boundary;
 import components.Vector2d;
+import simulations.MapChangeListener;
 import worldElements.Animal;
+
+import java.util.Map;
 
 public interface WorldMap {
 
@@ -27,5 +30,8 @@ public interface WorldMap {
 
     void endDay();
 
+    Map<Vector2d, Boolean> getPlants();
+    Map<Vector2d, MapCell> getMapCells();
 
+    void addObserver(MapChangeListener listener);
 }
