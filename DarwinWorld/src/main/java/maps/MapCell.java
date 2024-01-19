@@ -30,6 +30,9 @@ public class MapCell {
                 deadAnimals.add(animal);
             }
         });
+        for (Animal deadAnimal:deadAnimals){
+            deadAnimal.fixFamilyTree();
+        }
         animals.removeAll(deadAnimals);
 
         return deadAnimals;

@@ -97,4 +97,18 @@ public class Genome {
     public int[] getGenes() {
         return genes;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Genome genome)) return false;
+        return len == genome.len && Arrays.equals(getGenes(), genome.getGenes()) && Objects.equals(info, genome.info);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(len, info);
+        result = 31 * result + Arrays.hashCode(getGenes());
+        return result;
+    }
 }
