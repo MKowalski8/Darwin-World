@@ -23,7 +23,6 @@ public class RoundWorld extends AbstractWorld {
         } else if (bounds.crossedSites(newPosition)) {
             newPosition = bounds.transitionVector(newPosition);
         }
-
         return newPosition;
     }
 }

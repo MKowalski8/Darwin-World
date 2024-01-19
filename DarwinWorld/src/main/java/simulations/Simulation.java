@@ -17,9 +17,7 @@ public class Simulation implements Runnable{
     public void run() {
 //        System.out.println(Thread.currentThread());
         while(map.areAnimals()){
-//            System.out.println(Thread.currentThread());
             map.cleanDeadAnimals();
-//            System.out.println("end2");
             map.moveAnimals();
             map.consumePlants();
             map.reproduction();

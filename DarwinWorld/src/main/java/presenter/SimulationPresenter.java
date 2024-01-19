@@ -50,11 +50,11 @@ public class SimulationPresenter implements MapChangeListener {
         int cellWidth = 600/bounds.getWidth();
         int cellHeight = 600/bounds.getHeight();
 
-        for (int row = 0; row <= bounds.getWidth()-1; row++) {
+        for (int row = 0; row < bounds.getWidth(); row++) {
             mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
         }
 
-        for (int column = 0; column <= bounds.getHeight()-1; column++) {
+        for (int column = 0; column < bounds.getHeight(); column++) {
             mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
         }
 
@@ -76,7 +76,7 @@ public class SimulationPresenter implements MapChangeListener {
                     pane.setBackground(EMPTY_CELL_COLOR);
                 }
 
-                mapGrid.add(pane, row, column);
+//                mapGrid.add(pane, row, column);
             }
         }
     }
@@ -85,16 +85,15 @@ public class SimulationPresenter implements MapChangeListener {
         List<MapCell> mapCells = map.getMapCellsList();
 
         mapCells.forEach(mapCell -> {
-            int row = mapCell.getCellPosition().getY();
-            int column = mapCell.getCellPosition().getX();
-
-            mapGrid.add(new Label("ANIMAL"), row, column);
+                int row = mapCell.getCellPosition().getX();
+                int column = mapCell.getCellPosition().getY();
+                mapGrid.add(new Label("ANIMAL"), row, column);
         });
 
     }
 
     @Override
-    public void mapChanged(WorldMap worldMap) {
+    public synchronized void mapChanged(WorldMap worldMap) {
         Platform.runLater(() -> {
             drawMap(worldMap);
         });
