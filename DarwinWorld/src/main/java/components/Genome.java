@@ -18,6 +18,7 @@ public class Genome {
     public Genome(GenomeInformation info,Genome g1,Genome g2,int g1Energy, int g2Energy) {
         this.info=info;
         this.len = info.genomeLength();
+        this.genes= new int[len];
 
         Random random=new Random();
         int borderGene=Math.round(len*g1Energy/(g1Energy+g2Energy));
@@ -76,7 +77,7 @@ public class Genome {
     private void mutateOneGene(int geneIndex){
         Random random = new Random();
         if (info.slowEvolvingFlag()){
-            genes[geneIndex]+=(random.nextInt(2)==0)?-1:1;
+            genes[geneIndex]=(random.nextInt(2)==0)?(genes[geneIndex]+7)%8:(genes[geneIndex]+1)%8;
         }
         else{
             genes[geneIndex]=(genes[geneIndex]+1+ random.nextInt(7))%8;
@@ -91,5 +92,9 @@ public class Genome {
 
     public int getGeneIterator(){
         return geneIterator;
+    }
+
+    public int[] getGenes() {
+        return genes;
     }
 }

@@ -1,7 +1,7 @@
 package components;
 
-public record GenomeInformation(int maxMutation,
-                                int minMutation,
+public record GenomeInformation(int minMutation,
+                                int maxMutation,
                                 boolean slowEvolvingFlag,
                                 int genomeLength) {
 }
