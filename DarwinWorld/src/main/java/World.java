@@ -10,7 +10,7 @@ public class World {
     public static void main(String[] args) {
         GenomeInformation genomeInfo =  new GenomeInformation(10,10, false, 10);
         AnimalInformation animalInfo = new AnimalInformation(10, 10,
-                1,1, 10, genomeInfo);
+                1,100, 10, genomeInfo);
 
         WorldMap map = new RoundWorld(new Boundary(5,5), 5, 5, new MapStatistics());
 

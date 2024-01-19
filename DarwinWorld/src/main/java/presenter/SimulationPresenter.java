@@ -1,6 +1,7 @@
 package presenter;
 
 import components.Boundary;
+import components.MapStatistics;
 import components.Vector2d;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -35,20 +36,38 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label infoLabel;
 
+    MapStatistics stats;
 
-    public void setWorldMap(WorldMap map, String mapType) {
+    int cellWidth;
+    int cellHeight;
+
+    public void setWorldMap(WorldMap map, MapStatistics stats, String mapType) {
         this.map = map;
+        this.stats = stats;
         map.addObserver(this);
         infoLabel.setText(mapType);
-        drawMap(map);
+        configureGridPane();
+        drawMap();
     }
 
-    public void drawMap(WorldMap worldMap) {
+    private void configureGridPane(){
+        int mapGridWidth = 600;
+        int mapGridHeight = 600;
+
+        mapGrid.setMaxWidth(mapGridWidth);
+        mapGrid.setMaxWidth(mapGridHeight);
+        mapGrid.setBackground(EMPTY_CELL_COLOR);
+        this.cellWidth = mapGridWidth/map.getBounds().getWidth();
+        this.cellHeight = mapGridHeight/map.getBounds().getHeight();
+    }
+
+    public void drawMap() {
         clearGrid();
 
         Boundary bounds = map.getBounds();
+
         int cellWidth = 600/bounds.getWidth();
-        int cellHeight = 600/bounds.getHeight();
+
 
         for (int row = 0; row < bounds.getWidth(); row++) {
             mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
@@ -64,21 +83,19 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void drawPlants() {
+//        Na moje może tutaj być lista
         Map<Vector2d, Boolean> plants = map.getPlants();
 
-        for (int row = 0; row < map.getBounds().getHeight(); row++){
-            for (int column = 0; column < map.getBounds().getWidth(); column++){
-                StackPane pane = new StackPane();
+        plants.keySet().forEach(plantPosition -> {
+            Pane pane = new Pane();
+            pane.setBackground(GRASS_CELL_COLOR);
+            mapGrid.add(pane, plantPosition.getX(), plantPosition.getY());
+        });
 
-                if (plants.containsKey(new Vector2d(row, column))){
-                    pane.setBackground(GRASS_CELL_COLOR);
-                } else {
-                    pane.setBackground(EMPTY_CELL_COLOR);
-                }
-
-//                mapGrid.add(pane, row, column);
-            }
-        }
+//        Taki test
+        Pane pane = new Pane();
+        pane.setBackground(GRASS_CELL_COLOR);
+        mapGrid.add(pane, 0, 0);
     }
 
     private void addAnimals(){
@@ -94,9 +111,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     @Override
     public synchronized void mapChanged(WorldMap worldMap) {
-        Platform.runLater(() -> {
-            drawMap(worldMap);
-        });
+        Platform.runLater(this::drawMap);
     }
 
     private void clearGrid() {

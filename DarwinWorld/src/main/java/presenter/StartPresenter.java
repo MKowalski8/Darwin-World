@@ -88,21 +88,23 @@ public class StartPresenter {
 
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
-        WorldMap map = configureWorldMap();
+
+        MapStatistics stats = new MapStatistics();
+        WorldMap map = configureWorldMap(stats);
         simulationStart(map);
-        presenter.setWorldMap(map, mapVariant.getValue());
+        presenter.setWorldMap(map, stats, mapVariant.getValue());
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
         stage.show();
     }
 
-    private WorldMap configureWorldMap() {
+    private WorldMap configureWorldMap(MapStatistics stats) {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
 
         return mapVariant.getValue().equals("Round World") ?
                 new RoundWorld(bounds, plantNumber.getValue(),
-                        plantGrowingDaily.getValue(), new MapStatistics())
+                        plantGrowingDaily.getValue(), stats)
                 :
                 new HellWorld(bounds, plantNumber.getValue(),
                         plantNumber.getValue(), new MapStatistics());

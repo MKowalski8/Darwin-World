@@ -28,7 +28,7 @@ public class Simulation implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("endDay");
+//            System.out.println("endDay");
         }
         System.out.println("end");
     }
