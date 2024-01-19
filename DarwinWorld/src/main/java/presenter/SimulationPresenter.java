@@ -1,19 +1,28 @@
 package presenter;
 
 import components.Boundary;
+import components.MapStatistics;
+import components.Vector2d;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import maps.MapCell;
 import maps.WorldMap;
 import simulations.MapChangeListener;
+
+import java.util.List;
+import java.util.Map;
 
 
 public class SimulationPresenter implements MapChangeListener {
     private WorldMap map;
+
+    private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
+    private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
 
     @FXML
     GridPane mapGrid = new GridPane();
@@ -27,41 +36,82 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label infoLabel;
 
+    MapStatistics stats;
 
+    int cellWidth;
+    int cellHeight;
 
-    public void setWorldMap(WorldMap map, String mapType) {
+    public void setWorldMap(WorldMap map, MapStatistics stats, String mapType) {
         this.map = map;
+        this.stats = stats;
+        map.addObserver(this);
         infoLabel.setText(mapType);
-        drawMap(map);
+        configureGridPane();
+        drawMap();
     }
 
-    public void drawMap(WorldMap worldMap) {
+    private void configureGridPane(){
+        int mapGridWidth = 600;
+        int mapGridHeight = 600;
+
+        mapGrid.setMaxWidth(mapGridWidth);
+        mapGrid.setMaxWidth(mapGridHeight);
+        mapGrid.setBackground(EMPTY_CELL_COLOR);
+        this.cellWidth = mapGridWidth/map.getBounds().getWidth();
+        this.cellHeight = mapGridHeight/map.getBounds().getHeight();
+    }
+
+    public void drawMap() {
         clearGrid();
 
-        Boundary bounds = worldMap.getBounds();
+        Boundary bounds = map.getBounds();
+
         int cellWidth = 600/bounds.getWidth();
-        int cellHeight = 600/bounds.getHeight();
 
 
-        for (int i = 0; i <= bounds.getWidth()-1; i++) {
+        for (int row = 0; row < bounds.getWidth(); row++) {
             mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
         }
 
-        for (int i = 0; i <= bounds.getHeight()-1; i++) {
+        for (int column = 0; column < bounds.getHeight(); column++) {
             mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
         }
 
-        drawMapElements();
+        drawPlants();
+        addAnimals();
+
     }
 
-    private void drawMapElements() {
+    private void drawPlants() {
+//        Na moje może tutaj być lista
+        Map<Vector2d, Boolean> plants = map.getPlants();
+
+        plants.keySet().forEach(plantPosition -> {
+            Pane pane = new Pane();
+            pane.setBackground(GRASS_CELL_COLOR);
+            mapGrid.add(pane, plantPosition.getX(), plantPosition.getY());
+        });
+
+//        Taki test
+        Pane pane = new Pane();
+        pane.setBackground(GRASS_CELL_COLOR);
+        mapGrid.add(pane, 0, 0);
+    }
+
+    private void addAnimals(){
+        List<MapCell> mapCells = map.getMapCellsList();
+
+        mapCells.forEach(mapCell -> {
+                int row = mapCell.getCellPosition().getX();
+                int column = mapCell.getCellPosition().getY();
+                mapGrid.add(new Label("ANIMAL"), row, column);
+        });
+
     }
 
     @Override
-    public void mapChanged(WorldMap worldMap, String message) {
-        Platform.runLater(() -> {
-            drawMap(worldMap);
-        });
+    public synchronized void mapChanged(WorldMap worldMap) {
+        Platform.runLater(this::drawMap);
     }
 
     private void clearGrid() {

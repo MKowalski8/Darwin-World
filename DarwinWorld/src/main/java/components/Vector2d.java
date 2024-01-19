@@ -11,6 +11,12 @@ public class Vector2d {
         this.y = y;
     }
 
+   @Override
+   public String toString() {
+       return String.format("(%d,%d)", x, y);
+   }
+
+
     public int getX() {
         return x;
     }
@@ -20,9 +26,10 @@ public class Vector2d {
     }
 
 
-
     public Vector2d addVector(Vector2d vectorToAdd) {
         return new Vector2d(vectorToAdd.getX() + x, vectorToAdd.getY() + y);
     }
+
+
 
 }

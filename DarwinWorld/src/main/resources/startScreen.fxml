@@ -82,6 +82,11 @@
             </HBox>
 
             <HBox styleClass="confElement">
+                <Label text="Set energy used by living another day" styleClass="labelConf"/>
+                <Spinner fx:id="energyUsedToSurviveNextDay"  min="0" max="100" initialValue="1" editable="true" styleClass="spinnerConf"/>
+            </HBox>
+
+            <HBox styleClass="confElement">
                 <Label text="Set max mutation number" styleClass="labelConf"/>
                 <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
             </HBox>
@@ -97,7 +102,7 @@
             </HBox>
 
             <HBox styleClass="confElement">
-                <Label text="Do you want to safe statistics?" styleClass="labelConf"/>
+                <Label text="Do you want to save statistics?" styleClass="labelConf"/>
                 <ComboBox fx:id="toSave"/>
             </HBox>
         </VBox>

@@ -4,19 +4,18 @@ import components.AnimalInformation;
 import components.Boundary;
 import components.MapStatistics;
 import components.Vector2d;
+import simulations.MapChangeListener;
 import worldElements.Animal;
-import worldElements.Grass;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
 
 public abstract class AbstractWorld implements WorldMap {
 
     private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
 
-    private final Map<Vector2d, Grass> plants = new HashMap<>();
+    private final Map<Vector2d, Boolean> plants = new HashMap<>();
+
+    private final List<MapChangeListener> observers = new ArrayList<>();
 
     private final Boundary bounds;
 
@@ -57,9 +56,11 @@ public abstract class AbstractWorld implements WorldMap {
                 }
             }
         });
-
         mapCells.putAll(newMapCells);
+        newMapCells.clear();
         addMoved();
+        removeEmptyCells();
+        mapChange();
     }
 
 
@@ -80,6 +81,8 @@ public abstract class AbstractWorld implements WorldMap {
 
             mapCells.get(position).placeAnimalOnCell(new Animal(animalInfo));
         }
+
+        mapChange();
     }
 
 
@@ -88,18 +91,14 @@ public abstract class AbstractWorld implements WorldMap {
 
         mapCells.values().forEach(mapCell -> {
             List<Animal> deadAnimals = mapCell.removeDeads();
-            stats.updateDeadLiftime(deadAnimals);
+            stats.updateDeadLifetime(deadAnimals);
         });
         removeEmptyCells();
     }
 
 
     private void removeEmptyCells() {
-        mapCells.values().forEach(mapCell -> {
-            if (mapCell.animalNumber() == 0) {
-                mapCells.get(mapCell.getCellPosition());
-            }
-        });
+        mapCells.values().removeIf(mapCell -> mapCell.animalNumber() == 0);
     }
 
     public void consumePlants() {
@@ -133,12 +132,21 @@ public abstract class AbstractWorld implements WorldMap {
 
     @Override
     public void endDay() {
-        mapCells.values().forEach(MapCell::initializeReproduction);
-        stats.updateLiveStats(getMapCells());
+        mapCells.values().forEach(MapCell::survivedDay);
+        stats.updateLiveStats(getMapCellsList());
     }
 
-
-    public List<MapCell> getMapCells() {
+    public List<MapCell> getMapCellsList() {
         return mapCells.values().stream().toList();
+    }
+
+    public Map<Vector2d, Boolean> getPlants() {return Collections.unmodifiableMap(plants);}
+
+    public void addObserver(MapChangeListener listener) {
+        observers.add(listener);
+    }
+
+    private void mapChange() {
+        observers.forEach(observer -> observer.mapChanged(this));
     }
 }

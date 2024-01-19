@@ -2,10 +2,8 @@ package maps;
 
 import components.Vector2d;
 import worldElements.Animal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 
 public class MapCell {
 
@@ -15,56 +13,59 @@ public class MapCell {
 
     private final Vector2d cellPosition;
 
-    public MapCell(Vector2d cellPosition){
+    public MapCell(Vector2d cellPosition) {
         this.cellPosition = cellPosition;
     }
 
 
-    public void placeAnimalOnCell(Animal animal){
+    public void placeAnimalOnCell(Animal animal) {
         animals.add(animal);
     }
 
-    public List<Animal> removeDeads(){
+    public List<Animal> removeDeads() {
         List<Animal> deadAnimals = new ArrayList<>();
+
         animals.forEach(animal -> {
-            if (animal.isDead()){
+            if (animal.isDead()) {
                 deadAnimals.add(animal);
-                animals.remove(animal);
             }
         });
+        animals.removeAll(deadAnimals);
+
         return deadAnimals;
+
     }
 
-    public void consumePlantOnCell(){
+    public void consumePlantOnCell() {
         animals.get(plantForAnimal()).eatPlant();
     }
 
-    private int plantForAnimal(){
+    private int plantForAnimal() {
         return 0;
     }
 
-    public void initializeReproduction(){
+    public void initializeReproduction() {
         Animal animal1 = animalForReproduction();
     }
 
-    private Animal animalForReproduction(){
+    private Animal animalForReproduction() {
 //        TODO
         return null;
     }
 
-    public Animal takeAnimalFromCell(){
+    public Animal takeAnimalFromCell() {
         return animals.remove(0);
     }
 
-    public int animalNumber(){
+    public int animalNumber() {
         return animals.size();
     }
 
-    public void addMovedAnimal(Animal animal){
+    public void addMovedAnimal(Animal animal) {
         newMovedAnimals.add(animal);
     }
 
-    public void mergeAnimals(){
+    public void mergeAnimals() {
         animals.addAll(newMovedAnimals);
         newMovedAnimals.clear();
         sortAnimals();
@@ -74,11 +75,11 @@ public class MapCell {
         return cellPosition;
     }
 
-    public void survivedDay(){
+    public void survivedDay() {
         animals.forEach(Animal::skipDay);
     }
 
-    public void sortAnimals(){
+    public void sortAnimals() {
 //        animals.sort();
     }
 
