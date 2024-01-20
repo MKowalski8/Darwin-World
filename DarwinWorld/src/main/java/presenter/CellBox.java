@@ -36,19 +36,25 @@ public class CellBox {
     }
 
     private void setColor(){
+        int red = getRed();
         Color color;
+
         if (mapCell.animalNumber() > 1){
-            int blue = Math.min(255,mapCell.animalNumber()*30);
-            color = Color.rgb(0, 0, blue);
+            int blue = Math.min(255,mapCell.animalNumber()*50);
+            red = red/mapCell.animalNumber();
+            color = Color.rgb(red, 0, blue);
         } else {
-            Animal animal = mapCell.getAnimals().get(0);
-            int red = Math.min(255,animal.getEnergy()*10);
             color = Color.rgb(red, 0, 0);
         }
         element.setFill(color);
     }
 
-   public Vector2d getPosition(){
+    private int getRed() {
+        Animal animal = mapCell.getAnimals().get(0);
+        return Math.min(255,animal.getEnergy()*10);
+    }
+
+    public Vector2d getPosition(){
         return mapCell.getCellPosition();
    }
 

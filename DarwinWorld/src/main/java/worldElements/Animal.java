@@ -92,7 +92,7 @@ public class Animal{
     public boolean isDead() {
         return energy <= 0;
     }
-    public int getLifetime(){
+    public int getLifeTime(){
         return daysSurvived;
     }
     public int getEnergy(){

@@ -15,6 +15,7 @@ import maps.RoundWorld;
 import maps.WorldMap;
 import simulations.MapChangeListener;
 import simulations.Simulation;
+import simulations.StatSaving;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -89,9 +90,9 @@ public class StartPresenter {
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
 
-        MapStatistics stats = new MapStatistics();
-        WorldMap map = configureWorldMap(stats);
-        presenter.setWorldMap(map, stats, mapVariant.getValue());
+        WorldMap map = configureWorldMap();
+        setToSaveStats(map);
+        presenter.setWorldMap(map, mapVariant.getValue());
         presenter.setSimulation(simulationStart(map));
 
         Stage stage = new Stage();
@@ -99,15 +100,21 @@ public class StartPresenter {
         stage.show();
     }
 
-    private WorldMap configureWorldMap(MapStatistics stats) {
+    private void setToSaveStats(WorldMap map) {
+        if (toSave.getValue().equals("Yes")){
+            map.addObserver(new StatSaving());
+        }
+    }
+
+    private WorldMap configureWorldMap() {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
 
         return mapVariant.getValue().equals("Round World") ?
                 new RoundWorld(bounds, plantNumber.getValue(),
-                        plantGrowingDaily.getValue(), stats)
+                        plantGrowingDaily.getValue(), new MapStatistics())
                 :
                 new HellWorld(bounds, plantNumber.getValue(),
-                        plantNumber.getValue(), stats);
+                        plantNumber.getValue(), new MapStatistics());
     }
 
 

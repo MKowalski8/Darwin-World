@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import maps.MapCell;
 import maps.WorldMap;
 import simulations.MapChangeListener;
 import simulations.Simulation;
@@ -54,16 +55,13 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label worldType;
 
-    MapStatistics stats;
-
     Simulation simulation;
 
     private int cellWidth;
     private int cellHeight;
 
-    public void setWorldMap(WorldMap map, MapStatistics stats, String mapType) {
+    public void setWorldMap(WorldMap map, String mapType) {
         this.map = map;
-        this.stats = stats;
         map.addObserver(this);
         worldType.setText(mapType);
         configureGridPane();
@@ -154,23 +152,22 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private List<CellBox> getCellBoxes() {
-        List<CellBox> cellBoxes = Stream.of(map.getMapCellsList())
+        return Stream.of(map.getMapCellsList())
                 .flatMap(Collection::stream)
-                .map(CellBox::new)
+                .map(MapCell::getCellBox)
                 .toList();
-        return cellBoxes;
     }
 
     @Override
-    public void mapChanged(WorldMap worldMap) {
+    public void mapChanged(MapStatistics stats) {
         Platform.runLater(() -> {
             updateSimulation();
-            updateStats();
+            updateStats(stats);
             drawMap();
         });
     }
 
-    private void updateStats() {
+    private void updateStats(MapStatistics stats) {
         animalNumber.setText(String.format("%d",stats.getAllAliveAnimalNumber()));
         plantNumber.setText(String.format("%d", stats.getPlantNumber()));
         freeCells.setText(String.format("%d",stats.getFreeCells()));

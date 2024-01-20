@@ -35,4 +35,5 @@ public interface WorldMap {
     List<MapCell> getMapCellsList();
 
     void addObserver(MapChangeListener listener);
+
 }

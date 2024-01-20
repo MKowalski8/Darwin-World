@@ -49,8 +49,7 @@ public abstract class AbstractWorld implements WorldMap {
 //                zaimplementowane w zaleznosci od wariantu mapy
                 Vector2d nextPosition = cellToPlaceOn(animal, bounds, mapCell.getCellPosition());
                 if (!mapCells.containsKey(nextPosition)) {
-                    newMapCells.put(nextPosition, new MapCell(nextPosition));
-                    newMapCells.get(nextPosition).addMovedAnimal(animal);
+                    putInNewMapCell(newMapCells, nextPosition, animal);
                 } else {
                     mapCells.get(nextPosition).addMovedAnimal(animal);
                 }
@@ -60,7 +59,13 @@ public abstract class AbstractWorld implements WorldMap {
         mapCells.putAll(newMapCells);
         addMoved();
         removeEmptyCells();
-        mapChange();
+    }
+
+    private void putInNewMapCell(Map<Vector2d, MapCell> newMapCells, Vector2d nextPosition, Animal animal) {
+        if (!newMapCells.containsKey(nextPosition)){
+            newMapCells.put(nextPosition, new MapCell(nextPosition));
+        }
+        newMapCells.get(nextPosition).addMovedAnimal(animal);
     }
 
 
@@ -82,13 +87,11 @@ public abstract class AbstractWorld implements WorldMap {
             mapCells.get(position).placeAnimalOnCell(new Animal(animalInfo));
         }
 
-        mapChange();
+        stats.updateLiveStats(getMapCellsList(), bounds);
     }
 
 
     public void cleanDeadAnimals() {
-//        for (MapCell mapCell : mapCells.values()) {
-
         mapCells.values().forEach(mapCell -> {
             List<Animal> deadAnimals = mapCell.removeDeads();
             stats.updateDeadLifetime(deadAnimals);
@@ -133,7 +136,8 @@ public abstract class AbstractWorld implements WorldMap {
     @Override
     public void endDay() {
         mapCells.values().forEach(MapCell::survivedDay);
-        stats.updateLiveStats(getMapCellsList());
+        stats.updateLiveStats(getMapCellsList(), bounds);
+        mapChange();
     }
 
     public List<MapCell> getMapCellsList() {
@@ -146,7 +150,5 @@ public abstract class AbstractWorld implements WorldMap {
         observers.add(listener);
     }
 
-    private void mapChange() {
-        observers.forEach(observer -> observer.mapChanged(this));
-    }
+    private void mapChange() {observers.forEach(observer -> observer.mapChanged(stats));}
 }

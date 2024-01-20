@@ -24,7 +24,7 @@ public class MapStatistics {
             int newSum=0;
 
             for (Animal deadAnimal: deadAnimals) {
-                newSum+=deadAnimal.getLifetime();
+                newSum+=deadAnimal.getLifeTime();
             }
 
             avgDeadLiveTime=((avgDeadLiveTime*allDeadAnimalNumber)+newSum)/(allDeadAnimalNumber+ deadAnimals.size());
@@ -34,13 +34,19 @@ public class MapStatistics {
     }
 
 
-    public void updateLiveStats(List<MapCell> mapCells){
+    public void updateLiveStats(List<MapCell> mapCells, Boundary boundary){
         if (!mapCells.isEmpty()){
             //TODO mostPopularGenome();
             //TODO plantNumber();
             currentDay += 1;
             updatedAvgEnergyAndAnimalNumber(mapCells);
         }
+
+        freeCells = updateFreeCells(mapCells, boundary);
+    }
+
+    private int updateFreeCells(List<MapCell> mapCells, Boundary boundary){
+        return boundary.getWidth()*boundary.getHeight()-mapCells.size();
     }
 
     private void updateAvgLifeTime(){

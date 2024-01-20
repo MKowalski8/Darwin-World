@@ -20,7 +20,6 @@ public class Simulation implements Runnable{
     @Override
     public void run() {
         while(map.areAnimals()){
-
             if (!stopped){
                 map.cleanDeadAnimals();
                 map.moveAnimals();
@@ -28,7 +27,6 @@ public class Simulation implements Runnable{
                 map.reproduction();
                 map.plantGrow();
                 map.endDay();
-
             }
 
             try {
