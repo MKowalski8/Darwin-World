@@ -1,5 +1,6 @@
 package components;
 
+import java.util.Objects;
 import java.util.Vector;
 
 public class Vector2d {
@@ -30,6 +31,15 @@ public class Vector2d {
         return new Vector2d(vectorToAdd.getX() + x, vectorToAdd.getY() + y);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vector2d vector2d)) return false;
+        return getX() == vector2d.getX() && getY() == vector2d.getY();
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
+    }
 }

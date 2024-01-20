@@ -145,8 +145,10 @@ public class Animal{
                 rightParent.descendants.add(potentialDescendant);
             }
         }
-        leftParent.descendants.remove(this);
-        rightParent.descendants.remove(this);
+        if(leftParent!=null)
+            leftParent.descendants.remove(this);
+        if(rightParent!=null)
+            rightParent.descendants.remove(this);
 
     }
 
@@ -154,6 +156,9 @@ public class Animal{
         genome.getGeneIterator();
     }
 
+    public Genome getGenome(){
+        return genome;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

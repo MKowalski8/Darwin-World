@@ -14,6 +14,7 @@ import maps.MapCell;
 import maps.WorldMap;
 import simulations.MapChangeListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,9 +85,9 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void drawPlants() {
 //        Na moje może tutaj być lista
-        Map<Vector2d, Boolean> plants = map.getPlants();
+        ArrayList<Vector2d> plants = map.getPlants();
 
-        plants.keySet().forEach(plantPosition -> {
+        plants.forEach(plantPosition -> {
             Pane pane = new Pane();
             pane.setBackground(GRASS_CELL_COLOR);
             mapGrid.add(pane, plantPosition.getX(), plantPosition.getY());
