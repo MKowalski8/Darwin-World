@@ -1,3 +1,43 @@
 #infoLabel{
     -fx-font-size: 40;
 }
+
+#contentBox{
+    -fx-label-padding: 100;
+    -fx-padding: 50px;
+    -fx-max-height: 600px;
+    -fx-alignment: center;
+}
+
+#dataBox{
+    -fx-min-width: 500px;
+    -fx-label-padding: 30px;
+    -fx-padding: 10px;
+    -fx-font-size: 18px;
+}
+#statBox{
+    -fx-start-margin: 30px;
+    -fx-border-color: black;
+
+}
+
+#followBox{
+    -fx-start-margin: 30px;
+    -fx-border-color: black;
+
+}
+
+#mapGrid{
+    -fx-padding: 50px;
+    -fx-alignment: right;
+}
+
+.buttonClass {
+    -fx-font-size: 20px;
+    -fx-border-insets: 10px;
+}
+
+.header{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}

@@ -1,6 +1,7 @@
 package maps;
 
 import components.Vector2d;
+import presenter.CellBox;
 import worldElements.Animal;
 
 import java.util.*;
@@ -17,12 +18,27 @@ public class MapCell {
         this.cellPosition = cellPosition;
     }
 
+    private final CellBox cellBox = new CellBox(this);
+
 
     public void placeAnimalOnCell(Animal animal) {
         animals.add(animal);
     }
 
     public List<Animal> removeDeads() {
+        List<Animal> deadAnimals = getDeadAnimalsList();
+        fixFamilyTree(deadAnimals);
+        animals.removeAll(deadAnimals);
+        return deadAnimals;
+    }
+
+    private static void fixFamilyTree(List<Animal> deadAnimals) {
+        for (Animal deadAnimal: deadAnimals){
+            deadAnimal.fixFamilyTree();
+         }
+    }
+
+    private List<Animal> getDeadAnimalsList() {
         List<Animal> deadAnimals = new ArrayList<>();
 
         animals.forEach(animal -> {
@@ -30,13 +46,7 @@ public class MapCell {
                 deadAnimals.add(animal);
             }
         });
-        for (Animal deadAnimal:deadAnimals){
-            deadAnimal.fixFamilyTree();
-        }
-        animals.removeAll(deadAnimals);
-
         return deadAnimals;
-
     }
 
     public void consumePlantOnCell() {
@@ -89,4 +99,6 @@ public class MapCell {
     public List<Animal> getAnimals() {
         return Collections.unmodifiableList(animals);
     }
+
+    public CellBox getCellBox(){return cellBox;}
 }

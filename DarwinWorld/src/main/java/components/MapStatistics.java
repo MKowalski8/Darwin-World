@@ -16,6 +16,7 @@ public class MapStatistics {
     private int avgDeadLiveTime=0;
     private int avgCurrentLiveTime=0;
     private int currentDay = 0;
+    private int avgChildNumber = 0;
 
 
     public void updateDeadLifetime(List<Animal> deadAnimals){
@@ -46,17 +47,21 @@ public class MapStatistics {
 
     }
 
+    private void updateAvgChildNumber(){
+
+    }
 
     private void updatedAvgEnergyAndAnimalNumber(List<MapCell> mapCells) {
         int allEnergy = 0;
-        allAliveAnimalNumber = 0;
+        int nowAliveAnimalNumber = 0;
 
         for (MapCell mapCell : mapCells){
             List<Animal> animalsOnCell = mapCell.getAnimals();
-            allAliveAnimalNumber += animalsOnCell.size();
-            allEnergy = getEnergyFromCell(animalsOnCell);
+            nowAliveAnimalNumber += animalsOnCell.size();
+            allEnergy += getEnergyFromCell(animalsOnCell);
         }
 
+        allAliveAnimalNumber = nowAliveAnimalNumber;
         avgEnergy = allEnergy/allAliveAnimalNumber;
     }
 
@@ -70,4 +75,44 @@ public class MapStatistics {
         return energyInCell;
     }
 
+
+    public int getAllAliveAnimalNumber() {
+        return allAliveAnimalNumber;
+    }
+
+    public int getAllDeadAnimalNumber() {
+        return allDeadAnimalNumber;
+    }
+
+    public int getPlantNumber() {
+        return plantNumber;
+    }
+
+    public int getFreeCells() {
+        return freeCells;
+    }
+
+    public Genome getMostPopularGenome() {
+        return mostPopularGenome;
+    }
+
+    public int getAvgEnergy() {
+        return avgEnergy;
+    }
+
+    public int getAvgDeadLiveTime() {
+        return avgDeadLiveTime;
+    }
+
+    public int getAvgCurrentLiveTime() {
+        return avgCurrentLiveTime;
+    }
+
+    public int getCurrentDay() {
+        return currentDay;
+    }
+
+    public int getAvgChildNumber() {
+        return avgChildNumber;
+    }
 }

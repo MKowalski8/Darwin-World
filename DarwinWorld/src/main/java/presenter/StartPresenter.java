@@ -91,8 +91,8 @@ public class StartPresenter {
 
         MapStatistics stats = new MapStatistics();
         WorldMap map = configureWorldMap(stats);
-        simulationStart(map);
         presenter.setWorldMap(map, stats, mapVariant.getValue());
+        presenter.setSimulation(simulationStart(map));
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
@@ -107,7 +107,7 @@ public class StartPresenter {
                         plantGrowingDaily.getValue(), stats)
                 :
                 new HellWorld(bounds, plantNumber.getValue(),
-                        plantNumber.getValue(), new MapStatistics());
+                        plantNumber.getValue(), stats);
     }
 
 
@@ -120,12 +120,13 @@ public class StartPresenter {
     }
 
 
-    public void simulationStart(WorldMap map) {
+    public Simulation simulationStart(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
         AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
                 startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
-
-        executorService.submit(new Simulation(map, startAnimalNumber.getValue(), animalInfo));
+        Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
+        executorService.submit(simulation);
+        return simulation;
     }
 
     private GenomeInformation getGenomeInformation() {

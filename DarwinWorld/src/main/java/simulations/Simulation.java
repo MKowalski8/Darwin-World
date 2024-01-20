@@ -7,6 +7,10 @@ public class Simulation implements Runnable{
 
     private final WorldMap map;
 
+    private int speed = 500;
+
+    private boolean stopped = false;
+
     public Simulation(WorldMap map, int startAnimalNumber, AnimalInformation animalInfo) {
         this.map = map;
 //        umieszczanie zwierzakow na mapie
@@ -15,22 +19,36 @@ public class Simulation implements Runnable{
 
     @Override
     public void run() {
-//        System.out.println(Thread.currentThread());
         while(map.areAnimals()){
-            map.cleanDeadAnimals();
-            map.moveAnimals();
-            map.consumePlants();
-            map.reproduction();
-            map.plantGrow();
-            map.endDay();
+
+            if (!stopped){
+                map.cleanDeadAnimals();
+                map.moveAnimals();
+                map.consumePlants();
+                map.reproduction();
+                map.plantGrow();
+                map.endDay();
+
+            }
+
             try {
-                Thread.sleep(500);
+                Thread.sleep(speed);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-//            System.out.println("endDay");
         }
         System.out.println("end");
     }
 
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    public void stopSimulation(){
+        stopped = true;
+    }
+
+    public void continueSimulation(){
+        stopped = false;
+    }
 }

@@ -56,8 +56,8 @@ public abstract class AbstractWorld implements WorldMap {
                 }
             }
         });
+
         mapCells.putAll(newMapCells);
-        newMapCells.clear();
         addMoved();
         removeEmptyCells();
         mapChange();

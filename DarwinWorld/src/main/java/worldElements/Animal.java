@@ -3,7 +3,6 @@ package worldElements;
 import components.AnimalInformation;
 import components.Genome;
 import components.MapDirection;
-import components.Vector2d;
 
 import java.rmi.server.UID;
 import java.util.*;
@@ -77,13 +76,17 @@ public class Animal{
         Genome childGenome = new Genome(info.genomeInfo(),this.genome,anotherAnimal.genome,energy,anotherAnimal.energy);
         Animal newborn= new Animal(info,this.facing,childGenome,birtheDate+daysSurvived);
         //acttualizing parents stats
+        updateGenealogicalStats(anotherAnimal, newborn);
+        return newborn;
+    }
+
+    private void updateGenealogicalStats(Animal anotherAnimal, Animal newborn) {
         this.descendants.add(newborn);
         anotherAnimal.descendants.add(newborn);
         newborn.leftParent=this;
-        newborn.rightParent=anotherAnimal;
+        newborn.rightParent= anotherAnimal;
         this.numberOfChilds++;
         anotherAnimal.numberOfChilds++;
-        return newborn;
     }
 
     public boolean isDead() {
@@ -147,7 +150,6 @@ public class Animal{
         }
         leftParent.descendants.remove(this);
         rightParent.descendants.remove(this);
-
     }
 
     public void getGeneIterator(){
