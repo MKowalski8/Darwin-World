@@ -11,7 +11,6 @@ import maps.MapCell;
 
 public class MapStatistics {
 
-
     private int allAliveAnimalNumber = 0;
     private int allDeadAnimalNumber = 0;
     private int plantNumber = 0;
@@ -28,13 +27,11 @@ public class MapStatistics {
         if (!deadAnimals.isEmpty()) {
             int newSum = 0;
 
-
             for (Animal deadAnimal : deadAnimals) {
                 newSum += deadAnimal.getLifeTime();
             }
 
             avgDeadLiveTime = ((avgDeadLiveTime * allDeadAnimalNumber) + newSum) / (allDeadAnimalNumber + deadAnimals.size());
-            //        allDeadAnimalNumber=0;
             allDeadAnimalNumber += deadAnimals.size();
         }
     }

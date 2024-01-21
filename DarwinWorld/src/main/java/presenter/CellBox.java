@@ -25,7 +25,7 @@ public class CellBox {
         setColor();
     }
 
-    public void setSlickness(boolean ableToClick, SimulationPresenter presenter){
+    public void setClickness(boolean ableToClick, SimulationPresenter presenter){
         if (ableToClick){
             element.setOnMouseClicked(event -> {
                 chooseAnimal(presenter);

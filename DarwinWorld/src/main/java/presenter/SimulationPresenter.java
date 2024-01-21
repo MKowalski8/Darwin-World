@@ -61,7 +61,7 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label worldType;
 
-    Simulation simulation;
+    private Simulation simulation;
 
     private int cellWidth;
     private int cellHeight;
@@ -128,7 +128,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void changeClickAccessibility() {
         getCellBoxes().forEach(cellBox -> {
-            cellBox.setSlickness(stopButton.isDisable(), this);
+            cellBox.setClickness(stopButton.isDisable(), this);
         });
 
     }
