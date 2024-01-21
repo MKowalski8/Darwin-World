@@ -35,7 +35,6 @@ public class Simulation implements Runnable{
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("end");
     }
 
     public void setSpeed(int speed){

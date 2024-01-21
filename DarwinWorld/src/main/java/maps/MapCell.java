@@ -27,7 +27,7 @@ public class MapCell {
 
     public List<Animal> removeDeads() {
         List<Animal> deadAnimals = getDeadAnimalsList();
-//        fixFamilyTree(deadAnimals);
+        fixFamilyTree(deadAnimals);
         animals.removeAll(deadAnimals);
         return deadAnimals;
     }
@@ -50,7 +50,7 @@ public class MapCell {
     }
 
     public void consumePlantOnCell() {
-        animals.get(plantForAnimal()).eatPlant();
+//        animals.get(plantForAnimal()).eatPlant();
     }
 
     private int plantForAnimal() {

@@ -31,7 +31,6 @@ public class Vector2d {
         return new Vector2d(vectorToAdd.getX() + x, vectorToAdd.getY() + y);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

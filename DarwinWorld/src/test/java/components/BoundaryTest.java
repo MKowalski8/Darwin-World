@@ -71,4 +71,15 @@ class BoundaryTest {
 
     }
 
+    @Test
+    public void paretoPrinciple() {
+        //given
+        Boundary bounds=new Boundary(17,100);
+
+        //then ??
+
+        //then
+        assertEquals(40,bounds.getLowerJoungleBound());
+        assertEquals(60,bounds.getUpperJoungleBound());
+    }
 }

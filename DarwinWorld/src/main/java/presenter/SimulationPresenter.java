@@ -20,19 +20,19 @@ import simulations.MapChangeListener;
 import simulations.Simulation;
 import worldElements.Animal;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 
 public class SimulationPresenter implements MapChangeListener {
+
+    public Label actualDay;
     public Label animalNumber;
     public Label plantNumber;
     public Label freeCells;
     public Label mostPopularGenotype;
     public Label averageEnergy;
-    public Label averageLiveTime;
+    public Label averageDeadLiveTime;
     public Label averageChildNumber;
     public Label isFollowedAnimal;
     public ScrollPane followedGenome;
@@ -47,9 +47,10 @@ public class SimulationPresenter implements MapChangeListener {
     public Button plantsButton;
     public Button stopButton;
     public Button continueButton;
+    public Label averageAliveLiveTime;
     private WorldMap map;
 
-    private Animal followedAnimal;
+    private Optional<Animal> followedAnimal = Optional.empty();
 
     private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
     private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
@@ -116,7 +117,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void onClickContinueSimulation(){
+    public void onClickContinueSimulation() {
         simulation.continueSimulation();
         continueButton.setDisable(true);
         genesButton.setDisable(true);
@@ -134,18 +135,13 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void drawPlants() {
 //        Na moje może tutaj być lista
-        Map<Vector2d, Boolean> plants = map.getPlants();
+        List<Vector2d> plants = map.getPlants();
 
-        plants.keySet().forEach(plantPosition -> {
+        plants.forEach(plantPosition -> {
             Pane pane = new Pane();
             pane.setBackground(GRASS_CELL_COLOR);
             mapGrid.add(pane, plantPosition.getX(), plantPosition.getY());
         });
-
-//        Taki test
-        Pane pane = new Pane();
-        pane.setBackground(GRASS_CELL_COLOR);
-        mapGrid.add(pane, 0, 0);
     }
 
     private void addAnimals() {
@@ -183,17 +179,21 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void updateStats(MapStatistics stats) {
-        animalNumber.setText(String.format("%d",stats.getAllAliveAnimalNumber()));
-        plantNumber.setText(String.format("%d", stats.getPlantNumber()));
-        freeCells.setText(String.format("%d",stats.getFreeCells()));
-        mostPopularGenotype.setText(String.format("%s",stats.getMostPopularGenome()));
-        averageEnergy.setText(String.format("%d",stats.getAvgEnergy()));
-        averageLiveTime.setText(String.format("%d",stats.getAvgDeadLiveTime()));
-        averageChildNumber.setText(String.format("%d",stats.getAvgChildNumber()));
+        actualDay.setText(getFormat(stats.getCurrentDay()));
+        animalNumber.setText(getFormat(stats.getAllAliveAnimalNumber()));
+        plantNumber.setText(getFormat(stats.getPlantNumber()));
+        freeCells.setText(getFormat(stats.getFreeCellsNumber()));
+        String mostPopularGenome = Arrays.toString(stats.getMostPopularGenome().getGenes());
+        mostPopularGenotype.setText(String.format("%s", mostPopularGenome));
+        averageEnergy.setText(getFormat(stats.getAvgEnergy()));
+        averageDeadLiveTime.setText(getFormat(stats.getAvgDeadLiveTime()));
+        averageAliveLiveTime.setText(getFormat(stats.getAvgCurrentLiveTime()));
+        averageChildNumber.setText(getFormat(stats.getAvgChildNumber()));
     }
 
+
     private void updateSimulation() {
-        simulation.setSpeed((int)simulationSpeed.getValue());
+        simulation.setSpeed((int) simulationSpeed.getValue());
     }
 
     private void clearGrid() {
@@ -203,13 +203,38 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     public void setFollowedAnimal(Animal followedAnimal) {
-        this.followedAnimal = followedAnimal;
+        this.followedAnimal = Optional.ofNullable(followedAnimal);
         updateFollowedAnimalStats();
     }
 
     private void updateFollowedAnimalStats() {
-        followedGenome = GenomeDrawing.drawGenome(followedAnimal.getGenome(), followedAnimal.getGeneIterator());
-        followedEnergy.setText(String.format("%d", followedAnimal.getEnergy()));
+        if (followedAnimal.isPresent()) {
+            Animal animal = followedAnimal.get();
+            String genome = Arrays.toString(animal.getGenome().getGenes());
+            followedGenome = GenomeDrawing.drawGenome(genome, animal.getGeneIterator());
+            followedEnergy.setText(getFormat(animal.getEnergy()));
+            followedPlants.setText(getFormat(animal.getNumberOfPlants()));
+            followedChildren.setText(getFormat(animal.getNumberOfChildren()));
+            followedDescendants.setText(getFormat(animal.getNumberOfUniqueDescendants()));
+
+            setFollowedDays(animal);
+        }
+    }
+
+    private void setFollowedDays(Animal animal) {
+        int day = Integer.parseInt(actualDay.getText());
+
+        if (animal.isDead()) {
+            isFollowedAlive.setText("Zwierze zyło: ");
+            followedDays.setText(String.format("%d dni", day - animal.getLifeTime()));
+        } else {
+            isFollowedAlive.setText("Zwierze zyje: ");
+            followedDays.setText(String.format("%d dni", animal.getLifeTime()));
+        }
+    }
+
+    private static String getFormat(int statistic) {
+        return String.format("%d", statistic);
     }
 }
 

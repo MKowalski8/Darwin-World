@@ -1,5 +1,6 @@
 package simulations;
 
+import components.Genome;
 import components.MapStatistics;
 import maps.WorldMap;
 import simulations.MapChangeListener;
@@ -7,6 +8,7 @@ import simulations.MapChangeListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class StatSaving implements MapChangeListener {
@@ -36,8 +38,8 @@ public class StatSaving implements MapChangeListener {
             writer.write(getFormat(stats.getCurrentDay()));
             writer.write(getFormat(stats.getAllAliveAnimalNumber()));
             writer.write(getFormat(stats.getPlantNumber()));
-            writer.write(getFormat(stats.getFreeCells()));
-            writer.write(String.format("%s,", stats.getMostPopularGenome()));
+            writer.write(getFormat(stats.getFreeCellsNumber()));
+            writer.write(String.format("%s,", getGenomeAsString(stats.getMostPopularGenome())));
             writer.write(getFormat(stats.getAvgEnergy()));
             writer.write(getFormat(stats.getAvgCurrentLiveTime()));
             writer.write(getFormat(stats.getAvgChildNumber()));
@@ -45,6 +47,11 @@ public class StatSaving implements MapChangeListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getGenomeAsString(Genome genome) {
+        String genomeString = Arrays.toString(genome.getGenes());
+        return genomeString.replace(",", ";");
     }
 
     private static String getFormat(int stat) {

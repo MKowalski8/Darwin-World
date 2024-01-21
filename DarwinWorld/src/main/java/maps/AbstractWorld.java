@@ -1,9 +1,6 @@
 package maps;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.MapStatistics;
-import components.Vector2d;
+import components.*;
 import simulations.MapChangeListener;
 import worldElements.Animal;
 
@@ -13,7 +10,7 @@ public abstract class AbstractWorld implements WorldMap {
 
     private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
 
-    private final Map<Vector2d, Boolean> plants = new HashMap<>();
+    private final List<Vector2d> plants = new ArrayList<>();
 
     private final List<MapChangeListener> observers = new ArrayList<>();
 
@@ -22,17 +19,19 @@ public abstract class AbstractWorld implements WorldMap {
     private final int growingPlantsNumber;
 
     private final MapStatistics stats;
+    private final PlantGenerator plantGenerator;
 
     public AbstractWorld(Boundary bounds, int startPlants, int growingPlantsNumber, MapStatistics stats) {
         this.bounds = bounds;
+        this.plantGenerator = new PlantGenerator(bounds);
         generatePlants(startPlants);
         this.growingPlantsNumber = growingPlantsNumber;
         this.stats = stats;
     }
 
     private void generatePlants(int numberOfPlants) {
-//        TODO
-//        generowanie pozycji dla traw/roslinek i ich dodawanie
+        plantGenerator.generatePlants(plants, numberOfPlants);
+
     }
 
 
@@ -62,7 +61,7 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     private void putInNewMapCell(Map<Vector2d, MapCell> newMapCells, Vector2d nextPosition, Animal animal) {
-        if (!newMapCells.containsKey(nextPosition)){
+        if (!newMapCells.containsKey(nextPosition)) {
             newMapCells.put(nextPosition, new MapCell(nextPosition));
         }
         newMapCells.get(nextPosition).addMovedAnimal(animal);
@@ -87,7 +86,7 @@ public abstract class AbstractWorld implements WorldMap {
             mapCells.get(position).placeAnimalOnCell(new Animal(animalInfo));
         }
 
-        stats.updateLiveStats(getMapCellsList(), bounds);
+        stats.updateLiveStats(getMapCellsList(), plants, bounds);
     }
 
 
@@ -105,12 +104,15 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public void consumePlants() {
-        plants.keySet().forEach(grassPosition -> {
-            if (mapCells.containsKey(grassPosition)) {
-                mapCells.get(grassPosition).consumePlantOnCell();
-                plants.remove(grassPosition);
+
+        plants.forEach(plantPosition -> {
+            if (mapCells.containsKey(plantPosition)) {
+                mapCells.get(plantPosition).consumePlantOnCell();
             }
         });
+
+        plants.removeIf(mapCells::containsKey);
+
     }
 
     @Override
@@ -136,19 +138,23 @@ public abstract class AbstractWorld implements WorldMap {
     @Override
     public void endDay() {
         mapCells.values().forEach(MapCell::survivedDay);
-        stats.updateLiveStats(getMapCellsList(), bounds);
         mapChange();
+        stats.updateLiveStats(getMapCellsList(), plants, bounds);
     }
 
     public List<MapCell> getMapCellsList() {
         return mapCells.values().stream().toList();
     }
 
-    public Map<Vector2d, Boolean> getPlants() {return Collections.unmodifiableMap(plants);}
+    public List<Vector2d> getPlants() {
+        return plants;
+    }
 
     public void addObserver(MapChangeListener listener) {
         observers.add(listener);
     }
 
-    private void mapChange() {observers.forEach(observer -> observer.mapChanged(stats));}
+    private void mapChange() {
+        observers.forEach(observer -> observer.mapChanged(stats));
+    }
 }
