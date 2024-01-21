@@ -18,5 +18,6 @@ public class World {
 
         Simulation simulation = new Simulation(map, 5, animalInfo);
         simulation.run();
+
     }
 }
