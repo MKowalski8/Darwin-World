@@ -31,7 +31,6 @@ public abstract class AbstractWorld implements WorldMap {
 
     private void generatePlants(int numberOfPlants) {
         plantGenerator.generatePlants(plants, numberOfPlants);
-
     }
 
 
@@ -104,7 +103,6 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public void consumePlants() {
-
         plants.forEach(plantPosition -> {
             if (mapCells.containsKey(plantPosition)) {
                 mapCells.get(plantPosition).consumePlantOnCell();

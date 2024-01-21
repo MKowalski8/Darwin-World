@@ -6,6 +6,7 @@ import components.Vector2d;
 import simulations.MapChangeListener;
 import worldElements.Animal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface WorldMap {
@@ -31,8 +32,8 @@ public interface WorldMap {
     void endDay();
 
     List<Vector2d> getPlants();
+    
     List<MapCell> getMapCellsList();
 
     void addObserver(MapChangeListener listener);
-
 }

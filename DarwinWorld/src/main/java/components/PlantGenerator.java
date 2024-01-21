@@ -17,11 +17,11 @@ public class PlantGenerator {
         List<Vector2d> jungleCandidates = new ArrayList<>();
         List<Vector2d> candidatesOutside = new ArrayList<>();
 
+
         prepareCandidatesToGrow(actualPlants, jungleCandidates, candidatesOutside);
 
         //choosePlantsToGrow
         choosePlantsToGrow(actualPlants, numberOfJunglePlants, jungleCandidates, numberOfPlantsOutsideJungle, candidatesOutside);
-
     }
 
     private void choosePlantsToGrow(List<Vector2d> actualPlants, int numberOfJunglePlants, List<Vector2d> jungleCandidates, int numberOfPlantsOutsideJungle, List<Vector2d> candidatesOutside) {

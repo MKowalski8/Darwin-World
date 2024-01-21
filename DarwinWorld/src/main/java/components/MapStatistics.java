@@ -1,5 +1,8 @@
 package components;
 
+import com.sun.scenario.animation.shared.AnimationAccessor;
+import javafx.scene.control.Cell;
+import javafx.util.Pair;
 import worldElements.Animal;
 
 import java.util.*;
@@ -7,6 +10,7 @@ import java.util.*;
 import maps.MapCell;
 
 public class MapStatistics {
+
 
     private int allAliveAnimalNumber = 0;
     private int allDeadAnimalNumber = 0;
@@ -23,6 +27,7 @@ public class MapStatistics {
     public void updateDeadLifetime(List<Animal> deadAnimals) {
         if (!deadAnimals.isEmpty()) {
             int newSum = 0;
+
 
             for (Animal deadAnimal : deadAnimals) {
                 newSum += deadAnimal.getLifeTime();
@@ -64,6 +69,19 @@ public class MapStatistics {
         calculateMostPopularGenome(genesNumberMap, numberAnimalsWithMostPopularGenome);
         cellsContainingMostPopularGenome = createMapCellListWithGenome(mostPopularGenome, cells);
 
+
+    private List<MapCell> createMapCellListWithGenome(Genome genome,List<MapCell> allCells){
+        List<MapCell> cellList=new ArrayList<>();
+        for(MapCell currentCell:allCells){
+            for (Animal animal:currentCell.getAnimals()){
+                if (animal.getGenome().equals(genome)){
+                    if (!cellList.contains(currentCell)){
+                        cellList.add(currentCell);
+                    }
+                }
+            }
+        }
+        return cellList;
     }
 
     private void prepareGenomeStats(Map<Genome, Integer> genesNumberMap, List<MapCell> cells) {
@@ -106,14 +124,10 @@ public class MapStatistics {
         return cellList;
     }
 
-    private static void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
+    private void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
         for (Animal animal : currentCell.getAnimals()) {
             if (animal.getGenome().equals(genome)) {
-//                if (!cellList.contains(currentCell)) {
                 cellList.add(currentCell);
-//                }
-//                Popraw mnie, jeżeli źle rozumiem tę metodę, ale tu chyba można to breakować
-//                i ten if chyba nie był potrzebny, bo jedziemy zawsze po roznych cellach
                 break;
             }
         }
@@ -150,6 +164,7 @@ public class MapStatistics {
 
     public int getAllAliveAnimalNumber() {
         return allAliveAnimalNumber;
+
     }
 
     public int getAvgCurrentLiveTime() {

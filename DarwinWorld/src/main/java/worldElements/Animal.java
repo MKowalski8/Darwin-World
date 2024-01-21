@@ -33,7 +33,7 @@ public class Animal {
     public Animal(AnimalInformation info, MapDirection strongerParentFacing, Genome genome, int birtheDate) {
         this.genome = genome;
         this.info = info;
-        energy = info.energyUsedByReproduction();// *2 ?
+        energy = info.energyUsedByReproduction()*2;
         facing = strongerParentFacing;
         this.birtheDate = birtheDate;
     }
@@ -106,21 +106,16 @@ public class Animal {
 
 
     public int getNumberOfUniqueDescendants() {
-        // Reset the flag for each traversal
         resetWasCountedFlag();
 
-        // Use a set to keep track of unique descendants
         Set<Animal> uniqueDescendants = new HashSet<>();
 
-        // Perform DFS starting from the current object
         dfs(this, uniqueDescendants);
 
-        // Return the count of unique descendants
         return uniqueDescendants.size() - 1;
     }
 
     private void resetWasCountedFlag() {
-        // Reset the flag for each traversal
         wasCountedInGetNumberOfDescendants = false;
 
         for (Animal descendant : descendants) {
@@ -130,13 +125,10 @@ public class Animal {
 
 
     private void dfs(Animal current, Set<Animal> uniqueDescendants) {
-        // Mark the current object as visited
         current.wasCountedInGetNumberOfDescendants = true;
 
-        // Add the current object to the set of unique descendants
         uniqueDescendants.add(current);
 
-        // Recursively visit all unvisited descendants
         for (Animal descendant : current.descendants) {
             if (!descendant.wasCountedInGetNumberOfDescendants) {
                 dfs(descendant, uniqueDescendants);
@@ -156,7 +148,6 @@ public class Animal {
 
         if (leftParent != null) leftParent.descendants.remove(this);
         if (rightParent != null) rightParent.descendants.remove(this);
-
     }
 
     public int getGeneIterator() {
@@ -166,8 +157,8 @@ public class Animal {
     public Genome getGenome() {
         return genome;
     }
-
-    @Override
+    
+  @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Animal animal)) return false;
@@ -180,11 +171,6 @@ public class Animal {
     }
 
 
-    //    public int deathDate(){
-//        return birtheDate+daysSurvived;
-//    }
-//
-
     public UID getId() {
         return id;
     }
@@ -196,5 +182,4 @@ public class Animal {
     public int getNumberOfChildren(){
         return numberOfChildren;
     }
-
 }

@@ -19,9 +19,9 @@ import presenter.smallerElements.GenomeDrawing;
 import simulations.MapChangeListener;
 import simulations.Simulation;
 import worldElements.Animal;
-
 import java.util.*;
 import java.util.stream.Stream;
+
 
 
 public class SimulationPresenter implements MapChangeListener {
@@ -134,7 +134,6 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void drawPlants() {
-//        Na moje może tutaj być lista
         List<Vector2d> plants = map.getPlants();
 
         plants.forEach(plantPosition -> {
