@@ -40,7 +40,7 @@ public class MapStatistics {
     }
 
     public void updateLiveStats(List<MapCell> mapCells, List<Vector2d> plants, Boundary bounds) {
-        if (!mapCells.isEmpty()){
+        if (!mapCells.isEmpty()) {
             //prepare animals
             List<Animal> animals = createAnimalList(mapCells);
 
@@ -68,20 +68,6 @@ public class MapStatistics {
         int numberAnimalsWithMostPopularGenome = maxIntegerFromHashMap(genesNumberMap);
         calculateMostPopularGenome(genesNumberMap, numberAnimalsWithMostPopularGenome);
         cellsContainingMostPopularGenome = createMapCellListWithGenome(mostPopularGenome, cells);
-
-
-    private List<MapCell> createMapCellListWithGenome(Genome genome,List<MapCell> allCells){
-        List<MapCell> cellList=new ArrayList<>();
-        for(MapCell currentCell:allCells){
-            for (Animal animal:currentCell.getAnimals()){
-                if (animal.getGenome().equals(genome)){
-                    if (!cellList.contains(currentCell)){
-                        cellList.add(currentCell);
-                    }
-                }
-            }
-        }
-        return cellList;
     }
 
     private void prepareGenomeStats(Map<Genome, Integer> genesNumberMap, List<MapCell> cells) {
@@ -97,7 +83,8 @@ public class MapStatistics {
         }
     }
 
-    private void calculateMostPopularGenome(Map<Genome, Integer> genesNumberMap, int numOfAnimalsWithMostPopularGenom) {
+    private void calculateMostPopularGenome(Map<Genome, Integer> genesNumberMap,
+                                            int numOfAnimalsWithMostPopularGenom) {
         for (Genome currentGenome : genesNumberMap.keySet()) {
             if (genesNumberMap.get(currentGenome).equals(numOfAnimalsWithMostPopularGenom)) {
                 mostPopularGenome = currentGenome;
@@ -195,7 +182,7 @@ public class MapStatistics {
         return cellsContainingMostPopularGenome;
     }
 
-    public int getAvgChildNumber(){
+    public int getAvgChildNumber() {
         return avgChildNumber;
     }
 }
