@@ -9,13 +9,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import maps.MapCell;
 import maps.WorldMap;
+import presenter.smallerElements.GenomeDrawing;
 import simulations.MapChangeListener;
 import simulations.Simulation;
+import worldElements.Animal;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +35,7 @@ public class SimulationPresenter implements MapChangeListener {
     public Label averageLiveTime;
     public Label averageChildNumber;
     public Label isFollowedAnimal;
-    public Label followedGenome;
+    public ScrollPane followedGenome;
     public Label followedEnergy;
     public Label followedPlants;
     public Label followedChildren;
@@ -45,6 +48,8 @@ public class SimulationPresenter implements MapChangeListener {
     public Button stopButton;
     public Button continueButton;
     private WorldMap map;
+
+    private Animal followedAnimal;
 
     private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
     private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
@@ -107,7 +112,9 @@ public class SimulationPresenter implements MapChangeListener {
         genesButton.setDisable(false);
         plantsButton.setDisable(false);
         stopButton.setDisable(true);
+        changeClickAccessibility();
     }
+
     @FXML
     public void onClickContinueSimulation(){
         simulation.continueSimulation();
@@ -115,6 +122,14 @@ public class SimulationPresenter implements MapChangeListener {
         genesButton.setDisable(true);
         plantsButton.setDisable(true);
         stopButton.setDisable(false);
+        changeClickAccessibility();
+    }
+
+    private void changeClickAccessibility() {
+        getCellBoxes().forEach(cellBox -> {
+            cellBox.setSlickness(stopButton.isDisable(), this);
+        });
+
     }
 
     private void drawPlants() {
@@ -147,7 +162,6 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void configureElementInGrid(CellBox cellBox) {
         GridPane.setHalignment(cellBox.getElement(), HPos.CENTER);
-        cellBox.setAbleToClick(stopButton.isDisable());
         cellBox.configureElement(cellHeight, cellWidth);
     }
 
@@ -163,6 +177,7 @@ public class SimulationPresenter implements MapChangeListener {
         Platform.runLater(() -> {
             updateSimulation();
             updateStats(stats);
+            updateFollowedAnimalStats();
             drawMap();
         });
     }
@@ -171,7 +186,7 @@ public class SimulationPresenter implements MapChangeListener {
         animalNumber.setText(String.format("%d",stats.getAllAliveAnimalNumber()));
         plantNumber.setText(String.format("%d", stats.getPlantNumber()));
         freeCells.setText(String.format("%d",stats.getFreeCells()));
-        mostPopularGenotype.setText(String.format("%d",stats.getMostPopularGenome()));
+        mostPopularGenotype.setText(String.format("%s",stats.getMostPopularGenome()));
         averageEnergy.setText(String.format("%d",stats.getAvgEnergy()));
         averageLiveTime.setText(String.format("%d",stats.getAvgDeadLiveTime()));
         averageChildNumber.setText(String.format("%d",stats.getAvgChildNumber()));
@@ -185,6 +200,16 @@ public class SimulationPresenter implements MapChangeListener {
         mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
+    }
+
+    public void setFollowedAnimal(Animal followedAnimal) {
+        this.followedAnimal = followedAnimal;
+        updateFollowedAnimalStats();
+    }
+
+    private void updateFollowedAnimalStats() {
+        followedGenome = GenomeDrawing.drawGenome(followedAnimal.getGenome(), followedAnimal.getGeneIterator());
+        followedEnergy.setText(String.format("%d", followedAnimal.getEnergy()));
     }
 }
 

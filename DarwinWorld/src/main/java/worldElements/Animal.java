@@ -17,9 +17,9 @@ public class Animal{
     private int birtheDate=0;
     private Animal leftParent = null;
     private Animal rightParent = null;
-    private ArrayList<Animal> descendants = new ArrayList<>();
+    private final List<Animal> descendants = new ArrayList<>();
     boolean wasCountedInGetNumberOfDescendants = false;
-    private UID id = new UID();
+    private final UID id = new UID();
     private int numberOfChilds=0;
 
     public Animal(AnimalInformation info) {
@@ -152,8 +152,8 @@ public class Animal{
         rightParent.descendants.remove(this);
     }
 
-    public void getGeneIterator(){
-        genome.getGeneIterator();
+    public int getGeneIterator(){
+        return genome.getGeneIterator();
     }
 
     @Override
@@ -173,4 +173,12 @@ public class Animal{
 //        return birtheDate+daysSurvived;
 //    }
 //
+
+    public UID getId(){
+        return id;
+    }
+
+    public int getNumberOfGrasses() {
+        return numberOfGrasses;
+    }
 }

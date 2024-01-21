@@ -4,6 +4,7 @@ import components.Vector2d;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import maps.MapCell;
+import presenter.smallerElements.AnimalChooser;
 import worldElements.Animal;
 
 public class CellBox {
@@ -12,7 +13,6 @@ public class CellBox {
 
     private final Ellipse element = new Ellipse();
 
-    private boolean ableToClick = false;
 
 
     public CellBox(MapCell mapCell){
@@ -23,16 +23,20 @@ public class CellBox {
         element.setRadiusX((double) (cellWidth)/2*0.85);
         element.setRadiusY((double) (cellHeight)/2*0.85);
         setColor();
+    }
 
+    public void setSlickness(boolean ableToClick, SimulationPresenter presenter){
         if (ableToClick){
-            configureClickEvent();
+            element.setOnMouseClicked(event -> {
+                chooseAnimal(presenter);
+            });
+        } else {
+            element.setOnMouseClicked(event -> {});
         }
     }
 
-    private void configureClickEvent() {
-        element.setOnMouseClicked(event -> {
-            System.out.println("Hello");
-        });
+    private void chooseAnimal(SimulationPresenter presenter) {
+        AnimalChooser.showAnimalChooser(mapCell.getAnimals(), presenter::setFollowedAnimal);
     }
 
     private void setColor(){
@@ -61,8 +65,4 @@ public class CellBox {
    public Ellipse getElement(){
         return element;
    }
-
-    public void setAbleToClick(boolean isClickAble) {
-        ableToClick = isClickAble;
-    }
 }

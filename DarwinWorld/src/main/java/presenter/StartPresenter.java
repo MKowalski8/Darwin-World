@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
 import maps.WorldMap;
-import simulations.MapChangeListener;
 import simulations.Simulation;
 import simulations.StatSaving;
 
@@ -90,14 +89,18 @@ public class StartPresenter {
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
 
-        WorldMap map = configureWorldMap();
-        setToSaveStats(map);
-        presenter.setWorldMap(map, mapVariant.getValue());
-        presenter.setSimulation(simulationStart(map));
+        simulationPresenterConfiguration(presenter);
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
         stage.show();
+    }
+
+    private void simulationPresenterConfiguration(SimulationPresenter presenter) {
+        WorldMap map = configureWorldMap();
+        setToSaveStats(map);
+        presenter.setWorldMap(map, mapVariant.getValue());
+        presenter.setSimulation(simulationStart(map));
     }
 
     private void setToSaveStats(WorldMap map) {
