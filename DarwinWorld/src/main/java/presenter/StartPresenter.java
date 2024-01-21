@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
 import maps.WorldMap;
-import simulations.MapChangeListener;
 import simulations.Simulation;
+import simulations.StatSaving;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -89,22 +89,32 @@ public class StartPresenter {
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
 
-        MapStatistics stats = new MapStatistics();
-        WorldMap map = configureWorldMap(stats);
-        simulationStart(map);
-        presenter.setWorldMap(map, stats, mapVariant.getValue());
+        simulationPresenterConfiguration(presenter);
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
         stage.show();
     }
 
-    private WorldMap configureWorldMap(MapStatistics stats) {
+    private void simulationPresenterConfiguration(SimulationPresenter presenter) {
+        WorldMap map = configureWorldMap();
+        setToSaveStats(map);
+        presenter.setWorldMap(map, mapVariant.getValue());
+        presenter.setSimulation(simulationStart(map));
+    }
+
+    private void setToSaveStats(WorldMap map) {
+        if (toSave.getValue().equals("Yes")){
+            map.addObserver(new StatSaving());
+        }
+    }
+
+    private WorldMap configureWorldMap() {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
 
         return mapVariant.getValue().equals("Round World") ?
                 new RoundWorld(bounds, plantNumber.getValue(),
-                        plantGrowingDaily.getValue(), stats)
+                        plantGrowingDaily.getValue(), new MapStatistics())
                 :
                 new HellWorld(bounds, plantNumber.getValue(),
                         plantNumber.getValue(), new MapStatistics());
@@ -120,12 +130,13 @@ public class StartPresenter {
     }
 
 
-    public void simulationStart(WorldMap map) {
+    public Simulation simulationStart(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
         AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
                 startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
-
-        executorService.submit(new Simulation(map, startAnimalNumber.getValue(), animalInfo));
+        Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
+        executorService.submit(simulation);
+        return simulation;
     }
 
     private GenomeInformation getGenomeInformation() {

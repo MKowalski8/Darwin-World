@@ -8,7 +8,6 @@ import worldElements.Animal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface WorldMap {
 
@@ -32,7 +31,8 @@ public interface WorldMap {
 
     void endDay();
 
-    ArrayList<Vector2d> getPlants();
+    List<Vector2d> getPlants();
+    
     List<MapCell> getMapCellsList();
 
     void addObserver(MapChangeListener listener);

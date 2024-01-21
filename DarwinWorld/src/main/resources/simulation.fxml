@@ -6,6 +6,9 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
@@ -13,20 +16,132 @@
             stylesheets="simulationScreen.css">
     <top>
         <HBox alignment="CENTER">
-            <Label fx:id="infoLabel"/>
+            <Label fx:id="worldType"/>
         </HBox>
     </top>
     <center>
-        <GridPane fx:id="mapGrid"
-                  gridLinesVisible="true"
-                  alignment="CENTER"/>
+        <HBox id="contentBox">
+            <VBox id="dataBox">
+                <VBox id="statBox">
+                    <Label styleClass="header" text="STATYSTYKI SYMULACJI"/>
+
+                    <HBox>
+                        <Label text = "Dzień symulacji: : "/>
+                        <Label fx:id="actualDay"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Liczba zwierzaków: "/>
+                        <Label fx:id="animalNumber"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Liczba wszystkich roślin: "/>
+                        <Label fx:id="plantNumber"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Liczba wolnych pól: "/>
+                        <Label fx:id="freeCells"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Najpopularniejszy genotyp: "/>
+                        <Label fx:id="mostPopularGenotype"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Średni poziom energi: "/>
+                        <Label fx:id="averageEnergy"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Średnia długość życia zwierzaka żywego: "/>
+                        <Label fx:id="averageAliveLiveTime"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Średnia długość życia zwierzaka martwego: "/>
+                        <Label fx:id="averageDeadLiveTime"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text = "Średnia liczba dzieci: "/>
+                        <Label fx:id="averageChildNumber"/>
+                    </HBox>
+                </VBox>
+
+                <VBox minHeight="30"/>
+
+                <VBox id="followBox">
+                    <Label styleClass="header" fx:id="isFollowedAnimal" text="ŻADEN ZWIERZAK NIE JEST ŚLEDZONY" alignment="CENTER"/>
+
+                    <HBox>
+                        <Label text="Genome: "/>
+                        <ScrollPane fx:id="followedGenome"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text="Energia: "/>
+                        <Label fx:id="followedEnergy"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text="Zjedzone rośliny: "/>
+                        <Label fx:id="followedPlants"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text="Liczba dzieci : "/>
+                        <Label fx:id="followedChildren"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label text="Liczba potmków : "/>
+                        <Label fx:id="followedDescendants"/>
+                    </HBox>
+
+                    <HBox>
+                        <Label fx:id="isFollowedAlive" text="Ile dni żyje: "/>
+                        <Label fx:id="followedDays"/>
+                    </HBox>
+
+                </VBox>
+
+                <VBox minHeight="30"/>
+
+
+                <VBox alignment="CENTER">
+                    <Button fx:id="genesButton" disable="true" styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
+                    <VBox minHeight="10"/>
+                    <Button fx:id="plantsButton" disable="true" styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
+                </VBox>
+
+                <VBox minHeight="30"/>
+
+                <Slider fx:id="simulationSpeed"
+                        min="100" max="2000" value="500"
+                        blockIncrement="100" showTickLabels="true" showTickMarks="true"/>
+
+            </VBox>
+
+            <VBox minWidth="100"/>
+
+            <VBox>
+                <GridPane fx:id="mapGrid"
+                          id="grid"
+                          gridLinesVisible="true"/>
+
+                <VBox minHeight="10"/>
+
+                <HBox alignment="CENTER">
+                    <Button fx:id="stopButton" styleClass="buttonClass" onAction="#onClickStopSimulation" text="Stop"/>
+                    <HBox minWidth="10"/>
+                    <Button fx:id="continueButton" disable="True" styleClass="buttonClass" onAction="#onClickContinueSimulation" text="Continue"/>
+                </HBox>
+            </VBox>
+        </HBox>
     </center>
 
-    <bottom>
-        <HBox alignment="CENTER">
-            <Button fx:id="stopButton" text="Stop"/>
-            <Button fx:id="continueButton" text="Continue"/>
-        </HBox>
-    </bottom>
 </BorderPane>
 

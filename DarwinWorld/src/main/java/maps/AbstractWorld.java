@@ -10,7 +10,7 @@ public abstract class AbstractWorld implements WorldMap {
 
     private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
 
-    private final ArrayList<Vector2d> plants = new ArrayList<>();
+    private final List<Vector2d> plants = new ArrayList<>();
 
     private final List<MapChangeListener> observers = new ArrayList<>();
 
@@ -23,15 +23,14 @@ public abstract class AbstractWorld implements WorldMap {
 
     public AbstractWorld(Boundary bounds, int startPlants, int growingPlantsNumber, MapStatistics stats) {
         this.bounds = bounds;
+        this.plantGenerator = new PlantGenerator(bounds);
         generatePlants(startPlants);
         this.growingPlantsNumber = growingPlantsNumber;
         this.stats = stats;
-        this.plantGenerator=new PlantGenerator(bounds);
     }
 
     private void generatePlants(int numberOfPlants) {
-        plantGenerator.generatePlants(plants,numberOfPlants);
-
+        plantGenerator.generatePlants(plants, numberOfPlants);
     }
 
 
@@ -48,18 +47,23 @@ public abstract class AbstractWorld implements WorldMap {
 //                zaimplementowane w zaleznosci od wariantu mapy
                 Vector2d nextPosition = cellToPlaceOn(animal, bounds, mapCell.getCellPosition());
                 if (!mapCells.containsKey(nextPosition)) {
-                    newMapCells.put(nextPosition, new MapCell(nextPosition));
-                    newMapCells.get(nextPosition).addMovedAnimal(animal);
+                    putInNewMapCell(newMapCells, nextPosition, animal);
                 } else {
                     mapCells.get(nextPosition).addMovedAnimal(animal);
                 }
             }
         });
+
         mapCells.putAll(newMapCells);
-        newMapCells.clear();
         addMoved();
         removeEmptyCells();
-        mapChange();
+    }
+
+    private void putInNewMapCell(Map<Vector2d, MapCell> newMapCells, Vector2d nextPosition, Animal animal) {
+        if (!newMapCells.containsKey(nextPosition)) {
+            newMapCells.put(nextPosition, new MapCell(nextPosition));
+        }
+        newMapCells.get(nextPosition).addMovedAnimal(animal);
     }
 
 
@@ -81,13 +85,11 @@ public abstract class AbstractWorld implements WorldMap {
             mapCells.get(position).placeAnimalOnCell(new Animal(animalInfo));
         }
 
-        mapChange();
+        stats.updateLiveStats(getMapCellsList(), plants, bounds);
     }
 
 
     public void cleanDeadAnimals() {
-//        for (MapCell mapCell : mapCells.values()) {
-
         mapCells.values().forEach(mapCell -> {
             List<Animal> deadAnimals = mapCell.removeDeads();
             stats.updateDeadLifetime(deadAnimals);
@@ -101,12 +103,14 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public void consumePlants() {
-        plants.forEach(grassPosition -> {
-            if (mapCells.containsKey(grassPosition)) {
-                mapCells.get(grassPosition).consumePlantOnCell();
-                plants.remove(grassPosition);
+        plants.forEach(plantPosition -> {
+            if (mapCells.containsKey(plantPosition)) {
+                mapCells.get(plantPosition).consumePlantOnCell();
             }
         });
+
+        plants.removeIf(mapCells::containsKey);
+
     }
 
     @Override
@@ -132,14 +136,15 @@ public abstract class AbstractWorld implements WorldMap {
     @Override
     public void endDay() {
         mapCells.values().forEach(MapCell::survivedDay);
-        stats.updateLiveStats(getMapCellsList(),plants);
+        mapChange();
+        stats.updateLiveStats(getMapCellsList(), plants, bounds);
     }
 
     public List<MapCell> getMapCellsList() {
         return mapCells.values().stream().toList();
     }
 
-    public ArrayList<Vector2d> getPlants(){
+    public List<Vector2d> getPlants() {
         return plants;
     }
 
@@ -148,6 +153,6 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     private void mapChange() {
-        observers.forEach(observer -> observer.mapChanged(this));
+        observers.forEach(observer -> observer.mapChanged(stats));
     }
 }

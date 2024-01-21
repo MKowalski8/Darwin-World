@@ -1,8 +1,9 @@
 package simulations;
 
+import components.MapStatistics;
 import maps.WorldMap;
 
 public interface MapChangeListener {
 
-    void mapChanged(WorldMap worldMap);
+    void mapChanged(MapStatistics statistics);
 }
