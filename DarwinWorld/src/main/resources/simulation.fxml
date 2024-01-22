@@ -19,97 +19,16 @@
             <Label fx:id="worldType"/>
         </HBox>
     </top>
+
     <center>
         <HBox id="contentBox">
             <VBox id="dataBox">
-                <VBox id="statBox">
-                    <Label styleClass="header" text="STATYSTYKI SYMULACJI"/>
-
-                    <HBox>
-                        <Label text = "Dzień symulacji: : "/>
-                        <Label fx:id="actualDay"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Liczba zwierzaków: "/>
-                        <Label fx:id="animalNumber"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Liczba wszystkich roślin: "/>
-                        <Label fx:id="plantNumber"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Liczba wolnych pól: "/>
-                        <Label fx:id="freeCells"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Najpopularniejszy&#xD;   genotyp: " minWidth="150"/>
-                        <ScrollPane fx:id="mostPopularGenotype"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Średni poziom energi: "/>
-                        <Label fx:id="averageEnergy"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Średnia długość życia zwierzaka żywego: "/>
-                        <Label fx:id="averageAliveLiveTime"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Średnia długość życia zwierzaka martwego: "/>
-                        <Label fx:id="averageDeadLiveTime"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text = "Średnia liczba dzieci: "/>
-                        <Label fx:id="averageChildNumber"/>
-                    </HBox>
-                </VBox>
-
+                <VBox fx:id="statsBox"/>
                 <VBox minHeight="30"/>
 
-                <VBox id="followBox">
-                    <Label styleClass="header" fx:id="isFollowedAnimal" text="ŻADEN ZWIERZAK NIE JEST ŚLEDZONY" alignment="CENTER"/>
-
-                    <HBox>
-                        <Label text="Genome: " minWidth="100"/>
-                        <ScrollPane fx:id="followedGenome" minHeight="50"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text="Energia: "/>
-                        <Label fx:id="followedEnergy"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text="Zjedzone rośliny: "/>
-                        <Label fx:id="followedPlants"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text="Liczba dzieci : "/>
-                        <Label fx:id="followedChildren"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label text="Liczba potmków : "/>
-                        <Label fx:id="followedDescendants"/>
-                    </HBox>
-
-                    <HBox>
-                        <Label fx:id="isFollowedAlive" text="Ile dni zyje: "/>
-                        <Label fx:id="followedDays"/>
-                    </HBox>
-
-                </VBox>
+                <VBox fx:id="followedBox"/>
 
                 <VBox minHeight="30"/>
-
 
                 <VBox alignment="CENTER">
                     <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true" styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>

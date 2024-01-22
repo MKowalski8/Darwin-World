@@ -16,13 +16,14 @@
     -fx-padding: 10px;
     -fx-font-size: 18px;
 }
-#statBox{
+
+#statsBox{
     -fx-start-margin: 30px;
     -fx-border-color: black;
 
 }
 
-#followBox{
+#followedBox{
     -fx-start-margin: 30px;
     -fx-border-color: black;
 

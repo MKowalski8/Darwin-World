@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="presenter.AnimalStatisticsPresenter"
+            prefHeight="400.0" prefWidth="600.0">
+    <Label styleClass="header" fx:id="isFollowedAnimal" text="ŻADEN ZWIERZAK NIE JEST ŚLEDZONY" alignment="CENTER"/>
+
+    <HBox>
+        <Label text="Genome: " minWidth="100"/>
+        <ScrollPane fx:id="followedGenome" minHeight="50"/>
+    </HBox>
+
+    <HBox>
+        <Label text="Energia: "/>
+        <Label fx:id="followedEnergy"/>
+    </HBox>
+
+    <HBox>
+        <Label text="Zjedzone rośliny: "/>
+        <Label fx:id="followedPlants"/>
+    </HBox>
+
+    <HBox>
+        <Label text="Liczba dzieci : "/>
+        <Label fx:id="followedChildren"/>
+    </HBox>
+
+    <HBox>
+        <Label text="Liczba potmków : "/>
+        <Label fx:id="followedDescendants"/>
+    </HBox>
+
+    <HBox>
+        <Label fx:id="isFollowedAlive" text="Ile dni zyje: "/>
+        <Label fx:id="followedDays"/>
+    </HBox>
+</VBox>

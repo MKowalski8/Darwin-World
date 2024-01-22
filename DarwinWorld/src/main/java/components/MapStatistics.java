@@ -128,10 +128,6 @@ public class MapStatistics {
         return plantNumber;
     }
 
-    public List<MapCell> getCellsContainingMostPopularGenome(List<MapCell> mapCells) {
-        return GenomeSearcher.createMapCellListWithGenome(mostPopularGenome,mapCells);
-    }
-
     public int getAvgChildNumber() {
         return avgChildNumber;
     }
