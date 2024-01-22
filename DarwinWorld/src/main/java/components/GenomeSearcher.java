@@ -59,15 +59,6 @@ public class GenomeSearcher {
         return cellList;
     }
 
-//    private static void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
-//        for (Animal animal : currentCell.getAnimals()) {
-//            if (animal.getGenome().equals(genome)) {
-//                cellList.add(currentCell);
-//                break;
-//            }
-//        }
-//    }
-
     private static void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
         for (Animal animal : currentCell.getAnimals()) {
             MapCell mapCell = new MapCell(currentCell.getCellPosition());
