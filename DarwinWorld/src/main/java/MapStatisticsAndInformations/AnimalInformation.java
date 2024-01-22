@@ -1,4 +1,4 @@
-package components;
+package MapStatisticsAndInformations;
 
 public record AnimalInformation(
         int energyRequiredForReproduction,

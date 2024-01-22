@@ -14,24 +14,24 @@ public class CellBox {
     private final Ellipse element = new Ellipse();
 
 
-
-    public CellBox(MapCell mapCell){
+    public CellBox(MapCell mapCell) {
         this.mapCell = mapCell;
     }
 
     public void configureElement(int cellHeight, int cellWidth) {
-        element.setRadiusX((double) (cellWidth)/2*0.85);
-        element.setRadiusY((double) (cellHeight)/2*0.85);
+        element.setRadiusX((double) (cellWidth) / 2 * 0.85);
+        element.setRadiusY((double) (cellHeight) / 2 * 0.85);
         setColor();
     }
 
-    public void setClickness(boolean ableToClick, SimulationPresenter presenter){
-        if (ableToClick){
+    public void setClickness(boolean ableToClick, SimulationPresenter presenter) {
+        if (ableToClick) {
             element.setOnMouseClicked(event -> {
                 chooseAnimal(presenter);
             });
         } else {
-            element.setOnMouseClicked(event -> {});
+            element.setOnMouseClicked(event -> {
+            });
         }
     }
 
@@ -39,13 +39,13 @@ public class CellBox {
         AnimalChooser.showAnimalChooser(mapCell.getAnimals(), presenter::setFollowedAnimal);
     }
 
-    private void setColor(){
+    private void setColor() {
         int red = getRed();
         Color color;
 
-        if (mapCell.animalNumber() > 1){
-            int blue = Math.min(255,mapCell.animalNumber()*50);
-            red = red/mapCell.animalNumber();
+        if (mapCell.animalNumber() > 1) {
+            int blue = Math.min(255, mapCell.animalNumber() * 50);
+            red = red / mapCell.animalNumber();
             color = Color.rgb(red, 0, blue);
         } else {
             color = Color.rgb(red, 0, 0);
@@ -55,14 +55,14 @@ public class CellBox {
 
     private int getRed() {
         Animal animal = mapCell.getAnimals().get(0);
-        return Math.min(255,Math.max(0,animal.getEnergy()*10));
+        return Math.min(255, Math.max(0, animal.getEnergy() * 10));
     }
 
-    public Vector2d getPosition(){
+    public Vector2d getPosition() {
         return mapCell.getCellPosition();
-   }
+    }
 
-   public Ellipse getElement(){
+    public Ellipse getElement() {
         return element;
-   }
+    }
 }

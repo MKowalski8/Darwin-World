@@ -1,5 +1,8 @@
 package maps;
 
+import MapStatisticsAndInformations.AnimalInformation;
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.MapStatistics;
 import components.*;
 import simulations.MapChangeListener;
 import worldElements.Animal;
@@ -39,12 +42,10 @@ public abstract class AbstractWorld implements WorldMap {
         Map<Vector2d, MapCell> newMapCells = new HashMap<>();
 
         mapCells.values().forEach(mapCell -> {
-//            Dostajemy Animala z mapCella i umieszczamy go na kolejnym mapCellu
             for (int i = 0; i < mapCell.animalNumber(); i++) {
                 Animal animal = mapCell.takeAnimalFromCell();
                 animal.rotate();
-//                Tutaj jest sprawdzanie kolejnego cella animala
-//                zaimplementowane w zaleznosci od wariantu mapy
+
                 Vector2d nextPosition = cellToPlaceOn(animal, bounds, mapCell.getCellPosition());
                 if (!mapCells.containsKey(nextPosition)) {
                     putInNewMapCell(newMapCells, nextPosition, animal);
@@ -56,6 +57,7 @@ public abstract class AbstractWorld implements WorldMap {
 
         mapCells.putAll(newMapCells);
         addMoved();
+        cleanDeadAnimals();
         removeEmptyCells();
     }
 
@@ -66,13 +68,10 @@ public abstract class AbstractWorld implements WorldMap {
         newMapCells.get(nextPosition).addMovedAnimal(animal);
     }
 
-
     private void addMoved() {
         mapCells.values().forEach(MapCell::mergeAnimals);
     }
 
-
-    //    metoda ta jest wywolywana z symulacji
     @Override
     public void placeAnimals(int numberOfAnimals, AnimalInformation animalInfo) {
         for (int i = 0; i < numberOfAnimals; i++) {
@@ -141,14 +140,12 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public List<MapCell> getMapCellsList() {
-        return mapCells.values().stream().toList();
+        return List.copyOf(mapCells.values().stream().toList());
     }
 
     public List<Vector2d> getPlants() {
-        return plants;
+        return List.copyOf(plants);
     }
-
-    public MapStatistics getStats() {return stats;}
 
     public void addObserver(MapChangeListener listener) {
         observers.add(listener);
@@ -158,5 +155,7 @@ public abstract class AbstractWorld implements WorldMap {
         observers.forEach(observer -> observer.mapChanged(stats));
     }
 
-    public MapStatistics getMapStatistics(){return stats;}
+    public MapStatistics getMapStatistics() {
+        return stats;
+    }
 }

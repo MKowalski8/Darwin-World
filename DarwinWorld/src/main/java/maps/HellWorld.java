@@ -1,8 +1,7 @@
 package maps;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.MapStatistics;
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.MapStatistics;
 import components.Vector2d;
 import worldElements.Animal;
 
@@ -18,7 +17,7 @@ public class HellWorld extends AbstractWorld {
         Vector2d newPosition = position.addVector(animal.getFacing().toVector2d());
 
         if (bounds.outOfBounds(newPosition) || bounds.crossedSites(newPosition)){
-//            animal.consumeEnergy();
+            animal.consumeEnergyToReproduce();
             newPosition = new Vector2d((int) (Math.random() * (bounds.getWidth()-1)),
                     (int) (Math.random() * (bounds.getHeight()-1)));
         }

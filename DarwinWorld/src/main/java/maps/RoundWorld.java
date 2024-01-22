@@ -1,8 +1,7 @@
 package maps;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.MapStatistics;
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.MapStatistics;
 import components.Vector2d;
 import worldElements.Animal;
 

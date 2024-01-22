@@ -1,13 +1,6 @@
 package maps;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.GenomeInformation;
-import components.MapStatistics;
 import org.junit.jupiter.api.Test;
-import worldElements.Animal;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RoundWorldTest {
 

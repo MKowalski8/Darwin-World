@@ -1,13 +1,12 @@
 package maps;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.MapStatistics;
+import MapStatisticsAndInformations.AnimalInformation;
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.MapStatistics;
 import components.Vector2d;
 import simulations.MapChangeListener;
 import worldElements.Animal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface WorldMap {

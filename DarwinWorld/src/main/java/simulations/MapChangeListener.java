@@ -1,7 +1,6 @@
 package simulations;
 
-import components.MapStatistics;
-import maps.WorldMap;
+import MapStatisticsAndInformations.MapStatistics;
 
 public interface MapChangeListener {
 

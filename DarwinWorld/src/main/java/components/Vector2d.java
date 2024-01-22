@@ -12,10 +12,10 @@ public class Vector2d {
         this.y = y;
     }
 
-   @Override
-   public String toString() {
-       return String.format("(%d,%d)", x, y);
-   }
+    @Override
+    public String toString() {
+        return String.format("(%d,%d)", x, y);
+    }
 
 
     public int getX() {

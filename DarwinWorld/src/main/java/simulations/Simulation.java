@@ -1,9 +1,9 @@
 package simulations;
-import components.AnimalInformation;
-import maps.WorldMap;
-import worldElements.Animal;
 
-public class Simulation implements Runnable{
+import MapStatisticsAndInformations.AnimalInformation;
+import maps.WorldMap;
+
+public class Simulation implements Runnable {
 
     private final WorldMap map;
 
@@ -19,8 +19,8 @@ public class Simulation implements Runnable{
 
     @Override
     public void run() {
-        while(map.areAnimals()){
-            if(!stopped){
+        while (map.areAnimals()) {
+            if (!stopped) {
 //                System.out.println(Thread.currentThread());
                 map.cleanDeadAnimals();
                 map.moveAnimals();
@@ -38,16 +38,16 @@ public class Simulation implements Runnable{
         }
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public void stopSimulation(){
+    public void stopSimulation() {
         stopped = true;
 //        Thread.currentThread().interrupt();
     }
 
-    public void continueSimulation(){
+    public void continueSimulation() {
         stopped = false;
     }
 }

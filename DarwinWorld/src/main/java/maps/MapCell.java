@@ -91,15 +91,14 @@ public class MapCell {
     }
 
     public void sortAnimals() {
-        animals.stream()
-                .sorted(Comparator.comparingInt(Animal::getEnergy)
-                        .thenComparingInt(Animal::getLifeTime)
-                        .thenComparingInt(Animal::getNumberOfChildren)
-                        .thenComparing(animal -> animal.getId().toString()));
+        animals.sort(Comparator.comparingInt(Animal::getEnergy)
+                .thenComparingInt(Animal::getLifeTime)
+                .thenComparingInt(Animal::getNumberOfChildren)
+                .thenComparing(animal -> animal.getId().toString()));
     }
 
     public List<Animal> getAnimals() {
-        return Collections.unmodifiableList(animals);
+        return List.copyOf(animals);
     }
 
     public CellBox getCellBox() {

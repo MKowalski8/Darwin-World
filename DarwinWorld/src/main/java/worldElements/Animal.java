@@ -1,6 +1,6 @@
 package worldElements;
 
-import components.AnimalInformation;
+import MapStatisticsAndInformations.AnimalInformation;
 import components.Genome;
 import components.MapDirection;
 
@@ -74,14 +74,14 @@ public class Animal {
     }
 
     public Animal reproduce(Animal anotherAnimal) {
-            Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
-            Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
+        Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
+        Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
 
-            consumeEnergyToReproduce();
-            anotherAnimal.consumeEnergyToReproduce();
-            //acttualizing parents stats
-            updateGenealogicalStats(anotherAnimal, newborn);
-            return newborn;
+        consumeEnergyToReproduce();
+        anotherAnimal.consumeEnergyToReproduce();
+        //acttualizing parents stats
+        updateGenealogicalStats(anotherAnimal, newborn);
+        return newborn;
     }
 
     private void updateGenealogicalStats(Animal anotherAnimal, Animal newborn) {

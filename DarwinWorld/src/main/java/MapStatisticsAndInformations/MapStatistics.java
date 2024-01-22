@@ -1,8 +1,7 @@
-package components;
+package MapStatisticsAndInformations;
 
-import com.sun.scenario.animation.shared.AnimationAccessor;
-import javafx.scene.control.Cell;
-import javafx.util.Pair;
+import components.Genome;
+import components.Vector2d;
 import worldElements.Animal;
 
 import java.util.*;
@@ -54,15 +53,13 @@ public class MapStatistics {
             calculateAvgChildNumber(animals);
             //plants
             plantNumber = plants.size();
-            //mostPopularGenome int and list
-
-            mostPopularGenome=GenomeSearcher.calculateMostPopularGenome(mapCells);
+            //mostPopularGenome
+            mostPopularGenome = GenomeSearcher.calculateMostPopularGenome(mapCells);
         }
     }
 
 
-
-    private void calculateAvgChildNumber(List<Animal> animals){
+    private void calculateAvgChildNumber(List<Animal> animals) {
         int sum = 0;
         for (Animal animal : animals) {
             sum += animal.getNumberOfChildren();
@@ -101,7 +98,6 @@ public class MapStatistics {
 
     public int getAllAliveAnimalNumber() {
         return allAliveAnimalNumber;
-
     }
 
     public int getAvgCurrentLiveTime() {

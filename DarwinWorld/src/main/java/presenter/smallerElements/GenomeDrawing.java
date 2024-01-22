@@ -15,11 +15,11 @@ public class GenomeDrawing {
             char number = text.charAt(i);
             Label label = new Label(String.valueOf(number));
 
-            if(Character.isDigit(number)){
-                numberCtr++;
+            if (Character.isDigit(number)) {
                 if (numberCtr == blueIndex) {
                     label.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
                 }
+                numberCtr++;
             }
 
             hbox.getChildren().add(label);

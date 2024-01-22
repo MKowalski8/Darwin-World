@@ -67,7 +67,7 @@ public class AnimalChooser {
     }
 
     private static Color getColor(Animal animal) {
-        int red = Math.min(255,Math.max(0,animal.getEnergy()*10));
+        int red = Math.min(255, Math.max(0, animal.getEnergy() * 10));
         return Color.rgb(red, 0, 0);
     }
 }
