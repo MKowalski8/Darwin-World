@@ -16,7 +16,6 @@ public class MapStatistics {
     private int plantNumber = 0;
     private int freeCellsNumber = 0;
     private Genome mostPopularGenome = null;
-    private List<MapCell> cellsContainingMostPopularGenome;
     private int avgEnergy = 0;
     private int avgDeadLiveTime = 0;
     private int avgCurrentLiveTime = 0;
@@ -51,70 +50,24 @@ public class MapStatistics {
             calculateAvgEnergy(animals);
             //avgLifeTime
             calculateAvgLiveTime(animals);
+            //avgChildNumber
+            calculateAvgChildNumber(animals);
             //plants
             plantNumber = plants.size();
             //mostPopularGenome int and list
-            calculateMostPopularGenome(mapCells);
+
+            mostPopularGenome=GenomeSearcher.calculateMostPopularGenome(mapCells);
         }
     }
 
 
-    private void calculateMostPopularGenome(List<MapCell> cells) {
-        Map<Genome, Integer> genesNumberMap = new HashMap<>();
-        prepareGenomeStats(genesNumberMap, cells);
-        int numberAnimalsWithMostPopularGenome = maxIntegerFromHashMap(genesNumberMap);
-        calculateMostPopularGenome(genesNumberMap, numberAnimalsWithMostPopularGenome);
-        cellsContainingMostPopularGenome = createMapCellListWithGenome(mostPopularGenome, cells);
-    }
 
-    private void prepareGenomeStats(Map<Genome, Integer> genesNumberMap, List<MapCell> cells) {
-
-        for (MapCell cell : cells) {
-            for (Animal animal : cell.getAnimals()) {
-                if (genesNumberMap.containsKey(animal.getGenome())) {
-                    genesNumberMap.put(animal.getGenome(), genesNumberMap.get(animal.getGenome()) + 1);
-                } else {
-                    genesNumberMap.put(animal.getGenome(), Integer.valueOf(0));
-                }
-            }
+    private void calculateAvgChildNumber(List<Animal> animals){
+        int sum = 0;
+        for (Animal animal : animals) {
+            sum += animal.getNumberOfChildren();
         }
-    }
-
-    private void calculateMostPopularGenome(Map<Genome, Integer> genesNumberMap,
-                                            int numOfAnimalsWithMostPopularGenom) {
-        for (Genome currentGenome : genesNumberMap.keySet()) {
-            if (genesNumberMap.get(currentGenome).equals(numOfAnimalsWithMostPopularGenom)) {
-                mostPopularGenome = currentGenome;
-                break;
-            }
-        }
-    }
-
-    private Integer maxIntegerFromHashMap(Map<Genome, Integer> genesNumberMap) {
-        Integer maxVal = Integer.MIN_VALUE;
-        for (Integer currentVal : genesNumberMap.values()) {
-            if (currentVal > maxVal) {
-                maxVal = currentVal;
-            }
-        }
-        return maxVal;
-    }
-
-    private List<MapCell> createMapCellListWithGenome(Genome genome, List<MapCell> allCells) {
-        List<MapCell> cellList = new ArrayList<>();
-        for (MapCell currentCell : allCells) {
-            ifAnimalOnCellHaveGenome(genome, currentCell, cellList);
-        }
-        return cellList;
-    }
-
-    private void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
-        for (Animal animal : currentCell.getAnimals()) {
-            if (animal.getGenome().equals(genome)) {
-                cellList.add(currentCell);
-                break;
-            }
-        }
+        avgChildNumber = sum / animals.size();
     }
 
     private void calculateAvgEnergy(List<Animal> animals) {
@@ -175,8 +128,8 @@ public class MapStatistics {
         return plantNumber;
     }
 
-    public List<MapCell> getCellsContainingMostPopularGenome() {
-        return cellsContainingMostPopularGenome;
+    public List<MapCell> getCellsContainingMostPopularGenome(List<MapCell> mapCells) {
+        return GenomeSearcher.createMapCellListWithGenome(mostPopularGenome,mapCells);
     }
 
     public int getAvgChildNumber() {

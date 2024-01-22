@@ -1,6 +1,7 @@
 package presenter;
 
 import components.Boundary;
+import components.GenomeSearcher;
 import components.MapStatistics;
 import components.Vector2d;
 import javafx.application.Platform;
@@ -257,7 +258,7 @@ public class SimulationPresenter implements MapChangeListener {
             genesButton.setText("WSZYSTKIE GENOTYPY");
 
             Platform.runLater(() -> {
-                List<MapCell> mapCells = CellWithSpecificGenome.getCellsWithMostPopularGenome(map.getMapStatistics().getMostPopularGenome(), map.getMapCellsList());
+                List<MapCell> mapCells = map.getMapStatistics().getCellsContainingMostPopularGenome(map.getMapCellsList());
                 changeClickAccessibility(getCellBoxes(mapCells));
                 drawMap(mapCells, map.getPlants());
             });
