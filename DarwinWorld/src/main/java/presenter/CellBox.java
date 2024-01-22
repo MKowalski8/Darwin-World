@@ -55,7 +55,7 @@ public class CellBox {
 
     private int getRed() {
         Animal animal = mapCell.getAnimals().get(0);
-        return Math.min(255,animal.getEnergy()*10);
+        return Math.min(255,Math.max(0,animal.getEnergy()*10));
     }
 
     public Vector2d getPosition(){

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="presenter.StatisticsPresenter">
+
+        <Label styleClass="header" text="STATYSTYKI SYMULACJI"/>
+
+        <HBox>
+            <Label text = "Dzień symulacji: : "/>
+            <Label fx:id="actualDay"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Liczba zwierzaków: "/>
+            <Label fx:id="animalNumber"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Liczba wszystkich roślin: "/>
+            <Label fx:id="plantNumber"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Liczba wolnych pól: "/>
+            <Label fx:id="freeCells"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Najpopularniejszy&#xD;   genotyp: " minWidth="150"/>
+            <ScrollPane fx:id="mostPopularGenotype"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Średni poziom energi: "/>
+            <Label fx:id="averageEnergy"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Średnia długość życia zwierzaka żywego: "/>
+            <Label fx:id="averageAliveLiveTime"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Średnia długość życia zwierzaka martwego: "/>
+            <Label fx:id="averageDeadLiveTime"/>
+        </HBox>
+
+        <HBox>
+            <Label text = "Średnia liczba dzieci: "/>
+            <Label fx:id="averageChildNumber"/>
+        </HBox>
+</VBox>

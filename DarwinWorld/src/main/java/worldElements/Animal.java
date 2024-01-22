@@ -33,7 +33,7 @@ public class Animal {
     public Animal(AnimalInformation info, MapDirection strongerParentFacing, Genome genome, int birtheDate) {
         this.genome = genome;
         this.info = info;
-        energy = info.energyUsedByReproduction()*2;
+        energy = info.energyUsedByReproduction() * 2;
         facing = strongerParentFacing;
         this.birtheDate = birtheDate;
     }
@@ -74,13 +74,14 @@ public class Animal {
     }
 
     public Animal reproduce(Animal anotherAnimal) {
-        consumeEnergyToReproduce();
-        anotherAnimal.consumeEnergy(info.energyUsedByReproduction());
-        Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
-        Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
-        //acttualizing parents stats
-        updateGenealogicalStats(anotherAnimal, newborn);
-        return newborn;
+            Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
+            Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
+
+            consumeEnergyToReproduce();
+            anotherAnimal.consumeEnergyToReproduce();
+            //acttualizing parents stats
+            updateGenealogicalStats(anotherAnimal, newborn);
+            return newborn;
     }
 
     private void updateGenealogicalStats(Animal anotherAnimal, Animal newborn) {
@@ -93,7 +94,7 @@ public class Animal {
     }
 
     public boolean isDead() {
-        return energy <= 0;
+        return energy < 0;
     }
 
     public int getLifeTime() {
@@ -138,10 +139,10 @@ public class Animal {
 
     public void fixFamilyTree() {
         for (Animal potentialDescendant : descendants) {
-            if (!leftParent.descendants.contains(potentialDescendant)) {
+            if (leftParent != null && !leftParent.descendants.contains(potentialDescendant)) {
                 leftParent.descendants.add(potentialDescendant);
             }
-            if (!rightParent.descendants.contains(potentialDescendant)) {
+            if (rightParent != null && !rightParent.descendants.contains(potentialDescendant)) {
                 rightParent.descendants.add(potentialDescendant);
             }
         }
@@ -157,8 +158,8 @@ public class Animal {
     public Genome getGenome() {
         return genome;
     }
-    
-  @Override
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Animal animal)) return false;
@@ -179,7 +180,7 @@ public class Animal {
         return numberOfPlants;
     }
 
-    public int getNumberOfChildren(){
+    public int getNumberOfChildren() {
         return numberOfChildren;
     }
 }

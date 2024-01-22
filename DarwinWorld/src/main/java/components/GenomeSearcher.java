@@ -61,10 +61,18 @@ public class GenomeSearcher {
 
     private static void ifAnimalOnCellHaveGenome(Genome genome, MapCell currentCell, List<MapCell> cellList) {
         for (Animal animal : currentCell.getAnimals()) {
+            MapCell mapCell = new MapCell(currentCell.getCellPosition());
             if (animal.getGenome().equals(genome)) {
-                cellList.add(currentCell);
+                cellList.add(mapCell);
+                addAnimalsOnCellsWithGenome(genome, mapCell, currentCell);
                 break;
             }
+        }
+    }
+
+    private static void addAnimalsOnCellsWithGenome(Genome mostPopularGenome, MapCell mapCellToAdd, MapCell currentCell) {
+        for (Animal animal : currentCell.getAnimals()){
+            if(animal.getGenome().equals(mostPopularGenome)) mapCellToAdd.placeAnimalOnCell(animal);
         }
     }
 }

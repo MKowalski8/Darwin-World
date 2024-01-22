@@ -1,56 +1,40 @@
 package presenter;
 
-import components.Boundary;
-import components.MapStatistics;
-import components.Vector2d;
+import components.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import maps.MapCell;
 import maps.WorldMap;
-import presenter.smallerElements.GenomeDrawing;
 import simulations.MapChangeListener;
 import simulations.Simulation;
 import worldElements.Animal;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
 
+import javafx.stage.Screen;
 
 
 public class SimulationPresenter implements MapChangeListener {
-
-    public Label actualDay;
-    public Label animalNumber;
-    public Label plantNumber;
-    public Label freeCells;
-    public Label mostPopularGenotype;
-    public Label averageEnergy;
-    public Label averageDeadLiveTime;
-    public Label averageChildNumber;
-    public Label isFollowedAnimal;
-    public ScrollPane followedGenome;
-    public Label followedEnergy;
-    public Label followedPlants;
-    public Label followedChildren;
-    public Label followedDescendants;
-    public Label isFollowedAlive;
-    public Label followedDays;
     public Slider simulationSpeed;
     public Button genesButton;
     public Button plantsButton;
     public Button stopButton;
     public Button continueButton;
-    public Label averageAliveLiveTime;
     private WorldMap map;
-
     private Optional<Animal> followedAnimal = Optional.empty();
+
+    private StatisticsPresenter statsBoxPresenter;
+    private AnimalStatisticsPresenter followedBoxPresenter;
 
     private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
     private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
@@ -61,17 +45,46 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     Label worldType;
 
+    @FXML
+    public VBox statsBox;
+
+    @FXML
+    public VBox followedBox;
+
     private Simulation simulation;
 
     private int cellWidth;
     private int cellHeight;
+
+    @FXML
+    public void initialize() throws IOException {
+        initializeStatBox();
+        initializeFollowedBox();
+    }
+
+    private void initializeFollowedBox() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/followedAnimal.fxml"));
+        VBox viewRoot = loader.load();
+        this.followedBoxPresenter = loader.getController();
+        followedBox.getChildren().add(viewRoot);
+    }
+
+    private void initializeStatBox() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/statistics.fxml"));
+        VBox viewRoot = loader.load();
+        this.statsBoxPresenter = loader.getController();
+        statsBox.getChildren().add(viewRoot);
+    }
+
 
     public void setWorldMap(WorldMap map, String mapType) {
         this.map = map;
         map.addObserver(this);
         worldType.setText(mapType);
         configureGridPane();
-        drawMap();
+        Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
     }
 
     public void setSimulation(Simulation simulation) {
@@ -79,8 +92,10 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void configureGridPane() {
-        int mapGridWidth = 600;
-        int mapGridHeight = 600;
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
+        int mapGridWidth = (int) (screenHeight * 0.7);
+        int mapGridHeight = (int) (screenHeight * 0.7);
 
         mapGrid.setMaxWidth(mapGridWidth);
         mapGrid.setMaxWidth(mapGridHeight);
@@ -89,7 +104,7 @@ public class SimulationPresenter implements MapChangeListener {
         this.cellHeight = mapGridHeight / map.getBounds().getHeight();
     }
 
-    public void drawMap() {
+    public void drawMap(List<MapCell> mapCells, List<Vector2d> plants) {
         clearGrid();
 
         Boundary bounds = map.getBounds();
@@ -102,8 +117,8 @@ public class SimulationPresenter implements MapChangeListener {
             mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
         }
 
-        drawPlants();
-        addAnimals();
+        drawPlants(plants);
+        drawAnimals(getCellBoxes(mapCells));
     }
 
     @FXML
@@ -113,29 +128,29 @@ public class SimulationPresenter implements MapChangeListener {
         genesButton.setDisable(false);
         plantsButton.setDisable(false);
         stopButton.setDisable(true);
-        changeClickAccessibility();
+        changeClickAccessibility(getCellBoxes(map.getMapCellsList()));
     }
 
     @FXML
     public void onClickContinueSimulation() {
+//        executorService.submit(simulation);
         simulation.continueSimulation();
         continueButton.setDisable(true);
         genesButton.setDisable(true);
         plantsButton.setDisable(true);
         stopButton.setDisable(false);
-        changeClickAccessibility();
+        changeClickAccessibility(getCellBoxes(map.getMapCellsList()));
+        setButtonsToNormal();
     }
 
-    private void changeClickAccessibility() {
-        getCellBoxes().forEach(cellBox -> {
+    private void changeClickAccessibility(List<CellBox> cellBoxes) {
+        cellBoxes.forEach(cellBox -> {
             cellBox.setClickness(stopButton.isDisable(), this);
         });
 
     }
 
-    private void drawPlants() {
-        List<Vector2d> plants = map.getPlants();
-
+    private void drawPlants(List<Vector2d> plants) {
         plants.forEach(plantPosition -> {
             Pane pane = new Pane();
             pane.setBackground(GRASS_CELL_COLOR);
@@ -143,9 +158,7 @@ public class SimulationPresenter implements MapChangeListener {
         });
     }
 
-    private void addAnimals() {
-        List<CellBox> cellBoxes = getCellBoxes();
-
+    private void drawAnimals(List<CellBox> cellBoxes) {
         cellBoxes.forEach(cellBox -> {
             int row = cellBox.getPosition().getX();
             int column = cellBox.getPosition().getY();
@@ -160,8 +173,8 @@ public class SimulationPresenter implements MapChangeListener {
         cellBox.configureElement(cellHeight, cellWidth);
     }
 
-    private List<CellBox> getCellBoxes() {
-        return Stream.of(map.getMapCellsList())
+    private List<CellBox> getCellBoxes(List<MapCell> mapCells) {
+        return Stream.of(mapCells)
                 .flatMap(Collection::stream)
                 .map(MapCell::getCellBox)
                 .toList();
@@ -171,25 +184,11 @@ public class SimulationPresenter implements MapChangeListener {
     public void mapChanged(MapStatistics stats) {
         Platform.runLater(() -> {
             updateSimulation();
-            updateStats(stats);
-            updateFollowedAnimalStats();
-            drawMap();
+            statsBoxPresenter.updateStats(stats);
+            followedBoxPresenter.updateFollowedAnimalStats(followedAnimal, stats.getCurrentDay());
+            drawMap(map.getMapCellsList(), map.getPlants());
         });
     }
-
-    private void updateStats(MapStatistics stats) {
-        actualDay.setText(getFormat(stats.getCurrentDay()));
-        animalNumber.setText(getFormat(stats.getAllAliveAnimalNumber()));
-        plantNumber.setText(getFormat(stats.getPlantNumber()));
-        freeCells.setText(getFormat(stats.getFreeCellsNumber()));
-        String mostPopularGenome = Arrays.toString(stats.getMostPopularGenome().getGenes());
-        mostPopularGenotype.setText(String.format("%s", mostPopularGenome));
-        averageEnergy.setText(getFormat(stats.getAvgEnergy()));
-        averageDeadLiveTime.setText(getFormat(stats.getAvgDeadLiveTime()));
-        averageAliveLiveTime.setText(getFormat(stats.getAvgCurrentLiveTime()));
-        averageChildNumber.setText(getFormat(stats.getAvgChildNumber()));
-    }
-
 
     private void updateSimulation() {
         simulation.setSpeed((int) simulationSpeed.getValue());
@@ -203,37 +202,52 @@ public class SimulationPresenter implements MapChangeListener {
 
     public void setFollowedAnimal(Animal followedAnimal) {
         this.followedAnimal = Optional.ofNullable(followedAnimal);
-        updateFollowedAnimalStats();
+        Platform.runLater(() -> followedBoxPresenter.updateFollowedAnimalStats(this.followedAnimal, map.getMapStatistics().getCurrentDay()));
     }
 
-    private void updateFollowedAnimalStats() {
-        if (followedAnimal.isPresent()) {
-            Animal animal = followedAnimal.get();
-            String genome = Arrays.toString(animal.getGenome().getGenes());
-            followedGenome = GenomeDrawing.drawGenome(genome, animal.getGeneIterator());
-            followedEnergy.setText(getFormat(animal.getEnergy()));
-            followedPlants.setText(getFormat(animal.getNumberOfPlants()));
-            followedChildren.setText(getFormat(animal.getNumberOfChildren()));
-            followedDescendants.setText(getFormat(animal.getNumberOfUniqueDescendants()));
+    @FXML
+    public void showMostPopularGenome() {
+        if (genesButton.getText().equals("NAJPOPULARNIEJSZY GENOTYP")) {
+            setButtonsToNormal();
+            genesButton.setText("WSZYSTKIE GENOTYPY");
 
-            setFollowedDays(animal);
-        }
-    }
-
-    private void setFollowedDays(Animal animal) {
-        int day = Integer.parseInt(actualDay.getText());
-
-        if (animal.isDead()) {
-            isFollowedAlive.setText("Zwierze zyło: ");
-            followedDays.setText(String.format("%d dni", day - animal.getLifeTime()));
+            Platform.runLater(() -> {
+                List<MapCell> mapCells = GenomeSearcher.createMapCellListWithGenome(map.getMapStatistics().getMostPopularGenome(), map.getMapCellsList());
+                changeClickAccessibility(getCellBoxes(mapCells));
+                drawMap(mapCells, map.getPlants());
+            });
         } else {
-            isFollowedAlive.setText("Zwierze zyje: ");
-            followedDays.setText(String.format("%d dni", animal.getLifeTime()));
+            setButtonsToNormal();
+            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
         }
     }
 
-    private static String getFormat(int statistic) {
-        return String.format("%d", statistic);
+    @FXML
+    public void showBelovedPlantCells() {
+        if (plantsButton.getText().equals("PREFEROWANE POLA DO WZROSTU")) {
+            setButtonsToNormal();
+            Platform.runLater(() -> drawMap(map.getMapCellsList(), jungleList()));
+            plantsButton.setText("WSZYSTKIE TRAWY");
+        } else {
+            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
+            setButtonsToNormal();
+        }
+    }
+
+    public void setButtonsToNormal() {
+        plantsButton.setText("PREFEROWANE POLA DO WZROSTU");
+        genesButton.setText("NAJPOPULARNIEJSZY GENOTYP");
+    }
+
+    private List<Vector2d> jungleList() {
+        List<Vector2d> jungleCells = new LinkedList<>();
+        for (int i = 0; i < map.getBounds().getWidth(); i++) {
+            for (int j = map.getBounds().getLowerJoungleBound(); j < map.getBounds().getUpperJoungleBound(); j++) {
+                jungleCells.add(new Vector2d(i, j));
+            }
+        }
+
+        return jungleCells;
     }
 }
 

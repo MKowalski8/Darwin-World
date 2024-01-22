@@ -16,7 +16,6 @@ public class MapStatistics {
     private int plantNumber = 0;
     private int freeCellsNumber = 0;
     private Genome mostPopularGenome = null;
-    private List<MapCell> cellsContainingMostPopularGenome;
     private int avgEnergy = 0;
     private int avgDeadLiveTime = 0;
     private int avgCurrentLiveTime = 0;
@@ -58,7 +57,6 @@ public class MapStatistics {
             //mostPopularGenome int and list
 
             mostPopularGenome=GenomeSearcher.calculateMostPopularGenome(mapCells);
-            cellsContainingMostPopularGenome=GenomeSearcher.createMapCellListWithGenome(mostPopularGenome,mapCells);
         }
     }
 
@@ -128,10 +126,6 @@ public class MapStatistics {
 
     public int getPlantNumber() {
         return plantNumber;
-    }
-
-    public List<MapCell> getCellsContainingMostPopularGenome() {
-        return cellsContainingMostPopularGenome;
     }
 
     public int getAvgChildNumber() {

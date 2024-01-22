@@ -7,21 +7,23 @@
     -fx-padding: 50px;
     -fx-max-height: 600px;
     -fx-alignment: center;
+    -fx-min-width: 1500px;
 }
 
 #dataBox{
-    -fx-min-width: 500px;
+    -fx-min-width: 550px;
     -fx-label-padding: 30px;
     -fx-padding: 10px;
     -fx-font-size: 18px;
 }
-#statBox{
+
+#statsBox{
     -fx-start-margin: 30px;
     -fx-border-color: black;
 
 }
 
-#followBox{
+#followedBox{
     -fx-start-margin: 30px;
     -fx-border-color: black;
 
