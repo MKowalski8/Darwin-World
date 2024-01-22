@@ -148,6 +148,8 @@ public abstract class AbstractWorld implements WorldMap {
         return plants;
     }
 
+    public MapStatistics getStats() {return stats;}
+
     public void addObserver(MapChangeListener listener) {
         observers.add(listener);
     }
@@ -155,4 +157,6 @@ public abstract class AbstractWorld implements WorldMap {
     private void mapChange() {
         observers.forEach(observer -> observer.mapChanged(stats));
     }
+
+    public MapStatistics getMapStatistics(){return stats;}
 }

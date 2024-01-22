@@ -5,6 +5,7 @@ import presenter.CellBox;
 import worldElements.Animal;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class MapCell {
 
@@ -23,6 +24,7 @@ public class MapCell {
 
     public void placeAnimalOnCell(Animal animal) {
         animals.add(animal);
+        sortAnimals();
     }
 
     public List<Animal> removeDeads() {
@@ -33,9 +35,9 @@ public class MapCell {
     }
 
     private static void fixFamilyTree(List<Animal> deadAnimals) {
-        for (Animal deadAnimal: deadAnimals){
+        for (Animal deadAnimal : deadAnimals) {
             deadAnimal.fixFamilyTree();
-         }
+        }
     }
 
     private List<Animal> getDeadAnimalsList() {
@@ -50,20 +52,16 @@ public class MapCell {
     }
 
     public void consumePlantOnCell() {
-//        animals.get(plantForAnimal()).eatPlant();
-    }
-
-    private int plantForAnimal() {
-        return 0;
+        animals.get(0).eatPlant();
     }
 
     public void initializeReproduction() {
-        Animal animal1 = animalForReproduction();
-    }
-
-    private Animal animalForReproduction() {
-//        TODO
-        return null;
+        if (animals.size() >= 2) {
+            Animal animal1 = animals.get(0);
+            Animal animal2 = animals.get(1);
+            if (animal1.canReproduce() && animal2.canReproduce())
+                animals.add(animal1.reproduce(animal2));
+        }
     }
 
     public Animal takeAnimalFromCell() {
@@ -93,12 +91,18 @@ public class MapCell {
     }
 
     public void sortAnimals() {
-//        animals.sort();
+        animals.stream()
+                .sorted(Comparator.comparingInt(Animal::getEnergy)
+                        .thenComparingInt(Animal::getLifeTime)
+                        .thenComparingInt(Animal::getNumberOfChildren)
+                        .thenComparing(animal -> animal.getId().toString()));
     }
 
     public List<Animal> getAnimals() {
         return Collections.unmodifiableList(animals);
     }
 
-    public CellBox getCellBox(){return cellBox;}
+    public CellBox getCellBox() {
+        return cellBox;
+    }
 }

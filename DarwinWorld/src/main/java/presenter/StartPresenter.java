@@ -17,6 +17,7 @@ import simulations.Simulation;
 import simulations.StatSaving;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -88,9 +89,7 @@ public class StartPresenter {
 
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
-
         simulationPresenterConfiguration(presenter);
-
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
         stage.show();
@@ -132,11 +131,11 @@ public class StartPresenter {
 
     public Simulation simulationStart(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
-        AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
-                startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
-        Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
-        executorService.submit(simulation);
-        return simulation;
+            AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
+                    startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
+            Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
+            executorService.submit(simulation);
+            return simulation;
     }
 
     private GenomeInformation getGenomeInformation() {

@@ -2,6 +2,7 @@ package maps;
 
 import components.AnimalInformation;
 import components.Boundary;
+import components.MapStatistics;
 import components.Vector2d;
 import simulations.MapChangeListener;
 import worldElements.Animal;
@@ -36,4 +37,6 @@ public interface WorldMap {
     List<MapCell> getMapCellsList();
 
     void addObserver(MapChangeListener listener);
+
+    MapStatistics getMapStatistics();
 }

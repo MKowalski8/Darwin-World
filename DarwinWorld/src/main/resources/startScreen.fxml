@@ -18,100 +18,127 @@
     <top>
         <HBox alignment="CENTER">
             <Label fx:id="infoLabel" text="CONFIGURATION"/>
-            <Button onAction="#saveConfiguration" text="Save Configuration" textAlignment="CENTER"/>
-            <Button onAction="#loadConfiguration" text="Load Configuration" textAlignment="CENTER"/>
         </HBox>
     </top>
 
 
     <center>
-        <VBox alignment="CENTER">
-            <HBox alignment="CENTER">
-                <Label text="Select map variant" styleClass="labelConf"/>
-                <ComboBox fx:id="mapVariant" />
-            </HBox>
+        <HBox alignment="CENTER">
+            <VBox>
+                <HBox alignment="CENTER">
+                    <Label text="Select map variant" styleClass="labelConf"/>
+                    <ComboBox fx:id="mapVariant" styleClass="comboElement"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Select evolution variant"  styleClass="labelConf"/>
-                <ComboBox fx:id="evolutionVariant"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set map height"  styleClass="labelConf"/>
+                    <Spinner fx:id="mapHeight" styleClass="spinnerConf" min="0" max="100" initialValue="10" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set map height"  styleClass="labelConf"/>
-                <Spinner fx:id="mapHeight" styleClass="spinnerConf" min="0" max="100" initialValue="10" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set map width" styleClass="labelConf"/>
+                    <Spinner fx:id="mapWidth" styleClass="spinnerConf"  min="0" max="100" initialValue="10" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set map width" styleClass="labelConf"/>
-                <Spinner fx:id="mapWidth" styleClass="spinnerConf"  min="0" max="100" initialValue="10" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set start plant number" styleClass="labelConf"/>
+                    <Spinner fx:id="plantNumber" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set start plant number" styleClass="labelConf"/>
-                <Spinner fx:id="plantNumber" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set plant growing daily" styleClass="labelConf"/>
+                    <Spinner fx:id="plantGrowingDaily" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set start plant number" styleClass="labelConf"/>
-                <Spinner fx:id="plantGrowingDaily" styleClass="spinnerConf"  min="0" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set giving energy from plant"  styleClass="labelConf"/>
+                    <Spinner fx:id="energyFromPlant" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set giving energy from plant"  styleClass="labelConf"/>
-                <Spinner fx:id="energyFromPlant" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set start animals energy"  styleClass="labelConf"/>
+                    <Spinner fx:id="startAnimalEnergy" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set start animals energy"  styleClass="labelConf"/>
-                <Spinner fx:id="startAnimalEnergy" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set start animal number" styleClass="labelConf"/>
+                    <Spinner fx:id="startAnimalNumber" styleClass="spinnerConf" min="2" max="100" initialValue="1" editable="true" />
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set start animal number" styleClass="labelConf"/>
-                <Spinner fx:id="startAnimalNumber" styleClass="spinnerConf" min="2" max="100" initialValue="1" editable="true" />
-            </HBox>
+            </VBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set energy required for reproduction" styleClass="labelConf"/>
-                <Spinner fx:id="energyForReproduction"  min="0" max="100" initialValue="1" editable="true" styleClass="spinnerConf"/>
-            </HBox>
+            <VBox minWidth = "100"/>
 
-            <HBox styleClass="confElement">
-                <Label text="Set energy used by reproduction" styleClass="labelConf"/>
-                <Spinner fx:id="energyUsedByReproduction"  min="0" max="100" initialValue="1" editable="true" styleClass="spinnerConf"/>
-            </HBox>
+            <VBox>
+                <HBox styleClass="confElement">
+                    <Label text="Select evolution variant"  styleClass="labelConf"/>
+                    <ComboBox fx:id="evolutionVariant" styleClass="comboElement"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set energy used by living another day" styleClass="labelConf"/>
-                <Spinner fx:id="energyUsedToSurviveNextDay"  min="0" max="100" initialValue="1" editable="true" styleClass="spinnerConf"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set max mutation number" styleClass="labelConf"/>
+                    <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set max mutation number" styleClass="labelConf"/>
-                <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set min mutation number" styleClass="labelConf"/>
+                    <Spinner fx:id="minMutationNumber" styleClass="spinnerConf" min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set min mutation number" styleClass="labelConf"/>
-                <Spinner fx:id="minMutationNumber" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true"/>
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set genome length" styleClass="labelConf"/>
+                    <Spinner fx:id="genomeLength" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true" />
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Set genome length" styleClass="labelConf"/>
-                <Spinner fx:id="genomeLength" styleClass="spinnerConf" min="1" max="100" initialValue="1" editable="true" />
-            </HBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set energy required for reproduction" styleClass="labelConf"/>
+                    <Spinner fx:id="energyForReproduction" styleClass="spinnerConf" min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
 
-            <HBox styleClass="confElement">
-                <Label text="Do you want to save statistics?" styleClass="labelConf"/>
-                <ComboBox fx:id="toSave"/>
-            </HBox>
-        </VBox>
+                <HBox styleClass="confElement">
+                    <Label text="Set energy used by reproduction" styleClass="labelConf"/>
+                    <Spinner fx:id="energyUsedByReproduction" styleClass="spinnerConf" min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
+
+                <HBox styleClass="confElement">
+                    <Label text="Set energy used by living another day" styleClass="labelConf"/>
+                    <Spinner fx:id="energyUsedToSurviveNextDay" styleClass="spinnerConf" min="0" max="100" initialValue="1" editable="true"/>
+                </HBox>
+
+                <HBox styleClass="confElement">
+                    <Label text="Do you want to save statistics?" styleClass="labelConf"/>
+                    <ComboBox fx:id="toSave" styleClass="comboElement"/>
+                </HBox>
+            </VBox>
+        </HBox>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER">
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Button onAction="#saveConfiguration" text="Save Configuration" textAlignment="CENTER"/>
+                <HBox minWidth="50"/>
+                <Button onAction="#loadConfiguration" text="Load Configuration" textAlignment="CENTER"/>
+            </HBox>
+            <VBox minHeight="30"/>
             <Button onAction="#onSimulationStartClicked" text="Start simulation" textAlignment="CENTER"/>
-        </HBox>
+            <VBox minHeight="20"/>
+        </VBox>
     </bottom>
+
+
+    <bottom>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Button onAction="#saveConfiguration" text="Save Configuration" textAlignment="CENTER"/>
+                <HBox minWidth="50"/>
+                <Button onAction="#loadConfiguration" text="Load Configuration" textAlignment="CENTER"/>
+            </HBox>
+            <VBox minHeight="30"/>
+            <Button onAction="#onSimulationStartClicked" text="Start simulation" textAlignment="CENTER"/>
+            <VBox minHeight="20"/>
+        </VBox>
+    </bottom>
+
 </BorderPane>
 

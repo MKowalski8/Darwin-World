@@ -20,7 +20,8 @@ public class Simulation implements Runnable{
     @Override
     public void run() {
         while(map.areAnimals()){
-            if (!stopped){
+            if(!stopped){
+//                System.out.println(Thread.currentThread());
                 map.cleanDeadAnimals();
                 map.moveAnimals();
                 map.consumePlants();
@@ -43,6 +44,7 @@ public class Simulation implements Runnable{
 
     public void stopSimulation(){
         stopped = true;
+//        Thread.currentThread().interrupt();
     }
 
     public void continueSimulation(){

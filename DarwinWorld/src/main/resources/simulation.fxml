@@ -46,8 +46,8 @@
                     </HBox>
 
                     <HBox>
-                        <Label text = "Najpopularniejszy genotyp: "/>
-                        <Label fx:id="mostPopularGenotype"/>
+                        <Label text = "Najpopularniejszy&#xD;   genotyp: " minWidth="150"/>
+                        <ScrollPane fx:id="mostPopularGenotype"/>
                     </HBox>
 
                     <HBox>
@@ -77,8 +77,8 @@
                     <Label styleClass="header" fx:id="isFollowedAnimal" text="ŻADEN ZWIERZAK NIE JEST ŚLEDZONY" alignment="CENTER"/>
 
                     <HBox>
-                        <Label text="Genome: "/>
-                        <ScrollPane fx:id="followedGenome"/>
+                        <Label text="Genome: " minWidth="100"/>
+                        <ScrollPane fx:id="followedGenome" minHeight="50"/>
                     </HBox>
 
                     <HBox>
@@ -102,7 +102,7 @@
                     </HBox>
 
                     <HBox>
-                        <Label fx:id="isFollowedAlive" text="Ile dni żyje: "/>
+                        <Label fx:id="isFollowedAlive" text="Ile dni zyje: "/>
                         <Label fx:id="followedDays"/>
                     </HBox>
 
@@ -112,9 +112,9 @@
 
 
                 <VBox alignment="CENTER">
-                    <Button fx:id="genesButton" disable="true" styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
+                    <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true" styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
                     <VBox minHeight="10"/>
-                    <Button fx:id="plantsButton" disable="true" styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
+                    <Button fx:id="plantsButton" onAction="#showBelovedPlantCells" disable="true" styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
                 </VBox>
 
                 <VBox minHeight="30"/>
