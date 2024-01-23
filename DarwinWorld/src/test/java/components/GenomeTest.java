@@ -83,4 +83,21 @@ class GenomeTest {
         Assertions.assertEquals(g1.getGeneIterator(), g2.getGeneIterator());
 
     }
+
+    @Test
+    public void checkGetGeneIterator(){
+        //given
+        GenomeInformation info = new GenomeInformation(4,4,true,5);
+        Genome genome=new Genome(info);
+        int indexFollower=genome.getGeneIterator()+1;//-1 because we will cal methon "getInstruction" before assertion
+
+        //when
+        for (int i =0; i<100;i++ ){
+            genome.getInstruction();
+
+            //then
+            Assertions.assertEquals((indexFollower+i)% info.genomeLength(),genome.getGeneIterator());
+        }
+
+    }
 }
