@@ -13,15 +13,13 @@ public class Simulation implements Runnable {
 
     public Simulation(WorldMap map, int startAnimalNumber, AnimalInformation animalInfo) {
         this.map = map;
-//        umieszczanie zwierzakow na mapie
         map.placeAnimals(startAnimalNumber, animalInfo);
     }
 
     @Override
     public void run() {
         while (map.areAnimals()) {
-            if (!stopped) {
-//                System.out.println(Thread.currentThread());
+            if (!stopped){
                 map.cleanDeadAnimals();
                 map.moveAnimals();
                 map.consumePlants();
@@ -33,7 +31,7 @@ public class Simulation implements Runnable {
             try {
                 Thread.sleep(speed);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.out.println("Interrupted");;
             }
         }
     }
@@ -44,7 +42,6 @@ public class Simulation implements Runnable {
 
     public void stopSimulation() {
         stopped = true;
-//        Thread.currentThread().interrupt();
     }
 
     public void continueSimulation() {

@@ -151,6 +151,7 @@
             <Button onAction="#onSimulationStartClicked" text="Start simulation" textAlignment="CENTER"/>
             <VBox minHeight="20"/>
         </VBox>
+
     </bottom>
 
 </BorderPane>

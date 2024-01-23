@@ -22,12 +22,17 @@ import worldElements.Animal;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
 import javafx.stage.Screen;
 
 
 public class SimulationPresenter implements MapChangeListener {
+
+    private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
+    private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
 
     @FXML
     private Slider simulationSpeed;
@@ -49,9 +54,6 @@ public class SimulationPresenter implements MapChangeListener {
 
     private StatisticsPresenter statsBoxPresenter;
     private AnimalStatisticsPresenter followedBoxPresenter;
-
-    private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
-    private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
 
     @FXML
     private GridPane mapGrid = new GridPane();
@@ -147,7 +149,6 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private void onClickContinueSimulation() {
-//        executorService.submit(simulation);
         simulation.continueSimulation();
         continueButton.setDisable(true);
         genesButton.setDisable(true);

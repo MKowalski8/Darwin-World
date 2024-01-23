@@ -6,9 +6,14 @@ import MapStatisticsAndInformations.GenomeInformation;
 import MapStatisticsAndInformations.MapStatistics;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
@@ -72,6 +77,9 @@ public class StartPresenter {
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @FXML
+    private Label errorMessage;
+
+    @FXML
     public void initialize() {
         toSave.getItems().addAll("Yes", "No");
         toSave.setValue("Yes");
@@ -98,7 +106,7 @@ public class StartPresenter {
         WorldMap map = configureWorldMap();
         setToSaveStats(map);
         presenter.setWorldMap(map, mapVariant.getValue());
-        presenter.setSimulation(simulationStart(map));
+        presenter.setSimulation(simulationConf(map));
     }
 
     private void setToSaveStats(WorldMap map) {
@@ -128,7 +136,7 @@ public class StartPresenter {
     }
 
 
-    public Simulation simulationStart(WorldMap map) {
+    public Simulation simulationConf(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
         AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
                 startAnimalEnergy.getValue(), energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
@@ -143,6 +151,7 @@ public class StartPresenter {
         return new GenomeInformation(maxMutationNumber.getValue(), minMutationNumber.getValue(), slowEvolvingFlag, genomeLength.getValue());
     }
 
+    @FXML
     public void saveConfiguration() {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
         GenomeInformation genomeInfo = getGenomeInformation();
@@ -152,8 +161,10 @@ public class StartPresenter {
         FileConfiguration configuration = new FileConfiguration(animalInfo, bounds, mapVariant.getValue(), toSave.getValue(), plantNumber.getValue(),
                 plantGrowingDaily.getValue(), startAnimalNumber.getValue());
         configuration.saveActualConfiguration();
+
     }
 
+    @FXML
     public void loadConfiguration() {
         FileConfiguration configuration = new FileConfiguration(this);
         configuration.loadSavedConfiguration();

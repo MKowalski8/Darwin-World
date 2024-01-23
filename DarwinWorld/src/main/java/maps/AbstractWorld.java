@@ -33,7 +33,7 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     private void generatePlants(int numberOfPlants) {
-        plantGenerator.generatePlants(plants, numberOfPlants);
+        plants.addAll(plantGenerator.generatePlants(new HashSet<>(getPlants()), numberOfPlants));
     }
 
 
@@ -47,6 +47,7 @@ public abstract class AbstractWorld implements WorldMap {
                 animal.rotate();
 
                 Vector2d nextPosition = cellToPlaceOn(animal, bounds, mapCell.getCellPosition());
+
                 if (!mapCells.containsKey(nextPosition)) {
                     putInNewMapCell(newMapCells, nextPosition, animal);
                 } else {
@@ -58,7 +59,6 @@ public abstract class AbstractWorld implements WorldMap {
         mapCells.putAll(newMapCells);
         addMoved();
         cleanDeadAnimals();
-        removeEmptyCells();
     }
 
     private void putInNewMapCell(Map<Vector2d, MapCell> newMapCells, Vector2d nextPosition, Animal animal) {
@@ -140,11 +140,11 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public List<MapCell> getMapCellsList() {
-        return List.copyOf(mapCells.values().stream().toList());
+        return mapCells.values().stream().toList();
     }
 
     public List<Vector2d> getPlants() {
-        return List.copyOf(plants);
+        return Collections.unmodifiableList(plants);
     }
 
     public void addObserver(MapChangeListener listener) {

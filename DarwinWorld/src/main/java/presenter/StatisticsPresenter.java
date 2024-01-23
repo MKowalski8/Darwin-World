@@ -22,10 +22,18 @@ public class StatisticsPresenter {
 
     @FXML
     private ScrollPane mostPopularGenotype;
-    public Label averageEnergy;
-    public Label averageDeadLiveTime;
-    public Label averageChildNumber;
-    public Label averageAliveLiveTime;
+
+    @FXML
+    private Label averageEnergy;
+
+    @FXML
+    private Label averageDeadLiveTime;
+
+    @FXML
+    private Label averageChildNumber;
+
+    @FXML
+    private Label averageAliveLiveTime;
 
     public void updateStats(MapStatistics stats) {
         actualDay.setText(getFormat(stats.getCurrentDay()));

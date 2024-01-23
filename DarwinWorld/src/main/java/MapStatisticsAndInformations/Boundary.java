@@ -12,11 +12,15 @@ public class Boundary {
     private final int upperJungleBound;
     private final int lowerJungleBound;
 
+    private final List<Vector2d> jungleList;
+
+
     public Boundary(int width, int height) {
         this.width = width;
         this.height = height;
         this.lowerJungleBound = (int) (height * 0.40);
         this.upperJungleBound = (int) (height * 0.60);
+        this.jungleList = createJungleList();
     }
 
     public int getWidth() {
@@ -48,7 +52,7 @@ public class Boundary {
         return new Vector2d(newX, position.getY());
     }
 
-    public List<Vector2d> getJungleList() {
+    private List<Vector2d> createJungleList() {
         List<Vector2d> jungleCells = new LinkedList<>();
         for (int i = 0; i < width; i++) {
             for (int j = lowerJungleBound; j < upperJungleBound; j++) {
@@ -57,5 +61,9 @@ public class Boundary {
         }
 
         return jungleCells;
+    }
+
+    public List<Vector2d> getJungleList(){
+        return jungleList;
     }
 }

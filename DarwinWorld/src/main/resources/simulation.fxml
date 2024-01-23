@@ -40,8 +40,8 @@
                 <VBox minHeight="30"/>
 
                 <Slider fx:id="simulationSpeed"
-                        min="100" max="2000" value="500"
-                        blockIncrement="100" showTickLabels="true" showTickMarks="true"/>
+                        min="50" max="2000" value="500"
+                        blockIncrement="50"/>
 
             </VBox>
 
