@@ -3,7 +3,6 @@ package MapStatisticsAndInformations;
 import components.Genome;
 import maps.MapCell;
 import worldElements.Animal;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

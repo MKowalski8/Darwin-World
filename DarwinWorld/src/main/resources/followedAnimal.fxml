@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,7 +11,7 @@
 
     <HBox>
         <Label text="Genome: " minWidth="100"/>
-        <ScrollPane fx:id="followedGenome" minHeight="50" minWidth="50"/>
+        <ScrollPane fx:id="followedGenome" minHeight="50" minWidth="50" maxHeight="50"/>
     </HBox>
 
     <HBox>

@@ -5,7 +5,6 @@ import presenter.CellBox;
 import worldElements.Animal;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class MapCell {
 

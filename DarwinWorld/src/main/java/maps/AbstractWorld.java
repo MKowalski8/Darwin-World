@@ -13,7 +13,6 @@ public abstract class AbstractWorld implements WorldMap {
 
     private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
 
-//    private final List<Vector2d> plants = new ArrayList<>();
     private final Set<Vector2d> plants = new HashSet<>();
 
     private final List<MapChangeListener> observers = new ArrayList<>();

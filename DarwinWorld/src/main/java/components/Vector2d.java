@@ -1,7 +1,6 @@
 package components;
 
 import java.util.Objects;
-import java.util.Vector;
 
 public class Vector2d {
     private final int x;
