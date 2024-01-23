@@ -2,6 +2,7 @@ package presenter;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import presenter.smallerElements.GenomeDrawing;
 import worldElements.Animal;
 
@@ -18,12 +19,13 @@ public class AnimalStatisticsPresenter {
     public Label isFollowedAlive;
     public Label followedDays;
 
+
     public void updateFollowedAnimalStats(Optional<Animal> followedAnimal, int currentDay) {
         if (followedAnimal.isPresent()) {
             Animal animal = followedAnimal.get();
             if (!animal.isDead()) {
                 String genome = Arrays.toString(animal.getGenome().getGenes());
-                followedGenome.setContent(GenomeDrawing.drawGenome(genome, animal.getGeneIterator()));
+                followedGenome.setContent(GenomeDrawing.drawGenome(genome, animal.getGenome().getGeneIterator()));
 
                 followedEnergy.setText(getFormat(animal.getEnergy()));
                 followedPlants.setText(getFormat(animal.getNumberOfPlants()));
@@ -55,6 +57,5 @@ public class AnimalStatisticsPresenter {
     private static String getFormat(int statistic) {
         return String.format("%d", statistic);
     }
-
 
 }

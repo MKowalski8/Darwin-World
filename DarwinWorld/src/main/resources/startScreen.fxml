@@ -44,25 +44,25 @@
 
                 <HBox styleClass="confElement">
                     <Label text="Set start plant number" styleClass="labelConf"/>
-                    <Spinner fx:id="plantNumber" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
+                    <Spinner fx:id="plantNumber" styleClass="spinnerConf" min="0" max="500" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set plant growing daily" styleClass="labelConf"/>
-                    <Spinner fx:id="plantGrowingDaily" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
+                    <Spinner fx:id="plantGrowingDaily" styleClass="spinnerConf" min="0" max="500" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set giving energy from plant" styleClass="labelConf"/>
-                    <Spinner fx:id="energyFromPlant" styleClass="spinnerConf" min="1" max="100" initialValue="1"
+                    <Spinner fx:id="energyFromPlant" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set start animals energy" styleClass="labelConf"/>
-                    <Spinner fx:id="startAnimalEnergy" styleClass="spinnerConf" min="1" max="100" initialValue="1"
+                    <Spinner fx:id="startAnimalEnergy" styleClass="spinnerConf" min="1" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
@@ -84,37 +84,37 @@
 
                 <HBox styleClass="confElement">
                     <Label text="Set max mutation number" styleClass="labelConf"/>
-                    <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="0" max="100" initialValue="1"
+                    <Spinner fx:id="maxMutationNumber" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set min mutation number" styleClass="labelConf"/>
-                    <Spinner fx:id="minMutationNumber" styleClass="spinnerConf" min="0" max="100" initialValue="1"
+                    <Spinner fx:id="minMutationNumber" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set genome length" styleClass="labelConf"/>
-                    <Spinner fx:id="genomeLength" styleClass="spinnerConf" min="1" max="100" initialValue="1"
+                    <Spinner fx:id="genomeLength" styleClass="spinnerConf" min="1" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set energy required for reproduction" styleClass="labelConf"/>
-                    <Spinner fx:id="energyForReproduction" styleClass="spinnerConf" min="0" max="100" initialValue="1"
+                    <Spinner fx:id="energyForReproduction" styleClass="spinnerConf" min="0" max="1000" initialValue="1"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set energy used by reproduction" styleClass="labelConf"/>
-                    <Spinner fx:id="energyUsedByReproduction" styleClass="spinnerConf" min="0" max="100"
+                    <Spinner fx:id="energyUsedByReproduction" styleClass="spinnerConf" min="0" max="1000"
                              initialValue="1" editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set energy used by living another day" styleClass="labelConf"/>
-                    <Spinner fx:id="energyUsedToSurviveNextDay" styleClass="spinnerConf" min="0" max="100"
+                    <Spinner fx:id="energyUsedToSurviveNextDay" styleClass="spinnerConf" min="0" max="1000"
                              initialValue="1" editable="true"/>
                 </HBox>
 

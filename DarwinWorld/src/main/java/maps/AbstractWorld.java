@@ -13,7 +13,8 @@ public abstract class AbstractWorld implements WorldMap {
 
     private final Map<Vector2d, MapCell> mapCells = new HashMap<>();
 
-    private final List<Vector2d> plants = new ArrayList<>();
+//    private final List<Vector2d> plants = new ArrayList<>();
+    private final Set<Vector2d> plants = new HashSet<>();
 
     private final List<MapChangeListener> observers = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     private void generatePlants(int numberOfPlants) {
-        plants.addAll(plantGenerator.generatePlants(new HashSet<>(getPlants()), numberOfPlants));
+        plants.addAll(plantGenerator.generatePlants(getPlants(), numberOfPlants));
     }
 
 
@@ -109,7 +110,6 @@ public abstract class AbstractWorld implements WorldMap {
         });
 
         plants.removeIf(mapCells::containsKey);
-
     }
 
     @Override
@@ -143,8 +143,8 @@ public abstract class AbstractWorld implements WorldMap {
         return mapCells.values().stream().toList();
     }
 
-    public List<Vector2d> getPlants() {
-        return Collections.unmodifiableList(plants);
+    public Set<Vector2d> getPlants() {
+        return Collections.unmodifiableSet(plants);
     }
 
     public void addObserver(MapChangeListener listener) {

@@ -48,7 +48,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private Button continueButton;
-    @FXML
+
     private WorldMap map;
     private Optional<Animal> followedAnimal = Optional.empty();
 
@@ -120,7 +120,7 @@ public class SimulationPresenter implements MapChangeListener {
         this.cellHeight = mapGridHeight / map.getBounds().getHeight();
     }
 
-    private void drawMap(List<MapCell> mapCells, List<Vector2d> plants) {
+    private void drawMap(List<MapCell> mapCells, Set<Vector2d> plants) {
         clearGrid();
 
         Boundary bounds = map.getBounds();
@@ -165,7 +165,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     }
 
-    private void drawPlants(List<Vector2d> plants) {
+    private void drawPlants(Set<Vector2d> plants) {
         plants.forEach(plantPosition -> {
             Pane pane = new Pane();
             pane.setBackground(GRASS_CELL_COLOR);
@@ -241,7 +241,7 @@ public class SimulationPresenter implements MapChangeListener {
     private void showBelovedPlantCells() {
         if (plantsButton.getText().equals("PREFEROWANE POLA DO WZROSTU")) {
             setButtonsToNormal();
-            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getBounds().getJungleList()));
+            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getBounds().getJungleSet()));
             plantsButton.setText("WSZYSTKIE TRAWY");
         } else {
             Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
