@@ -34,7 +34,7 @@ public class MapStatistics {
         }
     }
 
-    public void updateLiveStats(List<MapCell> mapCells, List<Vector2d> plants, Boundary bounds) {
+    public void updateLiveStats(List<MapCell> mapCells, Set<Vector2d> plants, Boundary bounds) {
         if (!mapCells.isEmpty()) {
             //prepare animals
             List<Animal> animals = createAnimalList(mapCells);

@@ -11,7 +11,7 @@ public class PlantGenerator {
         this.bounds = bounds;
     }
 
-    public List<Vector2d> generatePlants(HashSet<Vector2d> actualPlants, int growingPlantsNumber) {
+    public List<Vector2d> generatePlants(Set<Vector2d> actualPlants, int growingPlantsNumber) {
         int numberOfJunglePlants = (int) (growingPlantsNumber * 0.8);
         int numberOfPlantsOutsideJungle = growingPlantsNumber - numberOfJunglePlants;
         List<Vector2d> jungleCandidates = new ArrayList<>();
@@ -44,7 +44,7 @@ public class PlantGenerator {
         }
     }
 
-    private void prepareCandidatesToGrow(HashSet<Vector2d> actualPlants, List<Vector2d> jungleCandidates, List<Vector2d> candidatesOutside) {
+    private void prepareCandidatesToGrow(Set<Vector2d> actualPlants, List<Vector2d> jungleCandidates, List<Vector2d> candidatesOutside) {
         for (int x = 0; x < bounds.getWidth(); x++) {
             for (int y = 0; y < bounds.getHeight(); y++) {
                 addCandidateToProperList(actualPlants, jungleCandidates, candidatesOutside, x, y);
@@ -52,7 +52,7 @@ public class PlantGenerator {
         }
     }
 
-    private void addCandidateToProperList(HashSet<Vector2d> actualPlants, List<Vector2d> jungleCandidates, List<Vector2d> candidatesOutside, int x, int y) {
+    private void addCandidateToProperList(Set<Vector2d> actualPlants, List<Vector2d> jungleCandidates, List<Vector2d> candidatesOutside, int x, int y) {
         Vector2d candidateToGrow = new Vector2d(x, y);
 
         if (!actualPlants.contains(candidateToGrow)) {

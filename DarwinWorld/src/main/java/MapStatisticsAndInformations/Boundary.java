@@ -2,8 +2,10 @@ package MapStatisticsAndInformations;
 
 import components.Vector2d;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Boundary {
 
@@ -12,7 +14,7 @@ public class Boundary {
     private final int upperJungleBound;
     private final int lowerJungleBound;
 
-    private final List<Vector2d> jungleList;
+    private final Set<Vector2d> jungleSet;
 
 
     public Boundary(int width, int height) {
@@ -20,7 +22,7 @@ public class Boundary {
         this.height = height;
         this.lowerJungleBound = (int) (height * 0.40);
         this.upperJungleBound = (int) (height * 0.60);
-        this.jungleList = createJungleList();
+        this.jungleSet = createJungleSet();
     }
 
     public int getWidth() {
@@ -52,8 +54,8 @@ public class Boundary {
         return new Vector2d(newX, position.getY());
     }
 
-    private List<Vector2d> createJungleList() {
-        List<Vector2d> jungleCells = new LinkedList<>();
+    private Set<Vector2d> createJungleSet() {
+        Set<Vector2d> jungleCells = new HashSet<>();
         for (int i = 0; i < width; i++) {
             for (int j = lowerJungleBound; j < upperJungleBound; j++) {
                 jungleCells.add(new Vector2d(i, j));
@@ -63,7 +65,7 @@ public class Boundary {
         return jungleCells;
     }
 
-    public List<Vector2d> getJungleList(){
-        return jungleList;
+    public Set<Vector2d> getJungleSet(){
+        return jungleSet;
     }
 }
