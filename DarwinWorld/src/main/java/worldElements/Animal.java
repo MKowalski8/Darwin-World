@@ -12,12 +12,12 @@ public class Animal {
     private final Genome genome;
     private int energy;
     private int daysSurvived = 0;
-    private MapDirection facing= MapDirection.intToMoveDirection(new Random().nextInt(8)) ;
+    private MapDirection facing;
     private int numberOfPlants = 0;
     private int birtheDate = 0;
     private Animal leftParent = null;
     private Animal rightParent = null;
-    private final HashSet<Animal> descendants = new HashSet<>();
+    private final Set<Animal> descendants = new HashSet<>();
     boolean wasCountedInGetNumberOfDescendants = false;
     private final UID id = new UID();
     private int numberOfChildren = 0;
@@ -27,7 +27,7 @@ public class Animal {
         this.genome = new Genome(info.genomeInfo());
         this.info = info;
         energy = info.startingEnergy();
-        this.facing = MapDirection.NORTH;
+        this.facing = MapDirection.intToMoveDirection(new Random().nextInt(8));
     }
 
     public Animal(AnimalInformation info, MapDirection strongerParentFacing, Genome genome, int birtheDate) {

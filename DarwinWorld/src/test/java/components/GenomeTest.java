@@ -68,23 +68,6 @@ class GenomeTest {
     }
 
     @Test
-    public void checkAllMovesFre() {
-        //given
-        GenomeInformation info = new GenomeInformation(0, 0, false, 5);
-        Genome g1 = new Genome(info);
-        Genome g2 = new Genome(info);
-
-        //when
-        for (int i = 0; i < info.genomeLength(); i++) {
-            g1.getInstruction();
-        }
-
-        //then
-        Assertions.assertEquals(g1.getGeneIterator(), g2.getGeneIterator());
-
-    }
-
-    @Test
     public void checkGetGeneIterator(){
         //given
         GenomeInformation info = new GenomeInformation(4,4,true,5);

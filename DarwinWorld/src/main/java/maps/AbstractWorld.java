@@ -94,6 +94,7 @@ public abstract class AbstractWorld implements WorldMap {
             List<Animal> deadAnimals = mapCell.removeDeads();
             stats.updateDeadLifetime(deadAnimals);
         });
+
         removeEmptyCells();
     }
 

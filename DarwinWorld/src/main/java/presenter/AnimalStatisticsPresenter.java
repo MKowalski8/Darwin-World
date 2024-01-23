@@ -25,7 +25,7 @@ public class AnimalStatisticsPresenter {
             Animal animal = followedAnimal.get();
             if (!animal.isDead()) {
                 String genome = Arrays.toString(animal.getGenome().getGenes());
-                followedGenome.setContent(GenomeDrawing.drawGenome(genome, animal.getGenome().getGeneIterator()));
+                followedGenome.setContent(GenomeDrawing.drawGenome(genome, animal.getGeneIterator()));
 
                 followedEnergy.setText(getFormat(animal.getEnergy()));
                 followedPlants.setText(getFormat(animal.getNumberOfPlants()));
