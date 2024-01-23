@@ -12,12 +12,12 @@ public class Animal {
     private final Genome genome;
     private int energy;
     private int daysSurvived = 0;
-    private MapDirection facing;
+    private MapDirection facing= MapDirection.intToMoveDirection(new Random().nextInt(8)) ;
     private int numberOfPlants = 0;
     private int birtheDate = 0;
     private Animal leftParent = null;
     private Animal rightParent = null;
-    private final List<Animal> descendants = new ArrayList<>();
+    private final HashSet<Animal> descendants = new HashSet<>();
     boolean wasCountedInGetNumberOfDescendants = false;
     private final UID id = new UID();
     private int numberOfChildren = 0;
@@ -147,6 +147,7 @@ public class Animal {
             }
         }
 
+        descendants.clear();
         if (leftParent != null) leftParent.descendants.remove(this);
         if (rightParent != null) rightParent.descendants.remove(this);
     }

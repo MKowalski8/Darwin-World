@@ -8,13 +8,13 @@ public class Genome {
     private final int len;
     private final int[] genes;
     private final GenomeInformation info;
-    private int geneIterator = 0;
+    private int geneIterator;
 
     public Genome(GenomeInformation info) {
         this.info = info;
         this.len = info.genomeLength();
         this.genes = new int[len];
-
+        this.geneIterator=new Random().nextInt(len);
         initRandomGenes();
     }
 
@@ -31,6 +31,7 @@ public class Genome {
             preformCombineGenes(g2, g1, borderGene);
         }
 
+        this.geneIterator=new Random().nextInt(len);
         performMutation();
     }
 

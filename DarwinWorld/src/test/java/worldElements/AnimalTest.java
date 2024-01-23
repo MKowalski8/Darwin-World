@@ -2,6 +2,7 @@ package worldElements;
 
 import MapStatisticsAndInformations.AnimalInformation;
 import MapStatisticsAndInformations.GenomeInformation;
+import components.MapDirection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +34,28 @@ class AnimalTest {
         Assertions.assertEquals(4, father.getNumberOfUniqueDescendants());
         Assertions.assertEquals(3, mother.getNumberOfUniqueDescendants());
         Assertions.assertEquals(1, aunt.getNumberOfUniqueDescendants());
+
+    }
+
+
+    @Test
+    public  void checkEmergencyRotation(){
+        //given
+        AnimalInformation info = new AnimalInformation(1, 1, 10, 1, 1,
+                new GenomeInformation(1, 1, false, 1));
+        Animal oneTimeRotatedAnimal = new Animal(info);
+        Animal twoTimesRotatedAnimal =new Animal(info);
+        MapDirection startingStateOfFirstAnimal =oneTimeRotatedAnimal.getFacing();
+        MapDirection startingStateOfSecondAnimal= twoTimesRotatedAnimal.getFacing();
+
+        //when
+        oneTimeRotatedAnimal.emergencyRotation();;
+        twoTimesRotatedAnimal.emergencyRotation();
+        twoTimesRotatedAnimal.emergencyRotation();
+
+        //then
+        Assertions.assertNotEquals(startingStateOfFirstAnimal,oneTimeRotatedAnimal.getFacing());
+        Assertions.assertEquals(startingStateOfSecondAnimal,twoTimesRotatedAnimal.getFacing());
 
     }
 }
