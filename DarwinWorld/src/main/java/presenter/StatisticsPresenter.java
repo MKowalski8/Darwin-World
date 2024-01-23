@@ -1,6 +1,6 @@
 package presenter;
 
-import components.MapStatistics;
+import MapStatisticsAndInformations.MapStatistics;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -9,15 +9,31 @@ import java.util.Arrays;
 
 public class StatisticsPresenter {
 
-    public Label actualDay;
-    public Label animalNumber;
-    public Label plantNumber;
-    public Label freeCells;
-    public ScrollPane mostPopularGenotype;
-    public Label averageEnergy;
-    public Label averageDeadLiveTime;
-    public Label averageChildNumber;
-    public Label averageAliveLiveTime;
+    @FXML
+    private Label actualDay;
+
+    @FXML
+    private Label animalNumber;
+
+    @FXML
+    private Label plantNumber;
+    @FXML
+    private Label freeCells;
+
+    @FXML
+    private ScrollPane mostPopularGenotype;
+
+    @FXML
+    private Label averageEnergy;
+
+    @FXML
+    private Label averageDeadLiveTime;
+
+    @FXML
+    private Label averageChildNumber;
+
+    @FXML
+    private Label averageAliveLiveTime;
 
     public void updateStats(MapStatistics stats) {
         actualDay.setText(getFormat(stats.getCurrentDay()));

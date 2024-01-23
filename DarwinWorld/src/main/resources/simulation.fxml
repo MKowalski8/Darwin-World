@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.ScrollPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
@@ -31,16 +30,18 @@
                 <VBox minHeight="30"/>
 
                 <VBox alignment="CENTER">
-                    <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true" styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
+                    <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true"
+                            styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
                     <VBox minHeight="10"/>
-                    <Button fx:id="plantsButton" onAction="#showBelovedPlantCells" disable="true" styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
+                    <Button fx:id="plantsButton" onAction="#showBelovedPlantCells" disable="true"
+                            styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
                 </VBox>
 
                 <VBox minHeight="30"/>
 
                 <Slider fx:id="simulationSpeed"
-                        min="100" max="2000" value="500"
-                        blockIncrement="100" showTickLabels="true" showTickMarks="true"/>
+                        min="50" max="2000" value="500"
+                        blockIncrement="50"/>
 
             </VBox>
 
@@ -56,7 +57,8 @@
                 <HBox alignment="CENTER">
                     <Button fx:id="stopButton" styleClass="buttonClass" onAction="#onClickStopSimulation" text="Stop"/>
                     <HBox minWidth="10"/>
-                    <Button fx:id="continueButton" disable="True" styleClass="buttonClass" onAction="#onClickContinueSimulation" text="Continue"/>
+                    <Button fx:id="continueButton" disable="True" styleClass="buttonClass"
+                            onAction="#onClickContinueSimulation" text="Continue"/>
                 </HBox>
             </VBox>
         </HBox>

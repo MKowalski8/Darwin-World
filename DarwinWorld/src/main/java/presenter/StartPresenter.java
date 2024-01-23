@@ -1,14 +1,19 @@
 package presenter;
 
-import components.AnimalInformation;
-import components.Boundary;
-import components.GenomeInformation;
-import components.MapStatistics;
+import MapStatisticsAndInformations.AnimalInformation;
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.GenomeInformation;
+import MapStatisticsAndInformations.MapStatistics;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import maps.HellWorld;
 import maps.RoundWorld;
@@ -17,7 +22,6 @@ import simulations.Simulation;
 import simulations.StatSaving;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -73,6 +77,9 @@ public class StartPresenter {
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @FXML
+    private Label errorMessage;
+
+    @FXML
     public void initialize() {
         toSave.getItems().addAll("Yes", "No");
         toSave.setValue("Yes");
@@ -99,11 +106,11 @@ public class StartPresenter {
         WorldMap map = configureWorldMap();
         setToSaveStats(map);
         presenter.setWorldMap(map, mapVariant.getValue());
-        presenter.setSimulation(simulationStart(map));
+        presenter.setSimulation(simulationConf(map));
     }
 
     private void setToSaveStats(WorldMap map) {
-        if (toSave.getValue().equals("Yes")){
+        if (toSave.getValue().equals("Yes")) {
             map.addObserver(new StatSaving());
         }
     }
@@ -129,32 +136,35 @@ public class StartPresenter {
     }
 
 
-    public Simulation simulationStart(WorldMap map) {
+    public Simulation simulationConf(WorldMap map) {
         GenomeInformation genomeInfo = getGenomeInformation();
-            AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
-                    startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
-            Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
-            executorService.submit(simulation);
-            return simulation;
+        AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
+                startAnimalEnergy.getValue(), energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
+        Simulation simulation = new Simulation(map, startAnimalNumber.getValue(), animalInfo);
+        executorService.submit(simulation);
+        return simulation;
     }
 
     private GenomeInformation getGenomeInformation() {
         boolean slowEvolvingFlag = !evolutionVariant.getValue().equals("Normal Evolving Animal");
 
-        return new GenomeInformation(maxMutationNumber.getValue(),minMutationNumber.getValue(), slowEvolvingFlag, genomeLength.getValue());
+        return new GenomeInformation(maxMutationNumber.getValue(), minMutationNumber.getValue(), slowEvolvingFlag, genomeLength.getValue());
     }
 
+    @FXML
     public void saveConfiguration() {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
         GenomeInformation genomeInfo = getGenomeInformation();
         AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
-                startAnimalEnergy.getValue(),energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
+                startAnimalEnergy.getValue(), energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
 
         FileConfiguration configuration = new FileConfiguration(animalInfo, bounds, mapVariant.getValue(), toSave.getValue(), plantNumber.getValue(),
                 plantGrowingDaily.getValue(), startAnimalNumber.getValue());
         configuration.saveActualConfiguration();
+
     }
 
+    @FXML
     public void loadConfiguration() {
         FileConfiguration configuration = new FileConfiguration(this);
         configuration.loadSavedConfiguration();
@@ -169,9 +179,9 @@ public class StartPresenter {
     }
 
     public void setEvolutionVariant(boolean slowEvolvingFlag) {
-        if (slowEvolvingFlag){
+        if (slowEvolvingFlag) {
             evolutionVariant.getSelectionModel().select(1);
-        } else{
+        } else {
             evolutionVariant.getSelectionModel().select(0);
         }
     }

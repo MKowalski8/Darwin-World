@@ -1,4 +1,4 @@
-package components;
+package MapStatisticsAndInformations;
 
 public record GenomeInformation(int minMutation,
                                 int maxMutation,

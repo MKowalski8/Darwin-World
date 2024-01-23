@@ -1,5 +1,6 @@
-package components;
+package MapStatisticsAndInformations;
 
+import components.Genome;
 import maps.MapCell;
 import worldElements.Animal;
 
@@ -20,12 +21,16 @@ public class GenomeSearcher {
 
         for (MapCell cell : cells) {
             for (Animal animal : cell.getAnimals()) {
-                if (genesNumberMap.containsKey(animal.getGenome())) {
-                    genesNumberMap.put(animal.getGenome(), genesNumberMap.get(animal.getGenome()) + 1);
-                } else {
-                    genesNumberMap.put(animal.getGenome(), Integer.valueOf(0));
-                }
+                actualizeGenesNumberMap(genesNumberMap, animal);
             }
+        }
+    }
+
+    private static void actualizeGenesNumberMap(Map<Genome, Integer> genesNumberMap, Animal animal) {
+        if (genesNumberMap.containsKey(animal.getGenome())) {
+            genesNumberMap.put(animal.getGenome(), genesNumberMap.get(animal.getGenome()) + 1);
+        } else {
+            genesNumberMap.put(animal.getGenome(), Integer.valueOf(0));
         }
     }
 
@@ -71,8 +76,8 @@ public class GenomeSearcher {
     }
 
     private static void addAnimalsOnCellsWithGenome(Genome mostPopularGenome, MapCell mapCellToAdd, MapCell currentCell) {
-        for (Animal animal : currentCell.getAnimals()){
-            if(animal.getGenome().equals(mostPopularGenome)) mapCellToAdd.placeAnimalOnCell(animal);
+        for (Animal animal : currentCell.getAnimals()) {
+            if (animal.getGenome().equals(mostPopularGenome)) mapCellToAdd.placeAnimalOnCell(animal);
         }
     }
 }

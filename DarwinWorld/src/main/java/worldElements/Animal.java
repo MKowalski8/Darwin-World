@@ -1,6 +1,6 @@
 package worldElements;
 
-import components.AnimalInformation;
+import MapStatisticsAndInformations.AnimalInformation;
 import components.Genome;
 import components.MapDirection;
 
@@ -17,7 +17,7 @@ public class Animal {
     private int birtheDate = 0;
     private Animal leftParent = null;
     private Animal rightParent = null;
-    private final List<Animal> descendants = new ArrayList<>();
+    private final Set<Animal> descendants = new HashSet<>();
     boolean wasCountedInGetNumberOfDescendants = false;
     private final UID id = new UID();
     private int numberOfChildren = 0;
@@ -27,7 +27,7 @@ public class Animal {
         this.genome = new Genome(info.genomeInfo());
         this.info = info;
         energy = info.startingEnergy();
-        this.facing = MapDirection.NORTH;
+        this.facing = MapDirection.intToMoveDirection(new Random().nextInt(8));
     }
 
     public Animal(AnimalInformation info, MapDirection strongerParentFacing, Genome genome, int birtheDate) {
@@ -74,14 +74,14 @@ public class Animal {
     }
 
     public Animal reproduce(Animal anotherAnimal) {
-            Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
-            Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
+        Genome childGenome = new Genome(info.genomeInfo(), this.genome, anotherAnimal.genome, energy, anotherAnimal.energy);
+        Animal newborn = new Animal(info, this.facing, childGenome, birtheDate + daysSurvived);
 
-            consumeEnergyToReproduce();
-            anotherAnimal.consumeEnergyToReproduce();
-            //acttualizing parents stats
-            updateGenealogicalStats(anotherAnimal, newborn);
-            return newborn;
+        consumeEnergyToReproduce();
+        anotherAnimal.consumeEnergyToReproduce();
+        //acttualizing parents stats
+        updateGenealogicalStats(anotherAnimal, newborn);
+        return newborn;
     }
 
     private void updateGenealogicalStats(Animal anotherAnimal, Animal newborn) {
@@ -147,6 +147,7 @@ public class Animal {
             }
         }
 
+        descendants.clear();
         if (leftParent != null) leftParent.descendants.remove(this);
         if (rightParent != null) rightParent.descendants.remove(this);
     }

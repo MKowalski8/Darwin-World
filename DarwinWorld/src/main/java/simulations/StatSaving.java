@@ -1,9 +1,7 @@
 package simulations;
 
 import components.Genome;
-import components.MapStatistics;
-import maps.WorldMap;
-import simulations.MapChangeListener;
+import MapStatisticsAndInformations.MapStatistics;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,8 +14,8 @@ public class StatSaving implements MapChangeListener {
     private final UUID id = UUID.randomUUID();
     File file = new File(String.format("simulation_%s.csv", id));
 
-    public StatSaving(){
-        try(FileWriter writer = new FileWriter(file, true)) {
+    public StatSaving() {
+        try (FileWriter writer = new FileWriter(file, true)) {
             writer.write("Simulation day,");
             writer.write("Animal Number,");
             writer.write("Plant Number,");
@@ -34,7 +32,7 @@ public class StatSaving implements MapChangeListener {
 
     @Override
     public void mapChanged(MapStatistics stats) {
-        try(FileWriter writer = new FileWriter(file, true)) {
+        try (FileWriter writer = new FileWriter(file, true)) {
             writer.write(getFormat(stats.getCurrentDay()));
             writer.write(getFormat(stats.getAllAliveAnimalNumber()));
             writer.write(getFormat(stats.getPlantNumber()));

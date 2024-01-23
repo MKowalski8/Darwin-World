@@ -1,8 +1,8 @@
-#infoLabel{
-    -fx-font-size: 40;
+#worldType {
+    -fx-font-size: 40px;
 }
 
-#contentBox{
+#contentBox {
     -fx-label-padding: 100;
     -fx-padding: 50px;
     -fx-max-height: 600px;
@@ -10,26 +10,26 @@
     -fx-min-width: 1500px;
 }
 
-#dataBox{
+#dataBox {
     -fx-min-width: 550px;
     -fx-label-padding: 30px;
     -fx-padding: 10px;
     -fx-font-size: 18px;
 }
 
-#statsBox{
+#statsBox {
     -fx-start-margin: 30px;
     -fx-border-color: black;
 
 }
 
-#followedBox{
+#followedBox {
     -fx-start-margin: 30px;
     -fx-border-color: black;
 
 }
 
-#mapGrid{
+#mapGrid {
     -fx-padding: 50px;
     -fx-alignment: right;
 }
@@ -39,7 +39,7 @@
     -fx-border-insets: 10px;
 }
 
-.header{
+.header {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }

@@ -1,47 +1,43 @@
 package components;
+
+import MapStatisticsAndInformations.GenomeInformation;
+
 import java.util.*;
 
 public class Genome {
-    private int len;
-    private int[] genes;
+    private final int len;
+    private final int[] genes;
     private final GenomeInformation info;
-    private int geneIterator=0;
+    private int geneIterator;
+
     public Genome(GenomeInformation info) {
-        this.info=info;
+        this.info = info;
+        this.len = info.genomeLength();
+        this.genes = new int[len];
+        this.geneIterator=new Random().nextInt(len);
+        initRandomGenes();
+    }
+
+    public Genome(GenomeInformation info, Genome g1, Genome g2, int g1Energy, int g2Energy) {
+        this.info = info;
         this.len = info.genomeLength();
         this.genes = new int[len];
 
-        initRandomGenes();
-
-//        this(info,this,this,1,1);
-    }
-    public Genome(GenomeInformation info,Genome g1,Genome g2,int g1Energy, int g2Energy) {
-        this.info=info;
-        this.len = info.genomeLength();
-        this.genes= new int[len];
-
-        Random random=new Random();
-        int borderGene=Math.round(len*g1Energy/(g1Energy+g2Energy));
-        if(random.nextInt(1)==1){ //left or right
-
+        Random random = new Random();
+        int borderGene = Math.round(len * g1Energy / (g1Energy + g2Energy));
+        if (random.nextInt(1) == 1) { //left or right
             preformCombineGenes(g1, g2, borderGene);
-        }
-        else{
+        } else {
             preformCombineGenes(g2, g1, borderGene);
         }
 
+        this.geneIterator=new Random().nextInt(len);
         performMutation();
     }
 
-//    public Genome(GenomeInformation info,Genome g1,Genome g2,int g1Energy, int g2Energy) {
-//        this.info=info;
-//        this(info);
-//        this(g1,g2,1,1);
-//    }
-
     private void preformCombineGenes(Genome g1, Genome g2, int borderGene) {
-        for(int i =0;i<len;i++){
-            genes[i]=(i< borderGene)? g1.genes[i]: g2.genes[i];
+        for (int i = 0; i < len; i++) {
+            genes[i] = (i < borderGene) ? g1.genes[i] : g2.genes[i];
         }
     }
 
@@ -52,45 +48,48 @@ public class Genome {
         }
     }
 
-    private void performMutation(){
+    private void performMutation() {
         Random random = new Random();
-        //generate number of mutaion
+        ArrayList<Boolean> genesToMutate = generateIndexToMutation(random);
+        mutateChoosenIndexes(genesToMutate);
+    }
+
+
+    private ArrayList<Boolean> generateIndexToMutation(Random random) {
         ArrayList<Boolean> genesToMutate = new ArrayList<>();
-        int numberOfMutaions= info.minMutation()+ random.nextInt(info.maxMutation()-info.minMutation()+1);
-        for(int i=0; i<len;i++)
-        {
-            genesToMutate.add((numberOfMutaions>0) ? Boolean.TRUE:Boolean.FALSE);
-            numberOfMutaions--;
+        int numberOfMutations = info.minMutation() + random.nextInt(info.maxMutation() - info.minMutation() + 1);
+        for (int i = 0; i < len; i++) {
+            genesToMutate.add((numberOfMutations > 0) ? Boolean.TRUE : Boolean.FALSE);
+            numberOfMutations--;
         }
         Collections.shuffle(genesToMutate);
+        return genesToMutate;
+    }
 
-        //mutating genes
-
-        for(int i=0; i<len;i++) {
-            if( genesToMutate.get(i)==Boolean.TRUE){
+    private void mutateChoosenIndexes(ArrayList<Boolean> genesToMutate) {
+        for (int i = 0; i < len; i++) {
+            if (genesToMutate.get(i) == Boolean.TRUE) {
                 mutateOneGene(i);
             }
-
         }
-
     }
-    private void mutateOneGene(int geneIndex){
+
+    private void mutateOneGene(int geneIndex) {
         Random random = new Random();
-        if (info.slowEvolvingFlag()){
-            genes[geneIndex]=(random.nextInt(2)==0)?(genes[geneIndex]+7)%8:(genes[geneIndex]+1)%8;
-        }
-        else{
-            genes[geneIndex]=(genes[geneIndex]+1+ random.nextInt(7))%8;
+        if (info.slowEvolvingFlag()) {
+            genes[geneIndex] = (random.nextInt(2) == 0) ? (genes[geneIndex] + 7) % 8 : (genes[geneIndex] + 1) % 8;
+        } else {
+            genes[geneIndex] = (genes[geneIndex] + 1 + random.nextInt(7)) % 8;
         }
     }
 
-    public int getInstruction(){
-        int res=genes[geneIterator];
-        geneIterator=(geneIterator+1)%len;
+    public int getInstruction() {
+        int res = genes[geneIterator];
+        geneIterator = (geneIterator + 1) % len;
         return res;
     }
 
-    public int getGeneIterator(){
+    public int getGeneIterator() {
         return geneIterator;
     }
 

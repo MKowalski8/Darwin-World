@@ -1,9 +1,9 @@
 package simulations;
-import components.AnimalInformation;
-import maps.WorldMap;
-import worldElements.Animal;
 
-public class Simulation implements Runnable{
+import MapStatisticsAndInformations.AnimalInformation;
+import maps.WorldMap;
+
+public class Simulation implements Runnable {
 
     private final WorldMap map;
 
@@ -13,15 +13,13 @@ public class Simulation implements Runnable{
 
     public Simulation(WorldMap map, int startAnimalNumber, AnimalInformation animalInfo) {
         this.map = map;
-//        umieszczanie zwierzakow na mapie
         map.placeAnimals(startAnimalNumber, animalInfo);
     }
 
     @Override
     public void run() {
-        while(map.areAnimals()){
-            if(!stopped){
-//                System.out.println(Thread.currentThread());
+        while (map.areAnimals()) {
+            if (!stopped){
                 map.cleanDeadAnimals();
                 map.moveAnimals();
                 map.consumePlants();
@@ -33,21 +31,20 @@ public class Simulation implements Runnable{
             try {
                 Thread.sleep(speed);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.out.println("Interrupted");;
             }
         }
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public void stopSimulation(){
+    public void stopSimulation() {
         stopped = true;
-//        Thread.currentThread().interrupt();
     }
 
-    public void continueSimulation(){
+    public void continueSimulation() {
         stopped = false;
     }
 }

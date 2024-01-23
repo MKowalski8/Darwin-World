@@ -2,7 +2,6 @@ package presenter.smallerElements;
 
 import javafx.scene.control.Label;
 
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 
 
@@ -12,14 +11,14 @@ public class GenomeDrawing {
         int numberCtr = 0;
 
         for (int i = 0; i < text.length(); i++) {
-            char number = text.charAt(i);
-            Label label = new Label(String.valueOf(number));
+            char symbol = text.charAt(i);
+            Label label = new Label(String.valueOf(symbol));
 
-            if(Character.isDigit(number)){
-                numberCtr++;
+            if (Character.isDigit(symbol)) {
                 if (numberCtr == blueIndex) {
                     label.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
                 }
+                numberCtr++;
             }
 
             hbox.getChildren().add(label);

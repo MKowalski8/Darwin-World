@@ -1,5 +1,8 @@
 package presenter;
 
+import MapStatisticsAndInformations.Boundary;
+import MapStatisticsAndInformations.GenomeSearcher;
+import MapStatisticsAndInformations.MapStatistics;
 import components.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -19,37 +22,50 @@ import worldElements.Animal;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
 import javafx.stage.Screen;
 
 
 public class SimulationPresenter implements MapChangeListener {
-    public Slider simulationSpeed;
-    public Button genesButton;
-    public Button plantsButton;
-    public Button stopButton;
-    public Button continueButton;
+
+    private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
+    private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
+
+    @FXML
+    private Slider simulationSpeed;
+
+    @FXML
+    private Button genesButton;
+
+    @FXML
+    private Button plantsButton;
+
+    @FXML
+    private Button stopButton;
+
+    @FXML
+    private Button continueButton;
+
     private WorldMap map;
     private Optional<Animal> followedAnimal = Optional.empty();
 
     private StatisticsPresenter statsBoxPresenter;
     private AnimalStatisticsPresenter followedBoxPresenter;
 
-    private static final Background EMPTY_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(127, 141, 121), CornerRadii.EMPTY, Insets.EMPTY));
-    private static final Background GRASS_CELL_COLOR = new Background(new BackgroundFill(Color.rgb(38, 184, 2), CornerRadii.EMPTY, Insets.EMPTY));
+    @FXML
+    private GridPane mapGrid = new GridPane();
 
     @FXML
-    GridPane mapGrid = new GridPane();
+    private Label worldType;
 
     @FXML
-    Label worldType;
+    private VBox statsBox;
 
     @FXML
-    public VBox statsBox;
-
-    @FXML
-    public VBox followedBox;
+    private VBox followedBox;
 
     private Simulation simulation;
 
@@ -57,7 +73,7 @@ public class SimulationPresenter implements MapChangeListener {
     private int cellHeight;
 
     @FXML
-    public void initialize() throws IOException {
+    private void initialize() throws IOException {
         initializeStatBox();
         initializeFollowedBox();
     }
@@ -104,7 +120,7 @@ public class SimulationPresenter implements MapChangeListener {
         this.cellHeight = mapGridHeight / map.getBounds().getHeight();
     }
 
-    public void drawMap(List<MapCell> mapCells, List<Vector2d> plants) {
+    private void drawMap(List<MapCell> mapCells, Set<Vector2d> plants) {
         clearGrid();
 
         Boundary bounds = map.getBounds();
@@ -122,7 +138,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void onClickStopSimulation() {
+    private void onClickStopSimulation() {
         simulation.stopSimulation();
         continueButton.setDisable(false);
         genesButton.setDisable(false);
@@ -132,8 +148,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void onClickContinueSimulation() {
-//        executorService.submit(simulation);
+    private void onClickContinueSimulation() {
         simulation.continueSimulation();
         continueButton.setDisable(true);
         genesButton.setDisable(true);
@@ -150,7 +165,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     }
 
-    private void drawPlants(List<Vector2d> plants) {
+    private void drawPlants(Set<Vector2d> plants) {
         plants.forEach(plantPosition -> {
             Pane pane = new Pane();
             pane.setBackground(GRASS_CELL_COLOR);
@@ -206,7 +221,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void showMostPopularGenome() {
+    private void showMostPopularGenome() {
         if (genesButton.getText().equals("NAJPOPULARNIEJSZY GENOTYP")) {
             setButtonsToNormal();
             genesButton.setText("WSZYSTKIE GENOTYPY");
@@ -223,10 +238,10 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void showBelovedPlantCells() {
+    private void showBelovedPlantCells() {
         if (plantsButton.getText().equals("PREFEROWANE POLA DO WZROSTU")) {
             setButtonsToNormal();
-            Platform.runLater(() -> drawMap(map.getMapCellsList(), jungleList()));
+            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getBounds().getJungleSet()));
             plantsButton.setText("WSZYSTKIE TRAWY");
         } else {
             Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
@@ -234,20 +249,10 @@ public class SimulationPresenter implements MapChangeListener {
         }
     }
 
-    public void setButtonsToNormal() {
+    private void setButtonsToNormal() {
         plantsButton.setText("PREFEROWANE POLA DO WZROSTU");
         genesButton.setText("NAJPOPULARNIEJSZY GENOTYP");
     }
 
-    private List<Vector2d> jungleList() {
-        List<Vector2d> jungleCells = new LinkedList<>();
-        for (int i = 0; i < map.getBounds().getWidth(); i++) {
-            for (int j = map.getBounds().getLowerJoungleBound(); j < map.getBounds().getUpperJoungleBound(); j++) {
-                jungleCells.add(new Vector2d(i, j));
-            }
-        }
-
-        return jungleCells;
-    }
 }
 

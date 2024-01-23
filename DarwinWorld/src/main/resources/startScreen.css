@@ -1,28 +1,28 @@
-#infoLabel{
+#infoLabel {
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-color-label-visible: white;
     -fx-font-size: 30px;
 }
 
-.body{
+.body {
     -fx-font-size: 15px;
+    -fx-background-color: lightgrey;
 }
 
-.confElement{
+.confElement {
     -fx-padding: 3px;
 }
 
-.labelConf{
+.labelConf {
     -fx-label-padding: 10;
 }
 
-.spinnerConf{
+.spinnerConf {
     -fx-max-width: 80;
     -fx-alignment: right;
 }
 
-.comboElement{
+.comboElement {
     -fx-alignment: right;
 }
-
