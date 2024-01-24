@@ -100,7 +100,10 @@ public class SimulationPresenter implements MapChangeListener {
         worldType.setText(mapType);
         configureGridPane();
 
-        Platform.runLater(() -> drawMap(getCellBoxes(map.getMapCellsList()), map.getPlants()));
+        List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
+        Set<Vector2d> plantsToDraw = map.getPlants();
+
+        Platform.runLater(() -> drawMap(cellBoxes, plantsToDraw));
     }
 
     public void setSimulation(Simulation simulation) {
@@ -182,11 +185,6 @@ public class SimulationPresenter implements MapChangeListener {
 
     }
 
-    private void configureCellBox(CellBox cellBox) {
-        GridPane.setHalignment(cellBox.getElement(), HPos.CENTER);
-        cellBox.configureElement(cellHeight, cellWidth);
-    }
-
     private List<CellBox> getCellBoxes(List<MapCell> mapCells) {
         List<CellBox> cellBoxes =  Stream.of(mapCells)
                 .flatMap(Collection::stream)
@@ -194,8 +192,14 @@ public class SimulationPresenter implements MapChangeListener {
                 .toList();
         cellBoxes.forEach(this::configureCellBox);
         return cellBoxes;
+
+
     }
 
+    private void configureCellBox(CellBox cellBox) {
+        GridPane.setHalignment(cellBox.getElement(), HPos.CENTER);
+        cellBox.configureElement(cellHeight, cellWidth);
+    }
     @Override
     public void mapChanged(MapStatistics stats) {
         List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
@@ -211,12 +215,6 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void updateSimulation() {
         simulation.setSpeed((int) simulationSpeed.getValue());
-    }
-
-    private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
-        mapGrid.getColumnConstraints().clear();
-        mapGrid.getRowConstraints().clear();
     }
 
     public void setFollowedAnimal(Animal followedAnimal) {
@@ -262,5 +260,10 @@ public class SimulationPresenter implements MapChangeListener {
         genesButton.setText("NAJPOPULARNIEJSZY GENOTYP");
     }
 
+    private void clearGrid() {
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
+        mapGrid.getColumnConstraints().clear();
+        mapGrid.getRowConstraints().clear();
+    }
 }
 
