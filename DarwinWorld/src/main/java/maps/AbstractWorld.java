@@ -144,7 +144,7 @@ public abstract class AbstractWorld implements WorldMap {
     }
 
     public Set<Vector2d> getPlants() {
-        return Collections.unmodifiableSet(plants);
+        return Set.copyOf(plants);
     }
 
     public void addObserver(MapChangeListener listener) {

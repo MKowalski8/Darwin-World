@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
@@ -98,7 +99,8 @@ public class SimulationPresenter implements MapChangeListener {
         map.addObserver(this);
         worldType.setText(mapType);
         configureGridPane();
-        Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
+
+        Platform.runLater(() -> drawMap(getCellBoxes(map.getMapCellsList()), map.getPlants()));
     }
 
     public void setSimulation(Simulation simulation) {
@@ -118,7 +120,7 @@ public class SimulationPresenter implements MapChangeListener {
         this.cellHeight = mapGridHeight / map.getBounds().getHeight();
     }
 
-    private void drawMap(List<MapCell> mapCells, Set<Vector2d> plants) {
+    private void drawMap(List<CellBox> cellBoxes, Set<Vector2d> plants) {
         clearGrid();
 
         Boundary bounds = map.getBounds();
@@ -132,7 +134,7 @@ public class SimulationPresenter implements MapChangeListener {
         }
 
         drawPlants(plants);
-        drawAnimals(getCellBoxes(mapCells));
+        drawAnimals(cellBoxes);
     }
 
     @FXML
@@ -175,31 +177,35 @@ public class SimulationPresenter implements MapChangeListener {
         cellBoxes.forEach(cellBox -> {
             int row = cellBox.getPosition().getX();
             int column = cellBox.getPosition().getY();
-            configureElementInGrid(cellBox);
             mapGrid.add(cellBox.getElement(), row, column);
         });
 
     }
 
-    private void configureElementInGrid(CellBox cellBox) {
+    private void configureCellBox(CellBox cellBox) {
         GridPane.setHalignment(cellBox.getElement(), HPos.CENTER);
         cellBox.configureElement(cellHeight, cellWidth);
     }
 
     private List<CellBox> getCellBoxes(List<MapCell> mapCells) {
-        return Stream.of(mapCells)
+        List<CellBox> cellBoxes =  Stream.of(mapCells)
                 .flatMap(Collection::stream)
                 .map(MapCell::getCellBox)
                 .toList();
+        cellBoxes.forEach(this::configureCellBox);
+        return cellBoxes;
     }
 
     @Override
     public void mapChanged(MapStatistics stats) {
+        List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
+        Set<Vector2d> plantsToDraw = map.getPlants();
+
         Platform.runLater(() -> {
             updateSimulation();
             statsBoxPresenter.updateStats(stats);
             followedBoxPresenter.updateFollowedAnimalStats(followedAnimal, stats.getCurrentDay());
-            drawMap(map.getMapCellsList(), map.getPlants());
+            drawMap(cellBoxes, plantsToDraw);
         });
     }
 
@@ -208,7 +214,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
@@ -220,30 +226,34 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private void showMostPopularGenome() {
-        if (genesButton.getText().equals("NAJPOPULARNIEJSZY GENOTYP")) {
-            setButtonsToNormal();
-            genesButton.setText("WSZYSTKIE GENOTYPY");
+        Set<Vector2d> plantsToDraw = map.getPlants();
+        String actual = genesButton.getText();
+        setButtonsToNormal();
 
-            Platform.runLater(() -> {
-                List<MapCell> mapCells = GenomeSearcher.createMapCellListWithGenome(map.getMapStatistics().getMostPopularGenome(), map.getMapCellsList());
-                changeClickAccessibility(getCellBoxes(mapCells));
-                drawMap(mapCells, map.getPlants());
-            });
+        if (actual.equals("NAJPOPULARNIEJSZY GENOTYP")) {
+            genesButton.setText("WSZYSTKIE GENOTYPY");
+            List<CellBox> cellBoxes = getCellBoxes(GenomeSearcher.createMapCellListWithGenome(map.getMapStatistics().getMostPopularGenome(), map.getMapCellsList()));
+            changeClickAccessibility(cellBoxes);
+            Platform.runLater(() -> {drawMap(cellBoxes, plantsToDraw);});
         } else {
-            setButtonsToNormal();
-            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
+            List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
+            Platform.runLater(() -> drawMap(cellBoxes, map.getPlants()));
         }
     }
 
     @FXML
     private void showBelovedPlantCells() {
-        if (plantsButton.getText().equals("PREFEROWANE POLA DO WZROSTU")) {
-            setButtonsToNormal();
-            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getBounds().getJungleSet()));
+        List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
+        String actual = plantsButton.getText();
+        setButtonsToNormal();
+
+        if (actual.equals("PREFEROWANE POLA DO WZROSTU")) {
             plantsButton.setText("WSZYSTKIE TRAWY");
+            Set<Vector2d> plantsToDraw = map.getBounds().getJungleSet();
+            Platform.runLater(() -> drawMap(cellBoxes, plantsToDraw));
         } else {
-            Platform.runLater(() -> drawMap(map.getMapCellsList(), map.getPlants()));
-            setButtonsToNormal();
+            Set<Vector2d> plantToDraw = map.getPlants();
+            Platform.runLater(() -> drawMap(cellBoxes, plantToDraw));
         }
     }
 

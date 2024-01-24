@@ -32,13 +32,13 @@
 
                 <HBox styleClass="confElement">
                     <Label text="Set map height" styleClass="labelConf"/>
-                    <Spinner fx:id="mapHeight" styleClass="spinnerConf" min="0" max="100" initialValue="10"
+                    <Spinner fx:id="mapHeight" styleClass="spinnerConf" min="0" max="200" initialValue="10"
                              editable="true"/>
                 </HBox>
 
                 <HBox styleClass="confElement">
                     <Label text="Set map width" styleClass="labelConf"/>
-                    <Spinner fx:id="mapWidth" styleClass="spinnerConf" min="0" max="100" initialValue="10"
+                    <Spinner fx:id="mapWidth" styleClass="spinnerConf" min="0" max="200" initialValue="10"
                              editable="true"/>
                 </HBox>
 

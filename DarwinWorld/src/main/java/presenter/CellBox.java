@@ -54,7 +54,7 @@ public class CellBox {
     }
 
     private int getRed() {
-        Animal animal = mapCell.getAnimals().get(0);
+        Animal animal = mapCell.getAnimals().get(mapCell.animalNumber()-1);
         return Math.min(255, Math.max(0, animal.getEnergy() * 10));
     }
 

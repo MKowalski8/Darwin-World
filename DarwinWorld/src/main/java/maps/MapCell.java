@@ -51,13 +51,13 @@ public class MapCell {
     }
 
     public void consumePlantOnCell() {
-        animals.get(animals.size()-1).eatPlant();
+        animals.get(animals.size() - 1).eatPlant();
     }
 
     public void initializeReproduction() {
         if (animals.size() >= 2) {
-            Animal animal1 = animals.get(animals.size()-1);
-            Animal animal2 = animals.get(animals.size()-2);
+            Animal animal1 = animals.get(animals.size() - 1);
+            Animal animal2 = animals.get(animals.size() - 2);
             if (animal1.canReproduce() && animal2.canReproduce())
                 animals.add(animal1.reproduce(animal2));
         }
@@ -97,7 +97,7 @@ public class MapCell {
     }
 
     public List<Animal> getAnimals() {
-        return Collections.unmodifiableList(animals);
+        return List.copyOf(animals);
     }
 
     public CellBox getCellBox() {

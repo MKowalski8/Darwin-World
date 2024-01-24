@@ -74,8 +74,8 @@ public class FileConfiguration {
                 startPresenter.setToSave(scanner.nextLine());
                 startPresenter.setMapVariant(scanner.nextLine());
                 startPresenter.setEvolutionVariant(scanner.nextBoolean());
-                startPresenter.setMapHeight(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
-                startPresenter.setMapWidth(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, scanner.nextInt()));
+                startPresenter.setMapHeight(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 200, scanner.nextInt()));
+                startPresenter.setMapWidth(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 200, scanner.nextInt()));
                 startPresenter.setPlantNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, scanner.nextInt()));
                 startPresenter.setPlantGrowingDaily(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, scanner.nextInt()));
                 startPresenter.setEnergyFromPlant(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
