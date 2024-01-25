@@ -34,8 +34,8 @@ public class StatisticsPresenter {
     @FXML
     private Label averageAliveLiveTime;
 
-    public void updateStats(MapStatistics stats) {
-        actualDay.setText(getFormat(stats.getCurrentDay()));
+    public void updateStats(MapStatistics stats, int currentDay) {
+        actualDay.setText(getFormat(currentDay));
         animalNumber.setText(getFormat(stats.getAllAliveAnimalNumber()));
         plantNumber.setText(getFormat(stats.getPlantNumber()));
         freeCells.setText(getFormat(stats.getFreeCellsNumber()));

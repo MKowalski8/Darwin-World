@@ -7,50 +7,51 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="presenter.StatisticsPresenter">
 
-    <Label styleClass="header" text="STATYSTYKI SYMULACJI"/>
+    <Label styleClass="header" text="SIMULATION STATISTICS"/>
 
     <HBox>
-        <Label text="Dzień symulacji: : "/>
+        <Label text="Simulation day: "/>
         <Label fx:id="actualDay"/>
     </HBox>
 
     <HBox>
-        <Label text="Liczba zwierzaków: "/>
+        <Label text="Number of animals: "/>
         <Label fx:id="animalNumber"/>
     </HBox>
 
     <HBox>
-        <Label text="Liczba wszystkich roślin: "/>
+        <Label text="Total number of plants: "/>
         <Label fx:id="plantNumber"/>
     </HBox>
 
     <HBox>
-        <Label text="Liczba wolnych pól: "/>
+        <Label text="Number of free cells: "/>
         <Label fx:id="freeCells"/>
     </HBox>
 
     <HBox>
-        <Label text="Najpopularniejszy&#xD;   genotyp: " minWidth="150"/>
+        <Label text="Most popular&#xD;   genotype: " minWidth="150"/>
         <ScrollPane fx:id="mostPopularGenotype"/>
     </HBox>
 
     <HBox>
-        <Label text="Średni poziom energi: "/>
+        <Label text="Average energy: "/>
         <Label fx:id="averageEnergy"/>
     </HBox>
 
     <HBox>
-        <Label text="Średnia długość życia zwierzaka żywego: "/>
+        <Label text="Average lifespan of a living animal: "/>
         <Label fx:id="averageAliveLiveTime"/>
     </HBox>
 
     <HBox>
-        <Label text="Średnia długość życia zwierzaka martwego: "/>
+        <Label text="Average lifespan of a dead animal: "/>
         <Label fx:id="averageDeadLiveTime"/>
     </HBox>
 
     <HBox>
-        <Label text="Średnia liczba dzieci: "/>
+        <Label text="Average number of children: "/>
         <Label fx:id="averageChildNumber"/>
     </HBox>
 </VBox>
+

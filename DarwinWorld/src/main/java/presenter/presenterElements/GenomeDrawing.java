@@ -1,4 +1,4 @@
-package presenter.smallerElements;
+package presenter.presenterElements;
 
 import javafx.scene.control.Label;
 

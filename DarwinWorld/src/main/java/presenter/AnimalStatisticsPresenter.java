@@ -2,7 +2,7 @@ package presenter;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import presenter.smallerElements.GenomeDrawing;
+import presenter.presenterElements.GenomeDrawing;
 import worldElements.Animal;
 
 import java.util.Arrays;
@@ -40,17 +40,17 @@ public class AnimalStatisticsPresenter {
     }
 
     private void setObituary(int currentDay) {
-        if (!isFollowedAlive.getText().equals("Zwierze zmarlo: ")) {
-            isFollowedAnimal.setText("SLEDZONY ZWIERZAK NIE ZYJE");
-            isFollowedAlive.setText("Zwierze zmarlo: ");
-            followedDays.setText(String.format("%d dnia", currentDay));
+        if (!isFollowedAlive.getText().equals("Animal died ")) {
+            isFollowedAnimal.setText("FOLLOWED ANIMAL IS DEAD");
+            isFollowedAlive.setText("Animal died ");
+            followedDays.setText(String.format("on day: %d", currentDay));
         }
     }
 
     private void setFollowedDays(Animal animal) {
-        isFollowedAnimal.setText(String.format("SLEDZISZ ZWIERZAKA %s", animal.getId().toString()));
-        isFollowedAlive.setText("Zwierze zyje: ");
-        followedDays.setText(String.format("%d dni", animal.getLifeTime()));
+        isFollowedAnimal.setText(String.format("YOU FOLLOW ANIMAL %s", animal.getId().toString()));
+        isFollowedAlive.setText("Animal is alive for: ");
+        followedDays.setText(String.format("%d days", animal.getLifeTime()));
     }
 
     private static String getFormat(int statistic) {

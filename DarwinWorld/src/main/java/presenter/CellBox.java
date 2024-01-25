@@ -4,7 +4,7 @@ import components.Vector2d;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import maps.MapCell;
-import presenter.smallerElements.AnimalChooser;
+import presenter.presenterElements.AnimalChooser;
 import worldElements.Animal;
 
 public class CellBox {
@@ -54,7 +54,7 @@ public class CellBox {
     }
 
     private int getRed() {
-        Animal animal = mapCell.getAnimals().get(mapCell.animalNumber()-1);
+        Animal animal = mapCell.getAnimals().get(mapCell.animalNumber() - 1);
         return Math.min(255, Math.max(0, animal.getEnergy() * 10));
     }
 

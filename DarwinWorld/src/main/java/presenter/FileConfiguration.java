@@ -2,7 +2,6 @@ package presenter;
 
 import MapStatisticsAndInformations.AnimalInformation;
 import MapStatisticsAndInformations.Boundary;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -21,7 +20,7 @@ public class FileConfiguration {
     private Boundary bounds;
     private String mapVariant;
     private String toSave;
-    private int plantNumber;
+    private int startPlantNumber;
     private int plantGrowingDaily;
     private int startAnimalNumber;
 
@@ -29,14 +28,14 @@ public class FileConfiguration {
         this.startPresenter = startPresenter;
     }
 
-    public FileConfiguration(AnimalInformation animalInfo, Boundary bounds, String mapVariant, String toSave, int plantGrowingDaily, int plantNumber, int startAnimalNumbery) {
+    public FileConfiguration(AnimalInformation animalInfo, Boundary bounds, String mapVariant, String toSave, int startPlantNumber, int plantGrowingDaily, int startAnimalNumber) {
         this.animalInfo = animalInfo;
         this.bounds = bounds;
         this.mapVariant = mapVariant;
         this.toSave = toSave;
         this.plantGrowingDaily = plantGrowingDaily;
-        this.plantNumber = plantNumber;
-        this.startAnimalNumber = startAnimalNumbery;
+        this.startPlantNumber = startPlantNumber;
+        this.startAnimalNumber = startAnimalNumber;
     }
 
     public void saveActualConfiguration() {
@@ -48,7 +47,7 @@ public class FileConfiguration {
                         animalInfo.genomeInfo().slowEvolvingFlag() + "\n" +
                         bounds.getHeight() + "\n" +
                         bounds.getWidth() + "\n" +
-                        plantNumber + "\n" +
+                        startPlantNumber + "\n" +
                         plantGrowingDaily + "\n" +
                         animalInfo.energyProvidedByEating() + "\n" +
                         animalInfo.startingEnergy() + "\n" +
@@ -74,19 +73,19 @@ public class FileConfiguration {
                 startPresenter.setToSave(scanner.nextLine());
                 startPresenter.setMapVariant(scanner.nextLine());
                 startPresenter.setEvolutionVariant(scanner.nextBoolean());
-                startPresenter.setMapHeight(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 200, scanner.nextInt()));
-                startPresenter.setMapWidth(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 200, scanner.nextInt()));
-                startPresenter.setPlantNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, scanner.nextInt()));
-                startPresenter.setPlantGrowingDaily(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, scanner.nextInt()));
-                startPresenter.setEnergyFromPlant(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setStartAnimalEnergy(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, scanner.nextInt()));
-                startPresenter.setStartAnimalNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 1000, scanner.nextInt()));
-                startPresenter.setEnergyForReproduction(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setEnergyUsedByReproduction(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setEnergyUsedToSurviveNextDay(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setMaxMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setMinMutationNumber(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, scanner.nextInt()));
-                startPresenter.setGenomeLength(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, scanner.nextInt()));
+                startPresenter.setMapHeight(scanner.nextInt());
+                startPresenter.setMapWidth(scanner.nextInt());
+                startPresenter.setStartPlantNumber(scanner.nextInt());
+                startPresenter.setPlantGrowingDaily(scanner.nextInt());
+                startPresenter.setEnergyFromPlant(scanner.nextInt());
+                startPresenter.setStartAnimalEnergy(scanner.nextInt());
+                startPresenter.setStartAnimalNumber(scanner.nextInt());
+                startPresenter.setEnergyForReproduction(scanner.nextInt());
+                startPresenter.setEnergyUsedByReproduction(scanner.nextInt());
+                startPresenter.setEnergyUsedToSurviveNextDay(scanner.nextInt());
+                startPresenter.setMaxMutationNumber(scanner.nextInt());
+                startPresenter.setMinMutationNumber(scanner.nextInt());
+                startPresenter.setGenomeLength(scanner.nextInt());
             } catch (IOException e) {
                 e.printStackTrace();
             }

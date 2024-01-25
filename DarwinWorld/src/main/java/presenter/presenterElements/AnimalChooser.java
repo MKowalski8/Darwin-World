@@ -1,4 +1,4 @@
-package presenter.smallerElements;
+package presenter.presenterElements;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

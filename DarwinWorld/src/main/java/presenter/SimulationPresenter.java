@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
@@ -48,12 +47,6 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private Button continueButton;
 
-    private WorldMap map;
-    private Optional<Animal> followedAnimal = Optional.empty();
-
-    private StatisticsPresenter statsBoxPresenter;
-    private AnimalStatisticsPresenter followedBoxPresenter;
-
     @FXML
     private GridPane mapGrid = new GridPane();
 
@@ -66,9 +59,17 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private VBox followedBox;
 
+    private WorldMap map;
+    private Optional<Animal> followedAnimal = Optional.empty();
+
+    private StatisticsPresenter statsBoxPresenter;
+
+    private AnimalStatisticsPresenter followedBoxPresenter;
+
     private Simulation simulation;
 
     private int cellWidth;
+
     private int cellHeight;
 
     @FXML
@@ -186,7 +187,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private List<CellBox> getCellBoxes(List<MapCell> mapCells) {
-        List<CellBox> cellBoxes =  Stream.of(mapCells)
+        List<CellBox> cellBoxes = Stream.of(mapCells)
                 .flatMap(Collection::stream)
                 .map(MapCell::getCellBox)
                 .toList();
@@ -200,15 +201,18 @@ public class SimulationPresenter implements MapChangeListener {
         GridPane.setHalignment(cellBox.getElement(), HPos.CENTER);
         cellBox.configureElement(cellHeight, cellWidth);
     }
+
     @Override
     public void mapChanged(MapStatistics stats) {
         List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
         Set<Vector2d> plantsToDraw = map.getPlants();
+        int currentDay = stats.getCurrentDay();
+
 
         Platform.runLater(() -> {
             updateSimulation();
-            statsBoxPresenter.updateStats(stats);
-            followedBoxPresenter.updateFollowedAnimalStats(followedAnimal, stats.getCurrentDay());
+            statsBoxPresenter.updateStats(stats, currentDay);
+            followedBoxPresenter.updateFollowedAnimalStats(followedAnimal, currentDay);
             drawMap(cellBoxes, plantsToDraw);
         });
     }
@@ -228,11 +232,13 @@ public class SimulationPresenter implements MapChangeListener {
         String actual = genesButton.getText();
         setButtonsToNormal();
 
-        if (actual.equals("NAJPOPULARNIEJSZY GENOTYP")) {
-            genesButton.setText("WSZYSTKIE GENOTYPY");
+        if (actual.equals("MOST POPULAR GENOTYPE")) {
+            genesButton.setText("ALL GENOTYPES");
             List<CellBox> cellBoxes = getCellBoxes(GenomeSearcher.createMapCellListWithGenome(map.getMapStatistics().getMostPopularGenome(), map.getMapCellsList()));
             changeClickAccessibility(cellBoxes);
-            Platform.runLater(() -> {drawMap(cellBoxes, plantsToDraw);});
+            Platform.runLater(() -> {
+                drawMap(cellBoxes, plantsToDraw);
+            });
         } else {
             List<CellBox> cellBoxes = getCellBoxes(map.getMapCellsList());
             Platform.runLater(() -> drawMap(cellBoxes, map.getPlants()));
@@ -245,8 +251,8 @@ public class SimulationPresenter implements MapChangeListener {
         String actual = plantsButton.getText();
         setButtonsToNormal();
 
-        if (actual.equals("PREFEROWANE POLA DO WZROSTU")) {
-            plantsButton.setText("WSZYSTKIE TRAWY");
+        if (actual.equals("PREFERRED PLANTS GROWTH AREAS")) {
+            plantsButton.setText("ALL PLANTS");
             Set<Vector2d> plantsToDraw = map.getBounds().getJungleSet();
             Platform.runLater(() -> drawMap(cellBoxes, plantsToDraw));
         } else {
@@ -256,8 +262,8 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void setButtonsToNormal() {
-        plantsButton.setText("PREFEROWANE POLA DO WZROSTU");
-        genesButton.setText("NAJPOPULARNIEJSZY GENOTYP");
+        plantsButton.setText("PREFERRED PLANTS GROWTH AREAS");
+        genesButton.setText("MOST POPULAR GENOTYPE");
     }
 
     private void clearGrid() {

@@ -30,11 +30,11 @@
                 <VBox minHeight="30"/>
 
                 <VBox alignment="CENTER">
-                    <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true"
-                            styleClass="buttonClass" text="NAJPOPULARNIEJSZY GENOTYP"/>
-                    <VBox minHeight="10"/>
-                    <Button fx:id="plantsButton" onAction="#showBelovedPlantCells" disable="true"
-                            styleClass="buttonClass" text="PREFEROWANE POLA DO WZROSTU"/>
+                <Button fx:id="genesButton" onAction="#showMostPopularGenome" disable="true"
+                        styleClass="buttonClass" text="MOST POPULAR GENOTYPE"/>
+                <VBox minHeight="10"/>
+                <Button fx:id="plantsButton" onAction="#showBelovedPlantCells" disable="true"
+                        styleClass="buttonClass" text="PREFERRED GROWTH AREAS"/>
                 </VBox>
 
                 <VBox minHeight="30"/>

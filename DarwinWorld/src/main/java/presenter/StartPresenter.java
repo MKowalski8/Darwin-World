@@ -38,7 +38,7 @@ public class StartPresenter {
     private Spinner<Integer> mapWidth;
 
     @FXML
-    private Spinner<Integer> plantNumber;
+    private Spinner<Integer> startPlantNumber;
 
     @FXML
     private Spinner<Integer> plantGrowingDaily;
@@ -54,6 +54,7 @@ public class StartPresenter {
 
     @FXML
     private Spinner<Integer> energyForReproduction;
+
     @FXML
     private Spinner<Integer> energyUsedByReproduction;
 
@@ -70,9 +71,6 @@ public class StartPresenter {
     private Spinner<Integer> genomeLength;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
-
-    @FXML
-    private Label errorMessage;
 
     @FXML
     public void initialize() {
@@ -114,11 +112,11 @@ public class StartPresenter {
         Boundary bounds = new Boundary(mapWidth.getValue(), mapHeight.getValue());
 
         return mapVariant.getValue().equals("Round World") ?
-                new RoundWorld(bounds, plantNumber.getValue(),
+                new RoundWorld(bounds, startPlantNumber.getValue(),
                         plantGrowingDaily.getValue(), new MapStatistics())
                 :
-                new HellWorld(bounds, plantNumber.getValue(),
-                        plantNumber.getValue(), new MapStatistics());
+                new HellWorld(bounds, startPlantNumber.getValue(),
+                        startPlantNumber.getValue(), new MapStatistics());
     }
 
 
@@ -140,11 +138,6 @@ public class StartPresenter {
         return simulation;
     }
 
-    private GenomeInformation getGenomeInformation() {
-        boolean slowEvolvingFlag = !evolutionVariant.getValue().equals("Normal Evolving Animal");
-
-        return new GenomeInformation(maxMutationNumber.getValue(), minMutationNumber.getValue(), slowEvolvingFlag, genomeLength.getValue());
-    }
 
     @FXML
     public void saveConfiguration() {
@@ -153,10 +146,16 @@ public class StartPresenter {
         AnimalInformation animalInfo = new AnimalInformation(energyForReproduction.getValue(), energyUsedByReproduction.getValue(),
                 startAnimalEnergy.getValue(), energyUsedToSurviveNextDay.getValue(), energyFromPlant.getValue(), genomeInfo);
 
-        FileConfiguration configuration = new FileConfiguration(animalInfo, bounds, mapVariant.getValue(), toSave.getValue(), plantNumber.getValue(),
+        FileConfiguration configuration = new FileConfiguration(animalInfo, bounds, mapVariant.getValue(), toSave.getValue(), startPlantNumber.getValue(),
                 plantGrowingDaily.getValue(), startAnimalNumber.getValue());
         configuration.saveActualConfiguration();
 
+    }
+
+    private GenomeInformation getGenomeInformation() {
+        boolean slowEvolvingFlag = !evolutionVariant.getValue().equals("Normal Evolving Animal");
+
+        return new GenomeInformation(minMutationNumber.getValue(), maxMutationNumber.getValue(), slowEvolvingFlag, genomeLength.getValue());
     }
 
     @FXML
@@ -181,56 +180,57 @@ public class StartPresenter {
         }
     }
 
-    public void setMapHeight(SpinnerValueFactory<Integer> mapHeight) {
-        this.mapHeight.setValueFactory(mapHeight);
+    public void setMapHeight(int mapHeightValue) {
+        this.mapHeight.getValueFactory().setValue(mapHeightValue);
     }
 
-    public void setMapWidth(SpinnerValueFactory<Integer> mapWidth) {
-        this.mapWidth.setValueFactory(mapWidth);
+    public void setMapWidth(int mapWidthValue) {
+        this.mapWidth.getValueFactory().setValue(mapWidthValue);
     }
 
-    public void setPlantNumber(SpinnerValueFactory<Integer> plantNumber) {
-        this.plantNumber.setValueFactory(plantNumber);
+    public void setStartPlantNumber(int plantNumber) {
+        startPlantNumber.getValueFactory().setValue(plantNumber);
     }
 
-    public void setPlantGrowingDaily(SpinnerValueFactory<Integer> plantGrowingDaily) {
-        this.plantGrowingDaily.setValueFactory(plantGrowingDaily);
+    public void setPlantGrowingDaily(int plantGrowingDailyValue) {
+        this.plantGrowingDaily.getValueFactory().setValue(plantGrowingDailyValue);
     }
 
-    public void setEnergyFromPlant(SpinnerValueFactory<Integer> energyFromPlant) {
-        this.energyFromPlant.setValueFactory(energyFromPlant);
+    public void setEnergyFromPlant(int energyFromPlantValue) {
+        this.energyFromPlant.getValueFactory().setValue(energyFromPlantValue);
     }
 
-    public void setStartAnimalNumber(SpinnerValueFactory<Integer> startAnimalNumber) {
-        this.startAnimalNumber.setValueFactory(startAnimalNumber);
+    public void setStartAnimalNumber(int startAnimalNumberValue) {
+        this.startAnimalNumber.getValueFactory().setValue(startAnimalNumberValue);
     }
 
-    public void setStartAnimalEnergy(SpinnerValueFactory<Integer> startAnimalEnergy) {
-        this.startAnimalEnergy.setValueFactory(startAnimalEnergy);
+    public void setStartAnimalEnergy(int startAnimalEnergyValue) {
+        this.startAnimalEnergy.getValueFactory().setValue(startAnimalEnergyValue);
     }
 
-    public void setEnergyForReproduction(SpinnerValueFactory<Integer> energyForReproduction) {
-        this.energyForReproduction.setValueFactory(energyForReproduction);
+    public void setEnergyForReproduction(int energyForReproductionValue) {
+        this.energyForReproduction.getValueFactory().setValue(energyForReproductionValue);
     }
 
-    public void setEnergyUsedByReproduction(SpinnerValueFactory<Integer> energyForReproduction) {
-        this.energyUsedByReproduction.setValueFactory(energyForReproduction);
+    public void setEnergyUsedByReproduction(int energyUsedByReproductionValue) {
+        this.energyUsedByReproduction.getValueFactory().setValue(energyUsedByReproductionValue);
     }
 
-    public void setEnergyUsedToSurviveNextDay(SpinnerValueFactory<Integer> energyForLivingDay) {
-        this.energyUsedToSurviveNextDay.setValueFactory(energyForLivingDay);
+    public void setEnergyUsedToSurviveNextDay(int energyUsedToSurviveNextDayValue) {
+        this.energyUsedToSurviveNextDay.getValueFactory().setValue(energyUsedToSurviveNextDayValue);
     }
 
-    public void setMaxMutationNumber(SpinnerValueFactory<Integer> maxMutationNumber) {
-        this.maxMutationNumber.setValueFactory(maxMutationNumber);
+    public void setMaxMutationNumber(int maxMutationNumberValue) {
+        this.maxMutationNumber.getValueFactory().setValue(maxMutationNumberValue);
     }
 
-    public void setMinMutationNumber(SpinnerValueFactory<Integer> minMutationNumber) {
-        this.minMutationNumber.setValueFactory(minMutationNumber);
+    public void setMinMutationNumber(int minMutationNumberValue) {
+        this.minMutationNumber.getValueFactory().setValue(minMutationNumberValue);
     }
 
-    public void setGenomeLength(SpinnerValueFactory<Integer> genomeLength) {
-        this.genomeLength.setValueFactory(genomeLength);
+    public void setGenomeLength(int genomeLengthValue) {
+        this.genomeLength.getValueFactory().setValue(genomeLengthValue);
     }
+
 }
 
